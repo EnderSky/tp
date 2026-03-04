@@ -21,12 +21,13 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Project Advisor
 
-### Jane Doe
+### Hong Eungi
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/eungi-hong.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/eungi-hong)]
+[[homepage](https://eungi-hong-digital-portfolio.vercel.app)]
+
 
 * Role: Team Lead
 * Responsibilities: UI

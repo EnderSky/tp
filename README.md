@@ -1,16 +1,48 @@
-[![CI Status](https://github.com/se-edu/addressbook-level3/workflows/Java%20CI/badge.svg)](https://github.com/se-edu/addressbook-level3/actions)
-
-[![codecov](https://codecov.io/github/AY2526S2-CS2103T-F14-2/tp/graph/badge.svg?token=CLETCTLB8M)](https://codecov.io/github/AY2526S2-CS2103T-F14-2/tp)
+[![Java CI](https://github.com/AY2526S2-CS2103T-F14-2/tp/actions/workflows/gradle.yml/badge.svg)](https://github.com/AY2526S2-CS2103T-F14-2/tp/actions/workflows/gradle.yml)
 
 ![Ui](docs/images/Ui.png)
 
-* This is **a sample project for Software Engineering (SE) students**.<br>
-  Example usages:
-  * as a starting point of a course project (as opposed to writing everything from scratch)
-  * as a case study
-* The project simulates an ongoing software project for a desktop application (called _AddressBook_) used for managing contact details.
-  * It is **written in OOP fashion**. It provides a **reasonably well-written** code base **bigger** (around 6 KLoC) than what students usually write in beginner-level SE modules, without being overwhelmingly big.
-  * It comes with a **reasonable level of user and developer documentation**.
-* It is named `AddressBook Level 3` (`AB3` for short) because it was initially created as a part of a series of `AddressBook` projects (`Level 1`, `Level 2`, `Level 3` ...).
-* For the detailed documentation of this project, see the **[Address Book Product Website](https://se-education.org/addressbook-level3)**.
-* This project is a **part of the se-education.org** initiative. If you would like to contribute code to this project, see [se-education.org](https://se-education.org/#contributing-to-se-edu) for more info.
+# Hairy Pawter
+
+Hairy Pawter is a desktop app for pet groomers to manage client contact details and important pet information quickly and efficiently.
+
+It is optimized for users who prefer typing commands over clicking through multiple screens. Hairy Pawter helps groomers keep track of customer records and appointment-related details in a fast and lightweight manner.
+
+## Value Proposition
+
+Hairy Pawter provides pet groomers with fast access to client contact details and key information about their pets. It also helps groomers manage appointment-related records more conveniently, especially for users who prefer a CLI-based workflow.
+
+## Target Users
+
+Hairy Pawter is designed for pet groomers who:
+- need quick access to customer and pet records
+- manage many clients and pets at once
+- prefer fast keyboard-based interaction
+- want a simple desktop app without unnecessary complexity
+
+## Features
+
+- Add client and pet records
+- Edit existing records
+- Delete records
+- Find records by keyword
+- View all stored records
+- Store data locally for future use
+- Use command-based input through a desktop GUI
+
+## Example Commands
+
+- `add n/Bella Tan p/91234567 e/bella@email.com a/123 Clementi Ave 3`
+- `edit 1 p/98765432`
+- `delete 2`
+- `find Bella`
+- `list`
+
+## Documentation
+
+- [User Guide](docs/UserGuide.md)
+- [Developer Guide](docs/DeveloperGuide.md)
+
+## Acknowledgement
+
+This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).

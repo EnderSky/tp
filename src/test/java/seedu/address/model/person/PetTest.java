@@ -10,10 +10,10 @@ public class PetTest {
 
     @Test
     public void equals() {
-        Pet pet = new Pet("Barkus");
+        Pet pet = new Pet(new Name("Barkus"));
 
         // same name -> returns true
-        Pet similarPet = new Pet("Barkus");
+        Pet similarPet = new Pet(new Name("Barkus"));
         assertTrue(pet.equals(similarPet));
 
         // same object -> returns true
@@ -26,13 +26,13 @@ public class PetTest {
         assertFalse(pet.equals(5));
 
         // different name -> returns false
-        Pet differentPet = new Pet("Meowy");
+        Pet differentPet = new Pet(new Name("Meowy"));
         assertFalse(pet.equals(differentPet));
     }
 
     @Test
     public void toStringMethod() {
-        Pet pet = new Pet("Barkus");
+        Pet pet = new Pet(new Name("Barkus"));
         String expected = "[" + "Barkus" + "]";
         assertEquals(expected, pet.toString());
     }

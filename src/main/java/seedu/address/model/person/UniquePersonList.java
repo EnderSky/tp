@@ -48,6 +48,19 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(toAdd);
     }
 
+    public Person searchByPhone(Phone phone) {
+        requireNonNull(phone);
+        return internalList.stream().filter(p -> p.getPhone().equals(phone))
+                .findFirst()
+                .orElseThrow(() -> new PersonNotFoundException());
+    }
+
+    public void addPet(Pet pet, Phone ownerPhone) {
+        requireAllNonNull(pet, ownerPhone);
+        Person owner = searchByPhone(ownerPhone);
+        owner.addPet(pet);
+    }
+
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      * {@code target} must exist in the list.

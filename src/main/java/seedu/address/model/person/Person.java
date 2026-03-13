@@ -82,6 +82,14 @@ public class Person {
         return pets;
     }
 
+    public boolean ownsPet(Pet pet) {
+        return pets.contains(pet);
+    }
+
+    public void addPet(Pet pet) {
+        pets.add(pet);
+    }
+
     /**
      * Returns true if both persons have the same phone.
      * This defines a weaker notion of equality between two persons.

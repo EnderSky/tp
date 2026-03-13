@@ -3,6 +3,7 @@ package seedu.address.storage;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Pet;
 
 /**
@@ -24,7 +25,7 @@ class JsonAdaptedPet {
      * Converts a given {@code Pet} into this class for Jackson use.
      */
     public JsonAdaptedPet(Pet source) {
-        petName = source.getName();
+        petName = source.getName().fullName;
     }
 
     /**
@@ -33,10 +34,9 @@ class JsonAdaptedPet {
      * @throws IllegalValueException if there were any data constraints violated in the adapted pet.
      */
     public Pet toModelType() throws IllegalValueException {
-        if (!Pet.isValidPetName(petName)) {
-            throw new IllegalValueException(Pet.MESSAGE_CONSTRAINTS);
+        if (!Name.isValidName(petName)) {
+            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
-        return new Pet(petName);
+        return new Pet(new Name(petName));
     }
-
 }

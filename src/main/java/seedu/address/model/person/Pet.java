@@ -5,37 +5,23 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Pet in the address book.
- * Guarantees: immutable; name is valid as declared in {@link #isValidPetName(String)}
+ * Guarantees: immutable;
  */
 public class Pet {
-
-    public static final String MESSAGE_CONSTRAINTS =
-            "Pet name should not be blank or start with space";
-    public static final String VALIDATION_REGEX = "[^\\s].*";
-
-    // Identity field
-    private final String petName;
+    private final Name petName;
 
     /**
      * Constructs a {@code Pet}.
      *
      * @param petName A valid pet name.
      */
-    public Pet(String petName) {
+    public Pet(Name petName) {
         requireNonNull(petName);
-        checkArgument(isValidPetName(petName), MESSAGE_CONSTRAINTS);
         this.petName = petName;
     }
 
-    public String getName() {
+    public Name getName() {
         return petName;
-    }
-
-    /**
-     * Returns true if a given string is a valid pet name.
-     */
-    public static boolean isValidPetName(String test) {
-        return test.matches(VALIDATION_REGEX);
     }
 
     @Override
@@ -62,6 +48,6 @@ public class Pet {
      * Format state as text for viewing.
      */
     public String toString() {
-        return '[' + petName + ']';
+        return "[" + petName + "]";
     }
 }

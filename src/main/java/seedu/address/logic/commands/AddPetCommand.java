@@ -1,0 +1,74 @@
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+
+
+import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.person.Pet;
+import seedu.address.model.person.Phone;
+
+/**
+ * Adds a person to the address book.
+ */
+public class AddPetCommand extends Command {
+
+    public static final String COMMAND_WORD = "pet";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a pet to the address book. "
+            + "Parameters: "
+            + PREFIX_NAME + "NAME "
+            + PREFIX_PHONE + "OWNER's PHONE "
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_NAME + "Doggy "
+            + PREFIX_PHONE + "98765432 ";
+
+    public static final String MESSAGE_SUCCESS = "New pet added: %1$s";
+
+    private final Pet toAdd;
+    private final Phone ownerPhone;
+
+    /**
+     * Creates an AddPersonCommand to add the specified {@code Person}
+     */
+    public AddPetCommand(Pet pet, Phone phone) {
+        requireAllNonNull(pet, phone);
+        toAdd = pet;
+        ownerPhone = phone;
+    }
+
+    @Override
+    public CommandResult execute(Model model) throws CommandException {
+        requireNonNull(model);
+
+        model.addPet(toAdd, ownerPhone);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof AddPetCommand)) {
+            return false;
+        }
+
+        AddPetCommand otherAddPetCommand = (AddPetCommand) other;
+        return toAdd.equals(otherAddPetCommand.toAdd);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .add("client", toAdd)
+                .toString();
+    }
+}

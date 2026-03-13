@@ -63,6 +63,7 @@ public class SampleDataUtil {
      */
     public static Set<Pet> getPetSet(String... strings) {
         return Arrays.stream(strings)
+                .map(Name::new)
                 .map(Pet::new)
                 .collect(Collectors.toSet());
     }

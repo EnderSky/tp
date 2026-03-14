@@ -31,7 +31,7 @@ public class PetCard extends UiPart<Region> {
     private Label id;
 
     /**
-     * Creates a {@code PersonCode} with the given {@code Person} and index to display.
+     * Creates a {@code PetCard} with the given {@code Pet} and index to display.
      */
     public PetCard(Pet pet, int displayedIndex) {
         super(FXML);

@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Name;
@@ -17,7 +18,7 @@ class JsonAdaptedPet {
      * Constructs a {@code JsonAdaptedPet} with the given {@code petName}.
      */
     @JsonCreator
-    public JsonAdaptedPet(String petName) {
+    public JsonAdaptedPet(@JsonProperty("petName") String petName) {
         this.petName = petName;
     }
 

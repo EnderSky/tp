@@ -22,7 +22,7 @@ checkstyle {
 
 test {
     useJUnitPlatform()
-    finalizedBy jacocoTestReport
+    finalizedBy 'coverage'
 }
 
 task coverage(type: JacocoReport) {
@@ -30,9 +30,12 @@ task coverage(type: JacocoReport) {
     classDirectories.from files(sourceSets.main.output)
     executionData.from files(jacocoTestReport.executionData)
     afterEvaluate {
-        classDirectories.from files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: ['**/*.jar'])
-        })
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    '**/*.jar',
+                    '**/seedu/address/ui/**'
+            ])
+        }))
     }
     reports {
         html.required = true

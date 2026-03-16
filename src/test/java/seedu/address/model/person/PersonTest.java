@@ -67,9 +67,11 @@ public class PersonTest {
 
     @Test
     public void addPet() {
-        Person aliceCopy = ALICE.addPet(SNOOPY);
+        Pet barkus = new Pet(new Name("Barkus"));
+        Person aliceCopy = ALICE.addPet(SNOOPY).addPet(barkus);
         Set<Pet> expectedPets = new HashSet<Pet>();
         expectedPets.add(SNOOPY);
+        expectedPets.add(barkus);
         assertEquals(expectedPets, aliceCopy.getPets());
     }
 

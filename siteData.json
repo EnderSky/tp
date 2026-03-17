@@ -129,9 +129,13 @@
     },
     {
       "src": "index.md",
-      "title": "",
+      "title": "Home",
       "headings": {
-        "addressbook-level-3": "AddressBook Level-3"
+        "hairy-pawter": "Hairy Pawter",
+        "who-is-it-for": "Who is it for?",
+        "what-can-it-do": "What can it do?",
+        "documentation": "Documentation",
+        "acknowledgement": "Acknowledgement"
       },
       "headingKeywords": {}
     },

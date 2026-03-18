@@ -21,6 +21,7 @@ checkstyle {
 }
 
 test {
+    enableAssertions = true
     useJUnitPlatform()
     finalizedBy 'coverage'
 }

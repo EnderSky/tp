@@ -1,7 +1,10 @@
 package seedu.address.ui;
 
+import java.io.File;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
@@ -80,14 +83,53 @@ public class PetThumbnailCard extends UiPart<Region> {
             breedLabel.setManaged(false);
         }
 
-        // TODO: Load pet thumbnail image when photo feature is implemented
-        // For now, hide the image view
-        thumbnailView.setVisible(false);
-        thumbnailView.setManaged(false);
+        // Load pet thumbnail image if photo path exists
+        loadPetPhoto();
 
         // Pet tags - currently pets don't have tags, so hide for now
         tagsPane.setVisible(false);
         tagsPane.setManaged(false);
+    }
+
+    /**
+     * Loads and displays the pet's photo if available.
+     * Uses a placeholder image if no photo is set or if the file is not found.
+     */
+    private void loadPetPhoto() {
+        if (pet.getPhotoPath().isPresent() && pet.getPhotoPath().get().fileExists()) {
+            try {
+                String photoPath = pet.getPhotoPath().get().value;
+                File photoFile = new File(photoPath);
+                Image image = new Image(photoFile.toURI().toString(), 80, 80, true, true);
+                thumbnailView.setImage(image);
+                thumbnailView.setVisible(true);
+                thumbnailView.setManaged(true);
+            } catch (Exception e) {
+                // If image loading fails, use placeholder
+                loadPlaceholderImage();
+            }
+        } else {
+            // No photo or file doesn't exist - use placeholder
+            loadPlaceholderImage();
+        }
+    }
+
+    /**
+     * Loads a placeholder image for pets without photos.
+     */
+    private void loadPlaceholderImage() {
+        try {
+            // Try to load a placeholder from resources
+            Image placeholder = new Image(getClass().getResourceAsStream("/images/pet_placeholder.png"),
+                    80, 80, true, true);
+            thumbnailView.setImage(placeholder);
+            thumbnailView.setVisible(true);
+            thumbnailView.setManaged(true);
+        } catch (Exception e) {
+            // If placeholder doesn't exist, hide the image view
+            thumbnailView.setVisible(false);
+            thumbnailView.setManaged(false);
+        }
     }
 
     /**

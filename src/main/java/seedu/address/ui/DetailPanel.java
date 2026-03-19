@@ -1,9 +1,11 @@
 package seedu.address.ui;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
@@ -110,8 +112,8 @@ public class DetailPanel extends UiPart<Region> {
         emptyStateContainer.setVisible(false);
         emptyStateContainer.setManaged(false);
 
-        // Photo section
-        // TODO: Load actual pet photo when photo feature is implemented
+        // Photo section - load pet photo
+        loadPetPhoto(pet);
         photoCaption.setText(pet.getName().fullName);
 
         // Primary info
@@ -120,11 +122,29 @@ public class DetailPanel extends UiPart<Region> {
 
         // Details
         detail1Label.setText("Species: " + pet.getSpecies().map(s -> s.value).orElse("Not specified"));
+        detail1Label.setVisible(true);
+        detail1Label.setManaged(true);
+
         detail2Label.setText("Breed: " + pet.getBreed().map(b -> b.value).orElse("Not specified"));
+        detail2Label.setVisible(true);
+        detail2Label.setManaged(true);
+
         detail3Label.setText("Date of Birth: " + pet.getDateOfBirth()
                 .map(d -> d.toString()).orElse("Not specified"));
-        detail4Label.setVisible(false);
-        detail4Label.setManaged(false);
+        detail3Label.setVisible(true);
+        detail3Label.setManaged(true);
+
+
+        // Show grooming notes if present
+        if (pet.getGroomingNotes().isPresent()) {
+            detail4Label.setText("Grooming Notes: " + pet.getGroomingNotes().get().value);
+            detail4Label.setVisible(true);
+            detail4Label.setManaged(true);
+            detail4Label.setWrapText(true);
+        } else {
+            detail4Label.setVisible(false);
+            detail4Label.setManaged(false);
+        }
 
         // Tags section - pets don't have tags yet, hide for now
         tagsSection.setVisible(false);
@@ -139,6 +159,47 @@ public class DetailPanel extends UiPart<Region> {
                 createDetailLabel("Email: " + owner.getEmail().value),
                 createDetailLabel("Address: " + owner.getAddress().value)
         );
+    }
+
+    /**
+     * Loads and displays the pet's photo in the detail panel.
+     * Uses a larger size for the detail view compared to the thumbnail.
+     */
+    private void loadPetPhoto(Pet pet) {
+        if (pet.getPhotoPath().isPresent() && pet.getPhotoPath().get().fileExists()) {
+            try {
+                String photoPath = pet.getPhotoPath().get().value;
+                File photoFile = new File(photoPath);
+                Image image = new Image(photoFile.toURI().toString(), 300, 300, true, true);
+                photoView.setImage(image);
+                photoContainer.setVisible(true);
+                photoContainer.setManaged(true);
+            } catch (Exception e) {
+                // If image loading fails, use placeholder
+                loadPlaceholderPhoto();
+            }
+        } else {
+            // No photo or file doesn't exist - use placeholder
+            loadPlaceholderPhoto();
+        }
+    }
+
+    /**
+     * Loads a placeholder image for the detail panel.
+     */
+    private void loadPlaceholderPhoto() {
+        try {
+            // Try to load a placeholder from resources
+            Image placeholder = new Image(getClass().getResourceAsStream("/images/pet_placeholder.png"),
+                    300, 300, true, true);
+            photoView.setImage(placeholder);
+            photoContainer.setVisible(true);
+            photoContainer.setManaged(true);
+        } catch (Exception e) {
+            // If placeholder doesn't exist, hide the photo section
+            photoContainer.setVisible(false);
+            photoContainer.setManaged(false);
+        }
     }
 
     /**

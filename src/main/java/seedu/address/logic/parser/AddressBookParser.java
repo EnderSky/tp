@@ -12,7 +12,8 @@ import seedu.address.logic.commands.AddNoteCommand;
 import seedu.address.logic.commands.AddPersonCommand;
 import seedu.address.logic.commands.AddPetCommand;
 import seedu.address.logic.commands.AddPhotoCommand;
-import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.ClearClientsCommand;
+import seedu.address.logic.commands.ClearPetsCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteNoteCommand;
 import seedu.address.logic.commands.DeletePersonCommand;
@@ -24,7 +25,6 @@ import seedu.address.logic.commands.EditPetCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindClientCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindPetCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -154,6 +154,14 @@ public class AddressBookParser {
         case DeletePhotoCommand.COMMAND_WORD_ALIAS:
             return new DeletePhotoCommandParser().parse(arguments);
 
+        case ClearPetsCommand.COMMAND_WORD:
+        case ClearPetsCommand.COMMAND_WORD_ALIAS:
+            return new ClearPetsCommand();
+
+        case ClearClientsCommand.COMMAND_WORD:
+        case ClearClientsCommand.COMMAND_WORD_ALIAS:
+            return new ClearClientsCommand();
+
         default:
             return null; // Not a recognized two-word command
         }
@@ -164,9 +172,6 @@ public class AddressBookParser {
      */
     private Command parseSingleWordCommand(String commandWord, String arguments) throws ParseException {
         switch (commandWord) {
-
-        case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_WORD_ALIAS:
@@ -208,6 +213,11 @@ public class AddressBookParser {
             throw new ParseException("Did you mean:\n"
                     + "  • find client (fc) - Find clients by name\n"
                     + "  • find pet (fp) - Find pets by name");
+
+        case "clear":
+            throw new ParseException("Did you mean:\n"
+                    + "  • clear pets (cp) - Remove all pets\n"
+                    + "  • clear clients (cc) - Remove all clients");
 
         default:
             logger.finer("This user input caused a ParseException: " + commandWord + arguments);

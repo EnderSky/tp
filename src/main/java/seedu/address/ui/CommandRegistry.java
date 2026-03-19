@@ -45,15 +45,6 @@ public class CommandRegistry {
         ));
 
         commands.add(new CommandInfo(
-                "view client", "vc",
-                "View client details in the side panel",
-                "view client INDEX",
-                "view client {CLIENT_INDEX}",
-                CommandCategory.CLIENT,
-                "Opens detailed view showing all client info and their pets."
-        ));
-
-        commands.add(new CommandInfo(
                 "find client", "fc",
                 "Find clients by name keywords",
                 "find client KEYWORD [MORE_KEYWORDS]...",
@@ -97,15 +88,6 @@ public class CommandRegistry {
                 "delete pet {PET_INDEX}",
                 CommandCategory.PET,
                 "Uses CLIENT.PET notation (e.g., 1.2 = 2nd pet of 1st client)"
-        ));
-
-        commands.add(new CommandInfo(
-                "view pet", "vp",
-                "View pet details in the side panel",
-                "view pet CLIENT_INDEX.PET_INDEX",
-                "view pet {PET_INDEX}",
-                CommandCategory.PET,
-                "Uses CLIENT.PET notation. Shows full pet info including notes and photo."
         ));
 
         commands.add(new CommandInfo(
@@ -190,6 +172,15 @@ public class CommandRegistry {
                 "list",
                 CommandCategory.GENERAL,
                 "Shows all clients and their pets. Clears any active filters."
+        ));
+
+        commands.add(new CommandInfo(
+                "view", "v",
+                "View client or pet details",
+                "view INDEX or view CLIENT_INDEX.PET_INDEX",
+                "view {CLIENT_INDEX} or view {PET_INDEX}",
+                CommandCategory.GENERAL,
+                "Single index views client details. CLIENT.PET notation views pet details."
         ));
 
         commands.add(new CommandInfo(

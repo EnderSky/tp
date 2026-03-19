@@ -92,7 +92,7 @@ public class CommandResult {
      * Creates a {@code CommandResult} for viewing a pet in the detail panel.
      */
     public static CommandResult withPetView(String feedbackToUser, Pet pet, Person owner) {
-        return new CommandResult(feedbackToUser, false, false, null, pet, owner, false, null, null);
+        return new CommandResult(feedbackToUser, false, false, null, pet, owner);
     }
 
     /**

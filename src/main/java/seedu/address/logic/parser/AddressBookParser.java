@@ -28,8 +28,7 @@ import seedu.address.logic.commands.FindClientCommand;
 import seedu.address.logic.commands.FindPetCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.ViewClientCommand;
-import seedu.address.logic.commands.ViewPetCommand;
+import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -118,13 +117,9 @@ public class AddressBookParser {
         case EditPetCommand.COMMAND_WORD_ALIAS:
             return new EditPetCommandParser().parse(arguments);
 
-        case ViewClientCommand.COMMAND_WORD:
-        case ViewClientCommand.COMMAND_WORD_ALIAS:
-            return new ViewClientCommandParser().parse(arguments);
-
-        case ViewPetCommand.COMMAND_WORD:
-        case ViewPetCommand.COMMAND_WORD_ALIAS:
-            return new ViewPetCommandParser().parse(arguments);
+        case ViewCommand.COMMAND_WORD:
+        case ViewCommand.COMMAND_WORD_ALIAS:
+            return new ViewCommandParser().parse(arguments);
 
         case FindClientCommand.COMMAND_WORD:
         case FindClientCommand.COMMAND_WORD_ALIAS:
@@ -188,6 +183,10 @@ public class AddressBookParser {
         case HelpCommand.COMMAND_WORD_ALIAS:
             return new HelpCommand();
 
+        case ViewCommand.COMMAND_WORD:
+        case ViewCommand.COMMAND_WORD_ALIAS:
+            return new ViewCommandParser().parse(arguments);
+
         // Command hints for ambiguous commands
         case "add":
             throw new ParseException("Did you mean:\n"
@@ -208,11 +207,6 @@ public class AddressBookParser {
                     + "  • delete pet (dp) - Delete a pet\n"
                     + "  • delete note (dn) - Delete grooming notes\n"
                     + "  • delete photo (dph) - Delete a pet photo");
-
-        case "view":
-            throw new ParseException("Did you mean:\n"
-                    + "  • view client (vc) - View client details\n"
-                    + "  • view pet (vp) - View pet details");
 
         case "find":
             throw new ParseException("Did you mean:\n"

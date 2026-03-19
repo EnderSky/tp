@@ -58,6 +58,16 @@ public class Messages {
     public static String format(Pet pet) {
         final StringBuilder builder = new StringBuilder();
         builder.append(pet.getName());
+
+        pet.getSpecies().ifPresent(species ->
+                builder.append("; Species: ").append(species.value));
+
+        pet.getBreed().ifPresent(breed ->
+                builder.append("; Breed: ").append(breed.value));
+
+        pet.getDateOfBirth().ifPresent(dob ->
+                builder.append("; DOB: ").append(dob.toString()));
+
         return builder.toString();
     }
 

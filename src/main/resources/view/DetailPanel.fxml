@@ -23,28 +23,28 @@
       <!-- Photo/Image placeholder -->
       <VBox fx:id="photoContainer" alignment="CENTER" styleClass="photo-container">
         <ImageView fx:id="photoView" fitWidth="150" fitHeight="150" preserveRatio="true" />
-        <Label fx:id="photoCaption" styleClass="photo-caption" />
+        <Label fx:id="photoCaption" styleClass="photo-caption" wrapText="true" />
       </VBox>
 
       <Separator />
 
       <!-- Primary Info Section -->
       <VBox fx:id="primaryInfoSection" spacing="4">
-        <Label fx:id="nameLabel" styleClass="detail-name" />
-        <Label fx:id="typeLabel" styleClass="detail-type" />
+        <Label fx:id="nameLabel" styleClass="detail-name" wrapText="true" />
+        <Label fx:id="typeLabel" styleClass="detail-type" wrapText="true" />
       </VBox>
 
       <!-- Details Section -->
       <VBox fx:id="detailsSection" spacing="4">
-        <Label fx:id="detail1Label" styleClass="detail-field" />
-        <Label fx:id="detail2Label" styleClass="detail-field" />
-        <Label fx:id="detail3Label" styleClass="detail-field" />
-        <Label fx:id="detail4Label" styleClass="detail-field" />
+        <Label fx:id="detail1Label" styleClass="detail-field" wrapText="true" />
+        <Label fx:id="detail2Label" styleClass="detail-field" wrapText="true" />
+        <Label fx:id="detail3Label" styleClass="detail-field" wrapText="true" />
+        <Label fx:id="detail4Label" styleClass="detail-field" wrapText="true" />
       </VBox>
 
       <!-- Tags Section -->
       <VBox fx:id="tagsSection" spacing="4">
-        <Label text="Tags:" styleClass="detail-section-header" />
+        <Label text="Tags:" styleClass="detail-section-header" wrapText="true" />
         <FlowPane fx:id="tagsPane" hgap="5" vgap="5" />
       </VBox>
 
@@ -52,7 +52,7 @@
 
       <!-- Secondary Info Section (Owner info for pets, Pets list for clients) -->
       <VBox fx:id="secondaryInfoSection" spacing="4">
-        <Label fx:id="secondaryHeader" styleClass="detail-section-header" />
+        <Label fx:id="secondaryHeader" styleClass="detail-section-header" wrapText="true" />
         <VBox fx:id="secondaryContent" spacing="2" />
       </VBox>
 
@@ -61,7 +61,7 @@
         <padding>
           <Insets top="50" />
         </padding>
-        <Label fx:id="emptyStateLabel" styleClass="detail-empty-state" text="Select a pet or client to view details" />
+        <Label fx:id="emptyStateLabel" styleClass="detail-empty-state" text="Select a pet or client to view details" wrapText="true" />
       </VBox>
     </VBox>
   </ScrollPane>

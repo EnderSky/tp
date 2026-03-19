@@ -377,12 +377,14 @@
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: white;
     -fx-padding: 5 0 0 0;
+    -fx-wrap-text: true;
 }
 
 .detail-name {
     -fx-font-size: 18pt;
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: white;
+    -fx-wrap-text: true;
 }
 
 .detail-type {
@@ -390,12 +392,14 @@
     -fx-font-family: "Segoe UI";
     -fx-text-fill: #888888;
     -fx-font-style: italic;
+    -fx-wrap-text: true;
 }
 
 .detail-field {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI";
     -fx-text-fill: #cccccc;
+    -fx-wrap-text: true;
 }
 
 .detail-section-header {
@@ -403,12 +407,14 @@
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: #3e7b91;
     -fx-padding: 5 0 2 0;
+    -fx-wrap-text: true;
 }
 
 .detail-secondary-text {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI";
     -fx-text-fill: #aaaaaa;
+    -fx-wrap-text: true;
 }
 
 .detail-tag {
@@ -425,6 +431,7 @@
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: #666666;
     -fx-text-alignment: center;
+    -fx-wrap-text: true;
 }
 
 /*
@@ -520,22 +527,25 @@
  * Pet Thumbnail Card Styles
  */
 .pet-thumbnail-card {
-    -fx-background-color: derive(#1d1d1d, 40%);
-    -fx-border-color: #4d4d4d;
-    -fx-border-width: 1;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
+    -fx-background-color: derive(#1d1d1d, 35%);
+    -fx-border-color: #5a9fd4;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 4, 0, 0, 2);
 }
 
 .pet-thumbnail-card:hover {
     -fx-background-color: derive(#1d1d1d, 50%);
-    -fx-border-color: #3e7b91;
+    -fx-border-color: #7ab8e8;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(90,159,212,0.5), 6, 0, 0, 2);
 }
 
 .pet-thumbnail-index {
     -fx-font-size: 10pt;
-    -fx-font-family: "Segoe UI";
-    -fx-text-fill: #3e7b91;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #5a9fd4;
 }
 
 .pet-thumbnail-image {

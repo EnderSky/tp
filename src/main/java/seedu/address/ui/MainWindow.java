@@ -133,8 +133,8 @@ public class MainWindow extends UiPart<Stage> {
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        // Set the split pane divider position to 80/20
-        splitPane.setDividerPositions(0.8);
+        // Set the split pane divider position to 70/30
+        splitPane.setDividerPositions(0.7);
 
         // Set initial text on resultDisplay to welcome the user
         resultDisplay.setFeedbackToUser("Welcome to Hairy Pawter! Type 'help' to see available commands.");

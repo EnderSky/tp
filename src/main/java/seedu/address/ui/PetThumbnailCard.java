@@ -3,6 +3,7 @@ package seedu.address.ui;
 import java.io.File;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -100,10 +101,8 @@ public class PetThumbnailCard extends UiPart<Region> {
             try {
                 String photoPath = pet.getPhotoPath().get().value;
                 File photoFile = new File(photoPath);
-                Image image = new Image(photoFile.toURI().toString(), 140, 140, true, true);
-                thumbnailView.setImage(image);
-                thumbnailView.setVisible(true);
-                thumbnailView.setManaged(true);
+                Image image = new Image(photoFile.toURI().toString());
+                configureImageViewWithCropping(image);
             } catch (Exception e) {
                 // If image loading fails, use placeholder
                 loadPlaceholderImage();
@@ -115,16 +114,43 @@ public class PetThumbnailCard extends UiPart<Region> {
     }
 
     /**
+     * Configures the ImageView with proper scaling and viewport cropping.
+     * Scales the image to 90px height and crops to 90px width, centering horizontally.
+     */
+    private void configureImageViewWithCropping(Image image) {
+        if (image == null || image.isError()) {
+            loadPlaceholderImage();
+            return;
+        }
+
+        // The target height for the thumbnail
+        double heightToFit = thumbnailView.getFitHeight();
+
+        double originalWidth = image.getWidth();
+        double originalHeight = image.getHeight();
+
+        // Calculate scale factor to fit height to 90px
+        double scaleFactor = heightToFit / originalHeight;
+        double scaledWidth = originalWidth * scaleFactor;
+
+        // Configure viewport for centered cropping
+        double cropX = (scaledWidth - heightToFit) / 2 / scaleFactor; // Convert back to original image coordinates
+        Rectangle2D viewport = new Rectangle2D(cropX, 0, heightToFit / scaleFactor, originalHeight);
+        thumbnailView.setViewport(viewport);
+
+        thumbnailView.setImage(image);
+        thumbnailView.setVisible(true);
+        thumbnailView.setManaged(true);
+    }
+
+    /**
      * Loads a placeholder image for pets without photos.
      */
     private void loadPlaceholderImage() {
         try {
             // Try to load a placeholder from resources
-            Image placeholder = new Image(getClass().getResourceAsStream("/images/pet_placeholder.png"),
-                    140, 140, true, true);
-            thumbnailView.setImage(placeholder);
-            thumbnailView.setVisible(true);
-            thumbnailView.setManaged(true);
+            Image placeholder = new Image(getClass().getResourceAsStream("/images/pet_placeholder.png"));
+            configureImageViewWithCropping(placeholder);
         } catch (Exception e) {
             // If placeholder doesn't exist, hide the image view
             thumbnailView.setVisible(false);

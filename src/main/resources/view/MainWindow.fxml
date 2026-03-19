@@ -46,8 +46,8 @@
           </padding>
         </StackPane>
 
-        <!-- Bottom: 80/20 Split Layout for List Panel and Detail Panel -->
-        <SplitPane fx:id="splitPane" VBox.vgrow="ALWAYS" dividerPositions="0.8">
+        <!-- Bottom: Split Layout for List Panel and Detail Panel -->
+        <SplitPane fx:id="splitPane" VBox.vgrow="ALWAYS">
           <!-- Left side: List Panel (70%) -->
           <VBox fx:id="listPanelContainer" styleClass="pane-with-border" SplitPane.resizableWithParent="true">
             <padding>

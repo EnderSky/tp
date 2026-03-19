@@ -7,16 +7,16 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<!-- Pet thumbnail card for grid display - Horizontal Rectangle Layout (180x80px) -->
+<!-- Pet thumbnail card for grid display - Horizontal Rectangle Layout (240x120px) -->
 <HBox fx:id="cardPane" styleClass="pet-thumbnail-card" alignment="CENTER_LEFT"
-      prefWidth="200" prefHeight="100" minWidth="200" maxWidth="200" minHeight="100" maxHeight="100"
+      prefWidth="240" prefHeight="120" minWidth="240" maxWidth="240" minHeight="120" maxHeight="120"
       xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <padding>
     <Insets top="5" right="5" bottom="5" left="5" />
   </padding>
 
-  <!-- Left side: Pet image (full height) -->
-  <ImageView fx:id="thumbnailView" fitWidth="90" fitHeight="90" preserveRatio="false" styleClass="pet-thumbnail-horizontal-image" />
+  <!-- Left side: Pet image (90x90px square with programmatic cropping) -->
+  <ImageView fx:id="thumbnailView" fitHeight="110" preserveRatio="true" smooth="true" styleClass="pet-thumbnail-horizontal-image" />
 
   <!-- Right side: Text information -->
   <VBox alignment="TOP_LEFT" spacing="2" HBox.hgrow="ALWAYS">

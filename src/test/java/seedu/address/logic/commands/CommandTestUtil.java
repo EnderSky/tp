@@ -3,9 +3,12 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.Assert.assertThrows;
 
@@ -20,6 +23,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.EditPetDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -60,11 +64,30 @@ public class CommandTestUtil {
 
     public static final String VALID_PETNAME_SNOOPY = "Snoopy";
     public static final String VALID_PETNAME_DOGGY = "Doggy";
+    public static final String VALID_SPECIES_DOG = "Dog";
+    public static final String VALID_SPECIES_CAT = "Cat";
+    public static final String VALID_BREED_BEAGLE = "Beagle";
+    public static final String VALID_BREED_PERSIAN = "Persian";
+    public static final String VALID_DOB = "2020-01-01";
+
     public static final String NAME_DESC_SNOOPY = " " + PREFIX_NAME + VALID_PETNAME_SNOOPY;
     public static final String NAME_DESC_DOGGY = " " + PREFIX_NAME + VALID_PETNAME_DOGGY;
+    public static final String SPECIES_DESC_DOG = " " + PREFIX_SPECIES + VALID_SPECIES_DOG;
+    public static final String SPECIES_DESC_CAT = " " + PREFIX_SPECIES + VALID_SPECIES_CAT;
+    public static final String BREED_DESC_BEAGLE = " " + PREFIX_BREED + VALID_BREED_BEAGLE;
+    public static final String BREED_DESC_PERSIAN = " " + PREFIX_BREED + VALID_BREED_PERSIAN;
+    public static final String DOB_DESC_VALID = " " + PREFIX_DOB + VALID_DOB;
+
+    public static final String INVALID_PETNAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
+    public static final String INVALID_SPECIES_DESC = " " + PREFIX_SPECIES; // empty string not allowed
+    public static final String INVALID_BREED_DESC = " " + PREFIX_BREED; // empty string not allowed
+    public static final String INVALID_DOB_DESC = " " + PREFIX_DOB + "2020-13-32"; // invalid date format
 
     public static final EditClientCommand.EditPersonDescriptor DESC_AMY;
     public static final EditClientCommand.EditPersonDescriptor DESC_BOB;
+
+    public static final EditPetCommand.EditPetDescriptor DESC_SNOOPY;
+    public static final EditPetCommand.EditPetDescriptor DESC_DOGGY;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -73,6 +96,10 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+
+        // TODO: Add pet descriptors after resolving validation issues
+        DESC_SNOOPY = new EditPetDescriptorBuilder().withName(VALID_PETNAME_SNOOPY).build();
+        DESC_DOGGY = new EditPetDescriptorBuilder().withName(VALID_PETNAME_DOGGY).build();
     }
 
     /**

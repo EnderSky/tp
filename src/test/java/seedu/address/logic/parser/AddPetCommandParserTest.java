@@ -11,7 +11,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PETNAME_SNOOPY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalPets.SNOOPY;
 
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +25,8 @@ public class AddPetCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Pet expectedPet = new PetBuilder(SNOOPY).build();
+        // Create a simple pet with just a name (no species, breed, or dob)
+        Pet expectedPet = new PetBuilder().withName(VALID_PETNAME_SNOOPY).build();
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_SNOOPY + PHONE_DESC_AMY,

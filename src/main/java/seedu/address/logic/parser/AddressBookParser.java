@@ -15,6 +15,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeletePersonCommand;
 import seedu.address.logic.commands.DeletePetCommand;
 import seedu.address.logic.commands.EditClientCommand;
+import seedu.address.logic.commands.EditPetCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -105,6 +106,10 @@ public class AddressBookParser {
         case EditClientCommand.COMMAND_WORD_ALIAS:
             return new EditClientCommandParser().parse(arguments);
 
+        case EditPetCommand.COMMAND_WORD:
+        case EditPetCommand.COMMAND_WORD_ALIAS:
+            return new EditPetCommandParser().parse(arguments);
+
         case ViewClientCommand.COMMAND_WORD:
         case ViewClientCommand.COMMAND_WORD_ALIAS:
             return new ViewClientCommandParser().parse(arguments);
@@ -150,7 +155,8 @@ public class AddressBookParser {
 
         case "edit":
             throw new ParseException("Did you mean:\n"
-                    + "  • edit client (ec) - Edit an existing client");
+                    + "  • edit client (ec) - Edit an existing client\n"
+                    + "  • edit pet (ep) - Edit an existing pet");
 
         case "delete":
             throw new ParseException("Did you mean:\n"

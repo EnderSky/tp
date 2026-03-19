@@ -12,7 +12,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PET;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -54,7 +54,7 @@ public class DeletePetCommandTest {
                 Messages.format(petToDelete), personWithPets.getName().fullName);
 
         // Create expected person without the deleted pet
-        Set<Pet> updatedPets = new HashSet<>(personWithPets.getPets());
+        Set<Pet> updatedPets = new LinkedHashSet<>(personWithPets.getPets());
         updatedPets.remove(petToDelete);
         Person expectedPerson = new Person(personWithPets, updatedPets);
 

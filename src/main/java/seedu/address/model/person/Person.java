@@ -4,6 +4,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -24,7 +25,7 @@ public class Person {
     private final Email email;
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private final Set<Pet> pets = new HashSet<>();
+    private final Set<Pet> pets = new LinkedHashSet<>();
 
     /**
      * Every field must be present and not null.
@@ -108,6 +109,21 @@ public class Person {
      */
     public void removePet(Pet pet) {
         pets.remove(pet);
+    }
+
+    /**
+     * Returns true if this person has the specified pet.
+     */
+    public boolean hasPet(Pet pet) {
+        return pets.contains(pet);
+    }
+
+    /**
+     * Returns true if this person has a pet with the same name as the specified pet.
+     * This uses the weaker {@code isSamePet} comparison.
+     */
+    public boolean hasSamePet(Pet pet) {
+        return pets.stream().anyMatch(p -> p.isSamePet(pet));
     }
 
     /**

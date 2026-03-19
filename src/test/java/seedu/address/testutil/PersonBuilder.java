@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
@@ -38,7 +39,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
-        pets = new HashSet<>();
+        pets = new LinkedHashSet<>();
     }
 
     /**
@@ -50,7 +51,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
-        pets = new HashSet<>(personToCopy.getPets());
+        pets = new LinkedHashSet<>(personToCopy.getPets());
     }
 
     /**
@@ -74,6 +75,14 @@ public class PersonBuilder {
      */
     public PersonBuilder withPets(String ... pets) {
         this.pets = SampleDataUtil.getPetSet(pets);
+        return this;
+    }
+
+    /**
+     * Sets the {@code pets} as a Set to the {@code Person} that we are building.
+     */
+    public PersonBuilder withPetSet(Set<Pet> pets) {
+        this.pets = new LinkedHashSet<>(pets);
         return this;
     }
 

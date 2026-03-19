@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -118,7 +119,7 @@ class JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
-        final Set<Pet> modelPets = new HashSet<>(personPets);
+        final Set<Pet> modelPets = new LinkedHashSet<>(personPets);
 
         return new Person(new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags),
                 modelPets);

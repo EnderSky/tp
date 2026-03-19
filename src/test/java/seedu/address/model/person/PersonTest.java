@@ -14,7 +14,7 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPets.SNOOPY;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -69,7 +69,7 @@ public class PersonTest {
     public void addPet() {
         Pet barkus = new Pet(new Name("Barkus"));
         Person aliceCopy = ALICE.addPet(SNOOPY).addPet(barkus);
-        Set<Pet> expectedPets = new HashSet<Pet>();
+        Set<Pet> expectedPets = new LinkedHashSet<Pet>();
         expectedPets.add(SNOOPY);
         expectedPets.add(barkus);
         assertEquals(expectedPets, aliceCopy.getPets());

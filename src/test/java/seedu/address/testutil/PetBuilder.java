@@ -1,41 +1,77 @@
 package seedu.address.testutil;
 
 
+import seedu.address.model.person.Breed;
+import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Pet;
+import seedu.address.model.person.Species;
 
 /**
- * A utility class to help with building Person objects.
+ * A utility class to help with building Pet objects.
  */
 public class PetBuilder {
 
     public static final String DEFAULT_NAME = "Snoopy";
 
     private Name name;
+    private Species species;
+    private Breed breed;
+    private DateOfBirth dateOfBirth;
 
     /**
-     * Creates a {@code PersonBuilder} with the default details.
+     * Creates a {@code PetBuilder} with the default details.
      */
     public PetBuilder() {
         name = new Name(DEFAULT_NAME);
+        species = null;
+        breed = null;
+        dateOfBirth = null;
     }
 
     /**
-     * Initializes the PersonBuilder with the data of {@code personToCopy}.
+     * Initializes the PetBuilder with the data of {@code petToCopy}.
      */
     public PetBuilder(Pet petToCopy) {
         name = petToCopy.getName();
+        species = petToCopy.getSpecies().orElse(null);
+        breed = petToCopy.getBreed().orElse(null);
+        dateOfBirth = petToCopy.getDateOfBirth().orElse(null);
     }
 
     /**
-     * Sets the {@code Name} of the {@code Person} that we are building.
+     * Sets the {@code Name} of the {@code Pet} that we are building.
      */
     public PetBuilder withName(String name) {
         this.name = new Name(name);
         return this;
     }
 
+    /**
+     * Sets the {@code Species} of the {@code Pet} that we are building.
+     */
+    public PetBuilder withSpecies(String species) {
+        this.species = new Species(species);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Breed} of the {@code Pet} that we are building.
+     */
+    public PetBuilder withBreed(String breed) {
+        this.breed = new Breed(breed);
+        return this;
+    }
+
+    /**
+     * Sets the {@code DateOfBirth} of the {@code Pet} that we are building.
+     */
+    public PetBuilder withDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = new DateOfBirth(dateOfBirth);
+        return this;
+    }
+
     public Pet build() {
-        return new Pet(name);
+        return new Pet(name, species, breed, dateOfBirth);
     }
 }

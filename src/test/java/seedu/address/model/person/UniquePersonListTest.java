@@ -13,7 +13,9 @@ import static seedu.address.testutil.TypicalPets.SNOOPY;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
@@ -230,7 +232,9 @@ public class UniquePersonListTest {
 
     @Test
     public void removePet_existingPet_removesPet() {
-        Person personWithPet = new PersonBuilder(ALICE).withPets("Snoopy").build();
+        Set<Pet> petsSet = new LinkedHashSet<>();
+        petsSet.add(SNOOPY);
+        Person personWithPet = new PersonBuilder(ALICE).withPetSet(petsSet).build();
         uniquePersonList.add(personWithPet);
         uniquePersonList.removePet(SNOOPY, ALICE.getPhone());
         Person expectedPerson = new PersonBuilder(ALICE).build(); // without pets

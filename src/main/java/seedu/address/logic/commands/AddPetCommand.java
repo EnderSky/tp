@@ -17,7 +17,7 @@ import seedu.address.model.person.Phone;
  */
 public class AddPetCommand extends Command {
 
-    public static final String COMMAND_WORD = "pet";
+    public static final String COMMAND_WORD = "addPet";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a pet to the address book. "
             + "Parameters: "
@@ -67,7 +67,7 @@ public class AddPetCommand extends Command {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("pet", toAdd)
+                .add("addPet", toAdd)
                 .toString();
     }
 }

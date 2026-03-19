@@ -64,7 +64,7 @@ public class SampleDataUtil {
     public static Set<Pet> getPetSet(String... strings) {
         return Arrays.stream(strings)
                 .map(Name::new)
-                .map(Pet::new)
+                .map(name -> new Pet(name, "", ""))
                 .collect(Collectors.toSet());
     }
 }

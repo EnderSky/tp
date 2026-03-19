@@ -19,7 +19,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.util.SampleDataUtil;
 
 public class JsonAdaptedPersonTest {
-    private static final String INVALID_NAME = "R@chel";
+    private static final String INVALID_NAME = "  ";
     private static final String INVALID_PHONE = " +651234";
     private static final String INVALID_PET = "  ";
     private static final String INVALID_ADDRESS = " ";
@@ -120,7 +120,7 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_invalidPets_throwsIllegalValueException() {
         List<JsonAdaptedPet> invalidPets = new ArrayList<>(VALID_PETS);
-        invalidPets.add(new JsonAdaptedPet(INVALID_PET));
+        invalidPets.add(new JsonAdaptedPet(INVALID_PET, "", ""));
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE,
                 VALID_EMAIL, VALID_ADDRESS, VALID_TAGS, invalidPets);
         assertThrows(IllegalValueException.class, person::toModelType);

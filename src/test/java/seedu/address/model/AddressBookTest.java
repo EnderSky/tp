@@ -99,7 +99,7 @@ public class AddressBookTest {
     public void removePet_nullPhone_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () ->
                 addressBook.removePet(
-                        new seedu.address.model.person.Pet(new seedu.address.model.person.Name("Test")),
+                        new seedu.address.model.person.Pet(new seedu.address.model.person.Name("Test"), "", ""),
                         null));
     }
 
@@ -107,7 +107,7 @@ public class AddressBookTest {
     public void removePet_personNotFound_throwsPersonNotFoundException() {
         assertThrows(seedu.address.model.person.exceptions.PersonNotFoundException.class, () ->
             addressBook.removePet(
-                    new seedu.address.model.person.Pet(new seedu.address.model.person.Name("Test")),
+                    new seedu.address.model.person.Pet(new seedu.address.model.person.Name("Test"), "", ""),
                     ALICE.getPhone()));
     }
 
@@ -116,7 +116,7 @@ public class AddressBookTest {
         AddressBook ab = new AddressBook();
         Person person = new seedu.address.testutil.PersonBuilder().withPhone("88888888").build();
         ab.addPerson(person);
-        Pet pet = new seedu.address.model.person.Pet(new seedu.address.model.person.Name("Catty"));
+        Pet pet = new seedu.address.model.person.Pet(new seedu.address.model.person.Name("Catty"), "", "");
         ab.addPet(pet, person.getPhone());
         Person found = ab.getPersonList().stream().filter(
                 p -> p.getPhone().equals(
@@ -129,7 +129,7 @@ public class AddressBookTest {
         AddressBook ab = new AddressBook();
         Person person = new seedu.address.testutil.PersonBuilder().withPhone("88888888").withPets("Catty").build();
         ab.addPerson(person);
-        Pet pet = new seedu.address.model.person.Pet(new seedu.address.model.person.Name("Catty"));
+        Pet pet = new seedu.address.model.person.Pet(new seedu.address.model.person.Name("Catty"), "", "");
         ab.removePet(pet, person.getPhone());
         Person found = ab.getPersonList().stream().filter(
                 p -> p.getPhone().equals(person.getPhone())).findFirst().get();

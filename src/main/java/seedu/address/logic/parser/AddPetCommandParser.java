@@ -1,8 +1,10 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 
 import java.util.stream.Stream;
 
@@ -24,7 +26,7 @@ public class AddPetCommandParser implements Parser<AddPetCommand> {
      */
     public AddPetCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_SPECIES, PREFIX_BREED);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -34,8 +36,10 @@ public class AddPetCommandParser implements Parser<AddPetCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
+        String species = argMultimap.getValue(PREFIX_SPECIES).orElse("");
+        String breed = argMultimap.getValue(PREFIX_BREED).orElse("");
 
-        Pet pet = new Pet(name);
+        Pet pet = new Pet(name, species, breed);
 
         return new AddPetCommand(pet, phone);
     }

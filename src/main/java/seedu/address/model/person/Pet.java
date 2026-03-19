@@ -8,19 +8,31 @@ import static java.util.Objects.requireNonNull;
  */
 public class Pet {
     private final Name petName;
+    private final String species;
+    private final String breed;
 
     /**
      * Constructs a {@code Pet}.
      *
      * @param petName A valid pet name.
      */
-    public Pet(Name petName) {
+    public Pet(Name petName, String species, String breed) {
         requireNonNull(petName);
         this.petName = petName;
+        this.species = species;
+        this.breed = breed;
     }
 
     public Name getName() {
         return petName;
+    }
+
+    public String getSpecies() {
+        return species;
+    }
+
+    public String getBreed() {
+        return breed;
     }
 
     @Override

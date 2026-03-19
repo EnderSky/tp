@@ -18,7 +18,7 @@ import seedu.address.model.person.Person;
  */
 public class AddPersonCommand extends Command {
 
-    public static final String COMMAND_WORD = "client";
+    public static final String COMMAND_WORD = "addClient";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a client to the address book. "
             + "Parameters: "
@@ -35,8 +35,8 @@ public class AddPersonCommand extends Command {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_SUCCESS = "New client added: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This client already exists in the address book";
 
     private final Person toAdd;
 
@@ -78,7 +78,7 @@ public class AddPersonCommand extends Command {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("client", toAdd)
+                .add("addClient", toAdd)
                 .toString();
     }
 }

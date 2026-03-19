@@ -102,7 +102,7 @@ public class ModelManagerTest {
     public void removePet_nullPhone_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () ->
                 modelManager.removePet(
-                        new seedu.address.model.person.Pet(new seedu.address.model.person.Name("Test")),
+                        new seedu.address.model.person.Pet(new seedu.address.model.person.Name("Test"), "", ""),
                         null));
     }
 
@@ -150,7 +150,7 @@ public class ModelManagerTest {
                 .PersonBuilder().withPhone("99999999").build();
         model.addPerson(person);
         seedu.address.model.person.Pet pet = new seedu.address.model.person.Pet(
-                new seedu.address.model.person.Name("Doggy"));
+                new seedu.address.model.person.Name("Doggy"), "", "");
         model.addPet(pet, person.getPhone());
         // Should not throw and filtered list should still contain a person with the same phone
         assertTrue(model.getFilteredPersonList().stream()
@@ -164,7 +164,7 @@ public class ModelManagerTest {
                 .withPhone("99999999").withPets("Doggy").build();
         model.addPerson(person);
         seedu.address.model.person.Pet pet = new seedu.address.model.person.Pet(
-                new seedu.address.model.person.Name("Doggy"));
+                new seedu.address.model.person.Name("Doggy"), "", "");
         model.removePet(pet, person.getPhone());
         // Should not throw and filtered list should still contain the person
         assertTrue(model.getFilteredPersonList().stream().anyMatch(p -> p.getPhone().equals(person.getPhone())));

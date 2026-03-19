@@ -51,7 +51,7 @@ public class PetPersonListPanel extends UiPart<Region> {
 
         for (Person person : personList) {
             if (person.getPets().isEmpty()) {
-                Pet noPet = new Pet(new Name("No pets for this person"));
+                Pet noPet = new Pet(new Name("No pets for this person"), "", "");
                 petPersonList.add(new PetAndPerson(noPet, person));
             } else {
                 for (Pet pet : person.getPets()) {

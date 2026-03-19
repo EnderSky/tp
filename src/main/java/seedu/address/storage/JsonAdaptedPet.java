@@ -13,13 +13,19 @@ import seedu.address.model.person.Pet;
 class JsonAdaptedPet {
 
     private final String petName;
+    private final String species;
+    private final String breed;
 
     /**
      * Constructs a {@code JsonAdaptedPet} with the given {@code petName}.
      */
     @JsonCreator
-    public JsonAdaptedPet(@JsonProperty("petName") String petName) {
+    public JsonAdaptedPet(@JsonProperty("petName") String petName,
+                          @JsonProperty("species") String species,
+                          @JsonProperty("breed") String breed) {
         this.petName = petName;
+        this.species = species;
+        this.breed = breed;
     }
 
     /**
@@ -27,6 +33,8 @@ class JsonAdaptedPet {
      */
     public JsonAdaptedPet(Pet source) {
         petName = source.getName().fullName;
+        species = source.getSpecies();
+        breed = source.getBreed();
     }
 
     /**
@@ -38,6 +46,6 @@ class JsonAdaptedPet {
         if (!Name.isValidName(petName)) {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
-        return new Pet(new Name(petName));
+        return new Pet(new Name(petName), species, breed);
     }
 }

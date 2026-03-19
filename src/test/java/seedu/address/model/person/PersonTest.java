@@ -67,7 +67,7 @@ public class PersonTest {
 
     @Test
     public void addPet() {
-        Pet barkus = new Pet(new Name("Barkus"));
+        Pet barkus = new Pet(new Name("Barkus"), "", "");
         Person aliceCopy = ALICE.addPet(SNOOPY).addPet(barkus);
         Set<Pet> expectedPets = new HashSet<Pet>();
         expectedPets.add(SNOOPY);
@@ -163,7 +163,7 @@ public class PersonTest {
     @Test
     public void removePet_existingPet_removesPet() {
         Person personWithPet = new PersonBuilder(ALICE).withPets(VALID_PET_DOG).build();
-        Pet petToRemove = new Pet(new Name(VALID_PET_DOG));
+        Pet petToRemove = new Pet(new Name(VALID_PET_DOG), "", "");
         personWithPet.removePet(petToRemove);
         Person expectedPerson = new PersonBuilder(ALICE).build(); // without pets
         assertTrue(personWithPet.equals(expectedPerson));
@@ -172,7 +172,7 @@ public class PersonTest {
     @Test
     public void removePet_nonExistingPet_noChange() {
         Person personWithPet = new PersonBuilder(ALICE).withPets(VALID_PET_DOG).build();
-        Pet petToRemove = new Pet(new Name("NonExistingPet"));
+        Pet petToRemove = new Pet(new Name("NonExistingPet"), "", "");
         personWithPet.removePet(petToRemove);
         Person expectedPerson = new PersonBuilder(ALICE).withPets(VALID_PET_DOG).build();
         assertTrue(personWithPet.equals(expectedPerson));

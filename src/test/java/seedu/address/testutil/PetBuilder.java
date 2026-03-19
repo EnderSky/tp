@@ -10,14 +10,21 @@ import seedu.address.model.person.Pet;
 public class PetBuilder {
 
     public static final String DEFAULT_NAME = "Snoopy";
+    public static final String DEFAULT_SPECIES = "Dog";
+    public static final String DEFAULT_BREED = "Labrador";
 
     private Name name;
+    private String species;
+    private String breed;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
      */
     public PetBuilder() {
         name = new Name(DEFAULT_NAME);
+        species = DEFAULT_SPECIES;
+        breed = DEFAULT_BREED;
+
     }
 
     /**
@@ -36,6 +43,6 @@ public class PetBuilder {
     }
 
     public Pet build() {
-        return new Pet(name);
+        return new Pet(name, "", "");
     }
 }

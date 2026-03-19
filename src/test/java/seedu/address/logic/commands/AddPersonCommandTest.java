@@ -83,7 +83,7 @@ public class AddPersonCommandTest {
     @Test
     public void toStringMethod() {
         AddPersonCommand addPersonCommand = new AddPersonCommand(ALICE);
-        String expected = AddPersonCommand.class.getCanonicalName() + "{client=" + ALICE + "}";
+        String expected = AddPersonCommand.class.getCanonicalName() + "{addClient=" + ALICE + "}";
         assertEquals(expected, addPersonCommand.toString());
     }
 

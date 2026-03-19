@@ -123,7 +123,9 @@ public class EditPetCommand extends Command {
         DateOfBirth updatedDateOfBirth = editPetDescriptor.getDateOfBirth()
                 .orElse(petToEdit.getDateOfBirth().orElse(null));
 
-        return new Pet(updatedName, updatedSpecies, updatedBreed, updatedDateOfBirth);
+        // Preserve existing photo path and grooming notes during editing
+        return new Pet(updatedName, updatedSpecies, updatedBreed, updatedDateOfBirth,
+                petToEdit.getGroomingNotes().orElse(null), petToEdit.getPhotoPath().orElse(null));
     }
 
     @Override

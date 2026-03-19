@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -32,8 +33,12 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private PetPersonListPanel petPersonListPanel;
+    private DetailPanel detailPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+
+    @FXML
+    private SplitPane splitPane;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -43,6 +48,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane detailPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -113,6 +121,9 @@ public class MainWindow extends UiPart<Stage> {
         petPersonListPanel = new PetPersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(petPersonListPanel.getRoot());
 
+        detailPanel = new DetailPanel();
+        detailPanelPlaceholder.getChildren().add(detailPanel.getRoot());
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -121,6 +132,9 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        // Set the split pane divider position to 70/30
+        splitPane.setDividerPositions(0.7);
     }
 
     /**
@@ -165,6 +179,13 @@ public class MainWindow extends UiPart<Stage> {
 
     public PetPersonListPanel getPersonListPanel() {
         return petPersonListPanel;
+    }
+
+    /**
+     * Returns the detail panel.
+     */
+    public DetailPanel getDetailPanel() {
+        return detailPanel;
     }
 
     /**

@@ -30,7 +30,7 @@ public class AddPetCommandParserTest {
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_SNOOPY + PHONE_DESC_AMY,
-                new AddPetCommand(expectedPet, new Phone("999")));
+                new AddPetCommand(expectedPet, new Phone(VALID_PHONE_AMY)));
     }
 
     @Test

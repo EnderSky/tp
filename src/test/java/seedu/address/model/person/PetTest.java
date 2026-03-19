@@ -33,7 +33,7 @@ public class PetTest {
     @Test
     public void toStringMethod() {
         Pet pet = new Pet(new Name("Barkus"));
-        String expected = "[" + "Barkus" + "]";
+        String expected = "Barkus";
         assertEquals(expected, pet.toString());
     }
 }

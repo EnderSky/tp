@@ -28,8 +28,11 @@ public class AddressBookParser {
 
     /**
      * Used for initial separation of command word and args.
+     * Supports both single-word commands (e.g., "list") and two-word commands (e.g., "add pet").
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+    private static final Pattern TWO_WORD_COMMAND_FORMAT =
+            Pattern.compile("(?<commandWord>\\S+\\s+\\S+)(?<arguments>.*)");
     private static final Logger logger = LogsCenter.getLogger(AddressBookParser.class);
 
     /**
@@ -40,54 +43,97 @@ public class AddressBookParser {
      * @throws ParseException if the user input does not conform the expected format
      */
     public Command parseCommand(String userInput) throws ParseException {
-        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        final String trimmedInput = userInput.trim();
+
+        if (trimmedInput.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        }
+
+        // First, try to match two-word commands
+        final Matcher twoWordMatcher = TWO_WORD_COMMAND_FORMAT.matcher(trimmedInput);
+        if (twoWordMatcher.matches()) {
+            final String twoWordCommand = twoWordMatcher.group("commandWord").toLowerCase();
+            final String twoWordArguments = twoWordMatcher.group("arguments");
+
+            Command command = parseTwoWordCommand(twoWordCommand, twoWordArguments);
+            if (command != null) {
+                return command;
+            }
+        }
+
+        // Fall back to single-word commands
+        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(trimmedInput);
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord");
+        final String commandWord = matcher.group("commandWord").toLowerCase();
         final String arguments = matcher.group("arguments");
 
-        // Note to developers: Change the log level in config.json to enable lower level
-        // (i.e., FINE, FINER and lower)
-        // log messages such as the one below.
-        // Lower level log messages are used sparingly to minimize noise in the code.
         logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
 
+        return parseSingleWordCommand(commandWord, arguments);
+    }
+
+    /**
+     * Parses two-word commands (e.g., "add pet", "delete client").
+     *
+     * @return the parsed Command, or null if the command word is not a recognized two-word command
+     */
+    private Command parseTwoWordCommand(String commandWord, String arguments) throws ParseException {
         switch (commandWord) {
 
-        case AddPersonCommand.COMMAND_WORD:
-            return new AddPersonCommandParser().parse(arguments);
-
         case AddPetCommand.COMMAND_WORD:
+        case AddPetCommand.COMMAND_WORD_ALIAS:
             return new AddPetCommandParser().parse(arguments);
 
+        case AddPersonCommand.COMMAND_WORD:
+        case AddPersonCommand.COMMAND_WORD_ALIAS:
+            return new AddPersonCommandParser().parse(arguments);
+
+        case DeletePersonCommand.COMMAND_WORD:
+        case DeletePersonCommand.COMMAND_WORD_ALIAS:
+            return new DeletePersonCommandParser().parse(arguments);
+
         case DeletePetCommand.COMMAND_WORD:
+        case DeletePetCommand.COMMAND_WORD_ALIAS:
             return new DeletePetCommandParser().parse(arguments);
 
         case EditClientCommand.COMMAND_WORD:
+        case EditClientCommand.COMMAND_WORD_ALIAS:
             return new EditClientCommandParser().parse(arguments);
 
-        case DeletePersonCommand.COMMAND_WORD:
-            return new DeletePersonCommandParser().parse(arguments);
+        default:
+            return null; // Not a recognized two-word command
+        }
+    }
+
+    /**
+     * Parses single-word commands (e.g., "list", "help").
+     */
+    private Command parseSingleWordCommand(String commandWord, String arguments) throws ParseException {
+        switch (commandWord) {
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_WORD_ALIAS:
             return new FindCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
+        case ListCommand.COMMAND_WORD_ALIAS:
             return new ListCommand();
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
+        case HelpCommand.COMMAND_WORD_ALIAS:
             return new HelpCommand();
 
         default:
-            logger.finer("This user input caused a ParseException: " + userInput);
+            logger.finer("This user input caused a ParseException: " + commandWord + arguments);
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }

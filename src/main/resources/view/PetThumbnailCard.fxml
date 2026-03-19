@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- Pet thumbnail card for grid display (~120x100px) -->
+<VBox fx:id="cardPane" styleClass="pet-thumbnail-card" alignment="CENTER"
+      prefWidth="120" prefHeight="100" maxWidth="120"
+      xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+  <padding>
+    <Insets top="5" right="5" bottom="5" left="5" />
+  </padding>
+
+  <!-- Index and thumbnail row -->
+  <VBox alignment="CENTER" spacing="2">
+    <Label fx:id="indexLabel" styleClass="pet-thumbnail-index" />
+    <ImageView fx:id="thumbnailView" fitWidth="48" fitHeight="48" preserveRatio="true" styleClass="pet-thumbnail-image" />
+  </VBox>
+
+  <!-- Pet name -->
+  <Label fx:id="nameLabel" styleClass="pet-thumbnail-name" wrapText="true" alignment="CENTER" />
+
+  <!-- Species/Breed info -->
+  <Label fx:id="infoLabel" styleClass="pet-thumbnail-info" wrapText="true" alignment="CENTER" />
+
+  <!-- Tags -->
+  <FlowPane fx:id="tagsPane" styleClass="pet-thumbnail-tags" alignment="CENTER" hgap="2" vgap="2" />
+</VBox>

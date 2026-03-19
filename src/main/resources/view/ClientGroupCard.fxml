@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- Client group card containing client header and wrapping pet cards -->
+<VBox fx:id="groupPane" styleClass="client-group-card"
+      xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+  <padding>
+    <Insets top="8" right="10" bottom="8" left="10" />
+  </padding>
+
+  <!-- Client Header Row -->
+  <HBox fx:id="clientHeader" styleClass="client-header" spacing="10" alignment="CENTER_LEFT">
+    <padding>
+      <Insets bottom="5" />
+    </padding>
+
+    <!-- Client Index -->
+    <Label fx:id="clientIndexLabel" styleClass="client-index" />
+
+    <!-- Client Name -->
+    <Label fx:id="clientNameLabel" styleClass="client-name" />
+
+    <!-- Separator -->
+    <Label text="|" styleClass="client-separator" />
+
+    <!-- Phone -->
+    <Label fx:id="clientPhoneLabel" styleClass="client-info" />
+
+    <!-- Separator -->
+    <Label text="|" styleClass="client-separator" />
+
+    <!-- Email -->
+    <Label fx:id="clientEmailLabel" styleClass="client-info" />
+
+    <!-- Separator -->
+    <Label text="|" styleClass="client-separator" />
+
+    <!-- Address (truncated) -->
+    <Label fx:id="clientAddressLabel" styleClass="client-info" maxWidth="200" />
+
+    <!-- Tags -->
+    <FlowPane fx:id="clientTagsPane" styleClass="client-tags" hgap="5" vgap="2" />
+  </HBox>
+
+  <!-- Pet Cards Container (horizontally wrapping) -->
+  <FlowPane fx:id="petsContainer" styleClass="pets-container" hgap="8" vgap="8" alignment="TOP_LEFT">
+    <padding>
+      <Insets top="5" left="20" />
+    </padding>
+  </FlowPane>
+
+  <!-- Empty pets message (shown when client has no pets) -->
+  <Label fx:id="noPetsLabel" styleClass="no-pets-label" text="(No pets)" visible="false" managed="false">
+    <padding>
+      <Insets top="5" left="25" />
+    </padding>
+  </Label>
+</VBox>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      styleClass="detail-panel" spacing="10">
+  <padding>
+    <Insets top="10" right="10" bottom="10" left="10" />
+  </padding>
+
+  <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="detail-scroll-pane">
+    <VBox fx:id="contentContainer" spacing="8">
+      <padding>
+        <Insets top="5" right="5" bottom="5" left="5" />
+      </padding>
+
+      <!-- Photo/Image placeholder -->
+      <VBox fx:id="photoContainer" alignment="CENTER" styleClass="photo-container">
+        <ImageView fx:id="photoView" fitWidth="150" fitHeight="150" preserveRatio="true" />
+        <Label fx:id="photoCaption" styleClass="photo-caption" />
+      </VBox>
+
+      <Separator />
+
+      <!-- Primary Info Section -->
+      <VBox fx:id="primaryInfoSection" spacing="4">
+        <Label fx:id="nameLabel" styleClass="detail-name" />
+        <Label fx:id="typeLabel" styleClass="detail-type" />
+      </VBox>
+
+      <!-- Details Section -->
+      <VBox fx:id="detailsSection" spacing="4">
+        <Label fx:id="detail1Label" styleClass="detail-field" />
+        <Label fx:id="detail2Label" styleClass="detail-field" />
+        <Label fx:id="detail3Label" styleClass="detail-field" />
+        <Label fx:id="detail4Label" styleClass="detail-field" />
+      </VBox>
+
+      <!-- Tags Section -->
+      <VBox fx:id="tagsSection" spacing="4">
+        <Label text="Tags:" styleClass="detail-section-header" />
+        <FlowPane fx:id="tagsPane" hgap="5" vgap="5" />
+      </VBox>
+
+      <Separator />
+
+      <!-- Secondary Info Section (Owner info for pets, Pets list for clients) -->
+      <VBox fx:id="secondaryInfoSection" spacing="4">
+        <Label fx:id="secondaryHeader" styleClass="detail-section-header" />
+        <VBox fx:id="secondaryContent" spacing="2" />
+      </VBox>
+
+      <!-- Empty State -->
+      <VBox fx:id="emptyStateContainer" alignment="CENTER" visible="false" managed="false">
+        <padding>
+          <Insets top="50" />
+        </padding>
+        <Label fx:id="emptyStateLabel" styleClass="detail-empty-state" text="Select a pet or client to view details" />
+      </VBox>
+    </VBox>
+  </ScrollPane>
+</VBox>

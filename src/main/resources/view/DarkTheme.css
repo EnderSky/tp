@@ -350,3 +350,211 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+/*
+ * Detail Panel Styles
+ */
+.detail-panel {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+.detail-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.detail-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.photo-container {
+    -fx-padding: 10;
+    -fx-alignment: center;
+}
+
+.photo-caption {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-padding: 5 0 0 0;
+}
+
+.detail-name {
+    -fx-font-size: 18pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+}
+
+.detail-type {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #888888;
+    -fx-font-style: italic;
+}
+
+.detail-field {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #cccccc;
+}
+
+.detail-section-header {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #3e7b91;
+    -fx-padding: 5 0 2 0;
+}
+
+.detail-secondary-text {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #aaaaaa;
+}
+
+.detail-tag {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+    -fx-padding: 2 6 2 6;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-font-size: 10pt;
+}
+
+.detail-empty-state {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: #666666;
+    -fx-text-alignment: center;
+}
+
+/*
+ * Grouped Pets-First List Panel Styles
+ */
+.list-panel {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+.client-list-view {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.client-list-view .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.client-list-view .list-cell:filled:even {
+    -fx-background-color: derive(#1d1d1d, 25%);
+}
+
+.client-list-view .list-cell:filled:odd {
+    -fx-background-color: derive(#1d1d1d, 30%);
+}
+
+.client-list-view .list-cell:filled:selected {
+    -fx-background-color: #424d5f;
+}
+
+/*
+ * Client Group Card Styles
+ */
+.client-group-card {
+    -fx-background-color: transparent;
+}
+
+.client-header {
+    -fx-background-color: transparent;
+}
+
+.client-index {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #3e7b91;
+    -fx-min-width: 30;
+}
+
+.client-name {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+}
+
+.client-separator {
+    -fx-font-size: 12pt;
+    -fx-text-fill: #555555;
+}
+
+.client-info {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #aaaaaa;
+}
+
+.client-tags {
+    -fx-padding: 0 0 0 10;
+}
+
+.client-tag {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+    -fx-padding: 1 5 1 5;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-font-size: 10pt;
+}
+
+.pets-container {
+    -fx-background-color: transparent;
+}
+
+.no-pets-label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #666666;
+    -fx-font-style: italic;
+}
+
+/*
+ * Pet Thumbnail Card Styles
+ */
+.pet-thumbnail-card {
+    -fx-background-color: derive(#1d1d1d, 40%);
+    -fx-border-color: #4d4d4d;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.pet-thumbnail-card:hover {
+    -fx-background-color: derive(#1d1d1d, 50%);
+    -fx-border-color: #3e7b91;
+}
+
+.pet-thumbnail-index {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #3e7b91;
+}
+
+.pet-thumbnail-image {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 3, 0, 0, 1);
+}
+
+.pet-thumbnail-name {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-padding: 2 0 0 0;
+}
+
+.pet-thumbnail-info {
+    -fx-font-size: 9pt;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #aaaaaa;
+}
+
+.pet-thumbnail-tags {
+    -fx-padding: 2 0 0 0;
+}

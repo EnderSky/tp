@@ -2,8 +2,11 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -13,19 +16,26 @@ import seedu.address.model.person.Pet;
 import seedu.address.model.person.Phone;
 
 /**
- * Adds a person to the address book.
+ * Adds a pet to an existing client in the address book.
  */
 public class AddPetCommand extends Command {
 
-    public static final String COMMAND_WORD = "pet";
+    public static final String COMMAND_WORD = "add pet";
+    public static final String COMMAND_WORD_ALIAS = "ap";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a pet to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a pet to a client in the address book.\n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_PHONE + "OWNER's PHONE "
+            + PREFIX_PHONE + "OWNER'S PHONE "
+            + "[" + PREFIX_SPECIES + "SPECIES] "
+            + "[" + PREFIX_BREED + "BREED] "
+            + "[" + PREFIX_DOB + "DATE_OF_BIRTH]\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "Doggy "
-            + PREFIX_PHONE + "98765432 ";
+            + PREFIX_NAME + "Fluffy "
+            + PREFIX_PHONE + "98765432 "
+            + PREFIX_SPECIES + "Dog "
+            + PREFIX_BREED + "Golden Retriever "
+            + PREFIX_DOB + "2020-03-15";
 
     public static final String MESSAGE_SUCCESS = "New pet added: %1$s";
 
@@ -33,7 +43,7 @@ public class AddPetCommand extends Command {
     private final Phone ownerPhone;
 
     /**
-     * Creates an AddPersonCommand to add the specified {@code Person}
+     * Creates an AddPetCommand to add the specified {@code Pet} to the client with the given phone.
      */
     public AddPetCommand(Pet pet, Phone phone) {
         requireAllNonNull(pet, phone);
@@ -61,13 +71,15 @@ public class AddPetCommand extends Command {
         }
 
         AddPetCommand otherAddPetCommand = (AddPetCommand) other;
-        return toAdd.equals(otherAddPetCommand.toAdd);
+        return toAdd.equals(otherAddPetCommand.toAdd)
+                && ownerPhone.equals(otherAddPetCommand.ownerPhone);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("pet", toAdd)
+                .add("ownerPhone", ownerPhone)
                 .toString();
     }
 }

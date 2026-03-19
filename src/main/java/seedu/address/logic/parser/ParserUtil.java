@@ -10,9 +10,12 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Breed;
+import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Species;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -120,5 +123,50 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String species} into a {@code Species}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code species} is invalid.
+     */
+    public static Species parseSpecies(String species) throws ParseException {
+        requireNonNull(species);
+        String trimmedSpecies = species.trim();
+        if (!Species.isValidSpecies(trimmedSpecies)) {
+            throw new ParseException(Species.MESSAGE_CONSTRAINTS);
+        }
+        return new Species(trimmedSpecies);
+    }
+
+    /**
+     * Parses a {@code String breed} into a {@code Breed}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code breed} is invalid.
+     */
+    public static Breed parseBreed(String breed) throws ParseException {
+        requireNonNull(breed);
+        String trimmedBreed = breed.trim();
+        if (!Breed.isValidBreed(trimmedBreed)) {
+            throw new ParseException(Breed.MESSAGE_CONSTRAINTS);
+        }
+        return new Breed(trimmedBreed);
+    }
+
+    /**
+     * Parses a {@code String dateOfBirth} into a {@code DateOfBirth}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code dateOfBirth} is invalid.
+     */
+    public static DateOfBirth parseDateOfBirth(String dateOfBirth) throws ParseException {
+        requireNonNull(dateOfBirth);
+        String trimmedDob = dateOfBirth.trim();
+        if (!DateOfBirth.isValidDateOfBirth(trimmedDob)) {
+            throw new ParseException(DateOfBirth.MESSAGE_CONSTRAINTS);
+        }
+        return new DateOfBirth(trimmedDob);
     }
 }

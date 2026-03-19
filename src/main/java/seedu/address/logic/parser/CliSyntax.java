@@ -12,4 +12,9 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
 
+    /* Pet-specific prefixes */
+    public static final Prefix PREFIX_SPECIES = new Prefix("s/");
+    public static final Prefix PREFIX_BREED = new Prefix("b/");
+    public static final Prefix PREFIX_DOB = new Prefix("dob/");
+
 }

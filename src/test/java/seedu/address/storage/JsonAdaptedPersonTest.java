@@ -120,7 +120,7 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_invalidPets_throwsIllegalValueException() {
         List<JsonAdaptedPet> invalidPets = new ArrayList<>(VALID_PETS);
-        invalidPets.add(new JsonAdaptedPet(INVALID_PET));
+        invalidPets.add(new JsonAdaptedPet(INVALID_PET, null, null, null));
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE,
                 VALID_EMAIL, VALID_ADDRESS, VALID_TAGS, invalidPets);
         assertThrows(IllegalValueException.class, person::toModelType);

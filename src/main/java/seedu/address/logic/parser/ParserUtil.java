@@ -24,6 +24,8 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_PET_INDEX_FORMAT =
+            "Pet index must be in CLIENT_INDEX.PET_INDEX format (e.g., 1.2).";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -168,5 +170,31 @@ public class ParserUtil {
             throw new ParseException(DateOfBirth.MESSAGE_CONSTRAINTS);
         }
         return new DateOfBirth(trimmedDob);
+    }
+
+    /**
+     * Parses a {@code String petIndex} in CLIENT_INDEX.PET_INDEX format into an array of two {@code Index} objects.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @param petIndex the string in format "CLIENT_INDEX.PET_INDEX" (e.g., "1.2")
+     * @return an array of two Index objects: [clientIndex, petIndex]
+     * @throws ParseException if the given {@code petIndex} is not in valid format.
+     */
+    public static Index[] parsePetIndex(String petIndex) throws ParseException {
+        requireNonNull(petIndex);
+        String trimmedIndex = petIndex.trim();
+
+        String[] parts = trimmedIndex.split("\\.");
+        if (parts.length != 2) {
+            throw new ParseException(MESSAGE_INVALID_PET_INDEX_FORMAT);
+        }
+
+        try {
+            Index clientIndex = parseIndex(parts[0]);
+            Index petIndexParsed = parseIndex(parts[1]);
+            return new Index[]{clientIndex, petIndexParsed};
+        } catch (ParseException pe) {
+            throw new ParseException(MESSAGE_INVALID_PET_INDEX_FORMAT);
+        }
     }
 }

@@ -19,6 +19,8 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ViewClientCommand;
+import seedu.address.logic.commands.ViewPetCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -102,6 +104,14 @@ public class AddressBookParser {
         case EditClientCommand.COMMAND_WORD:
         case EditClientCommand.COMMAND_WORD_ALIAS:
             return new EditClientCommandParser().parse(arguments);
+
+        case ViewClientCommand.COMMAND_WORD:
+        case ViewClientCommand.COMMAND_WORD_ALIAS:
+            return new ViewClientCommandParser().parse(arguments);
+
+        case ViewPetCommand.COMMAND_WORD:
+        case ViewPetCommand.COMMAND_WORD_ALIAS:
+            return new ViewPetCommandParser().parse(arguments);
 
         default:
             return null; // Not a recognized two-word command

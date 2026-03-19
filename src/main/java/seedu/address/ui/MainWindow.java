@@ -207,6 +207,19 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
+            // Handle view commands - update detail panel
+            if (commandResult.hasClientToView()) {
+                commandResult.getPersonToView().ifPresent(client -> {
+                    detailPanel.showClientDetails(client);
+                });
+            } else if (commandResult.hasPetToView()) {
+                commandResult.getPetToView().ifPresent(pet -> {
+                    commandResult.getPetOwner().ifPresent(owner -> {
+                        detailPanel.showPetDetails(pet, owner);
+                    });
+                });
+            }
+
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);

@@ -14,6 +14,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Pet;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Adds a pet to an existing client in the address book.
@@ -38,6 +39,7 @@ public class AddPetCommand extends Command {
             + PREFIX_DOB + "2020-03-15";
 
     public static final String MESSAGE_SUCCESS = "New pet added: %1$s";
+    public static final String MESSAGE_OWNER_NOT_FOUND = "No client found with phone number: %1$s";
 
     private final Pet toAdd;
     private final Phone ownerPhone;
@@ -55,8 +57,12 @@ public class AddPetCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        model.addPet(toAdd, ownerPhone);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        try {
+            model.addPet(toAdd, ownerPhone);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        } catch (PersonNotFoundException e) {
+            throw new CommandException(String.format(MESSAGE_OWNER_NOT_FOUND, ownerPhone));
+        }
     }
 
     @Override

@@ -57,7 +57,7 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_deletePet() throws Exception {
         DeletePetCommand command = (DeletePetCommand) parser.parseCommand(
-                DeletePetCommand.COMMAND_WORD + " n/Snoopy p/99999999");
+                DeletePetCommand.COMMAND_WORD + " 1.1");
         assertTrue(command instanceof seedu.address.logic.commands.DeletePetCommand);
     }
 

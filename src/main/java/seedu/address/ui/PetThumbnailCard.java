@@ -33,7 +33,10 @@ public class PetThumbnailCard extends UiPart<Region> {
     private Label nameLabel;
 
     @FXML
-    private Label infoLabel;
+    private Label speciesLabel;
+
+    @FXML
+    private Label breedLabel;
 
     @FXML
     private FlowPane tagsPane;
@@ -57,22 +60,24 @@ public class PetThumbnailCard extends UiPart<Region> {
         // Set pet name
         nameLabel.setText(pet.getName().fullName);
 
-        // Set species/breed info
-        StringBuilder info = new StringBuilder();
-        pet.getSpecies().ifPresent(s -> info.append(s.value));
-        pet.getBreed().ifPresent(b -> {
-            if (info.length() > 0) {
-                info.append(", ");
-            }
-            info.append(b.value);
-        });
-        if (info.length() > 0) {
-            infoLabel.setText(info.toString());
-            infoLabel.setVisible(true);
-            infoLabel.setManaged(true);
+        // Set species (centered on its own line)
+        if (pet.getSpecies().isPresent()) {
+            speciesLabel.setText(pet.getSpecies().get().value);
+            speciesLabel.setVisible(true);
+            speciesLabel.setManaged(true);
         } else {
-            infoLabel.setVisible(false);
-            infoLabel.setManaged(false);
+            speciesLabel.setVisible(false);
+            speciesLabel.setManaged(false);
+        }
+
+        // Set breed (centered on its own line below species)
+        if (pet.getBreed().isPresent()) {
+            breedLabel.setText(pet.getBreed().get().value);
+            breedLabel.setVisible(true);
+            breedLabel.setManaged(true);
+        } else {
+            breedLabel.setVisible(false);
+            breedLabel.setManaged(false);
         }
 
         // TODO: Load pet thumbnail image when photo feature is implemented

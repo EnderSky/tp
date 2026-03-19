@@ -47,9 +47,9 @@ public class HelpWindow extends UiPart<Stage> {
                                 Usage: add pet INDEX n/NAME [s/SPECIES] [b/BREED] [dob/DATE_OF_BIRTH]
                                 Example: add pet 1 n/Buddy s/Dog b/Golden Retriever dob/2020-05-15
 
-            delete pet (dp)     Delete a pet
-                                Usage: delete pet n/PET_NAME p/OWNER_PHONE
-                                Example: delete pet n/Buddy p/98765432
+            delete pet (dp)     Delete a pet (uses CLIENT.PET notation)
+                                Usage: delete pet CLIENT_INDEX.PET_INDEX
+                                Example: delete pet 1.2 (deletes 2nd pet of 1st client)
 
             view pet (vp)       View pet details in side panel (uses CLIENT.PET notation)
                                 Usage: view pet CLIENT_INDEX.PET_INDEX

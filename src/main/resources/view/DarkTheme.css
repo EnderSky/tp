@@ -447,6 +447,16 @@
     -fx-padding: 0;
 }
 
+.client-list-view .scroll-bar:vertical {
+    -fx-opacity: 0;
+    -fx-pref-width: 0;
+}
+
+.client-list-view .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-pref-height: 0;
+}
+
 .client-list-view .list-cell {
     -fx-background-color: transparent;
     -fx-padding: 0;
@@ -500,16 +510,18 @@
 }
 
 .client-tags {
-    -fx-padding: 0 0 0 10;
+    -fx-padding: 0 0 0 5;
+    -fx-spacing: 3;
+    -fx-alignment: center-left;
 }
 
 .client-tag {
     -fx-text-fill: white;
     -fx-background-color: #3e7b91;
-    -fx-padding: 1 5 1 5;
-    -fx-border-radius: 3;
-    -fx-background-radius: 3;
-    -fx-font-size: 10pt;
+    -fx-padding: 0 4 0 4;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 8pt;
 }
 
 .pets-container {
@@ -546,6 +558,8 @@
     -fx-font-size: 10pt;
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: #5a9fd4;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
 }
 
 .pet-thumbnail-image {
@@ -557,6 +571,30 @@
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: white;
     -fx-padding: 2 0 0 0;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+
+.pet-thumbnail-info {
+    -fx-font-size: 9pt;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #aaaaaa;
+}
+
+.pet-thumbnail-species {
+    -fx-font-size: 8pt;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #aaaaaa;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+
+.pet-thumbnail-breed {
+    -fx-font-size: 8pt;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #aaaaaa;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
 }
 
 .pet-thumbnail-info {

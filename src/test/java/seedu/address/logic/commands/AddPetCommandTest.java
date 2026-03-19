@@ -79,7 +79,8 @@ public class AddPetCommandTest {
         Pet snoopy = new PetBuilder().withName("Snoopy").build();
         Phone ownerPhone = new Phone("99999999");
         AddPetCommand addPetCommand = new AddPetCommand(snoopy, ownerPhone);
-        String expected = AddPetCommand.class.getCanonicalName() + "{pet=" + snoopy + ", ownerPhone=" + ownerPhone + "}";
+        String expected = AddPetCommand.class.getCanonicalName() + "{pet=" + snoopy
+                + ", ownerPhone=" + ownerPhone + "}";
         assertEquals(expected, addPetCommand.toString());
     }
 

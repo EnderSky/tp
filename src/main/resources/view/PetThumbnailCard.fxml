@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<!-- Pet thumbnail card for grid display (~120x100px) -->
+<!-- Pet thumbnail card for grid display (120x110px fixed) -->
 <VBox fx:id="cardPane" styleClass="pet-thumbnail-card" alignment="CENTER"
-      prefWidth="120" prefHeight="100" maxWidth="120"
+      prefWidth="120" prefHeight="110" minWidth="120" maxWidth="120" minHeight="110" maxHeight="110"
       xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <padding>
     <Insets top="5" right="5" bottom="5" left="5" />
@@ -21,10 +21,16 @@
   </VBox>
 
   <!-- Pet name -->
-  <Label fx:id="nameLabel" styleClass="pet-thumbnail-name" wrapText="true" alignment="CENTER" />
+  <Label fx:id="nameLabel" styleClass="pet-thumbnail-name" wrapText="true" alignment="CENTER" 
+         textAlignment="CENTER" maxWidth="110" maxHeight="28" />
 
-  <!-- Species/Breed info -->
-  <Label fx:id="infoLabel" styleClass="pet-thumbnail-info" wrapText="true" alignment="CENTER" />
+  <!-- Species info (centered) -->
+  <Label fx:id="speciesLabel" styleClass="pet-thumbnail-species" wrapText="true" alignment="CENTER" 
+         textAlignment="CENTER" maxWidth="110" maxHeight="14" />
+
+  <!-- Breed info (centered, below species) -->
+  <Label fx:id="breedLabel" styleClass="pet-thumbnail-breed" wrapText="true" alignment="CENTER" 
+         textAlignment="CENTER" maxWidth="110" maxHeight="14" />
 
   <!-- Tags -->
   <FlowPane fx:id="tagsPane" styleClass="pet-thumbnail-tags" alignment="CENTER" hgap="2" vgap="2" />

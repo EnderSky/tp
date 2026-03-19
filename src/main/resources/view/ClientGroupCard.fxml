@@ -14,8 +14,8 @@
     <Insets top="8" right="10" bottom="8" left="10" />
   </padding>
 
-  <!-- Client Header Row -->
-  <HBox fx:id="clientHeader" styleClass="client-header" spacing="10" alignment="CENTER_LEFT">
+  <!-- Client Header Row (wrapping) -->
+  <FlowPane fx:id="clientHeader" styleClass="client-header" hgap="6" vgap="3" alignment="CENTER_LEFT">
     <padding>
       <Insets bottom="5" />
     </padding>
@@ -38,15 +38,9 @@
     <!-- Email -->
     <Label fx:id="clientEmailLabel" styleClass="client-info" />
 
-    <!-- Separator -->
-    <Label text="|" styleClass="client-separator" />
-
-    <!-- Address (truncated) -->
-    <Label fx:id="clientAddressLabel" styleClass="client-info" maxWidth="200" />
-
     <!-- Tags -->
-    <FlowPane fx:id="clientTagsPane" styleClass="client-tags" hgap="5" vgap="2" />
-  </HBox>
+    <HBox fx:id="clientTagsPane" styleClass="client-tags" spacing="3" />
+  </FlowPane>
 
   <!-- Pet Cards Container (horizontally wrapping) -->
   <FlowPane fx:id="petsContainer" styleClass="pets-container" hgap="8" vgap="8" alignment="TOP_LEFT">

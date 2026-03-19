@@ -142,6 +142,26 @@ public class AddressBookParser {
         case HelpCommand.COMMAND_WORD_ALIAS:
             return new HelpCommand();
 
+        // Command hints for ambiguous commands
+        case "add":
+            throw new ParseException("Did you mean:\n"
+                    + "  • add client (ac) - Add a new client\n"
+                    + "  • add pet (ap) - Add a pet to a client");
+
+        case "edit":
+            throw new ParseException("Did you mean:\n"
+                    + "  • edit client (ec) - Edit an existing client");
+
+        case "delete":
+            throw new ParseException("Did you mean:\n"
+                    + "  • delete client (dc) - Delete a client\n"
+                    + "  • delete pet (dp) - Delete a pet");
+
+        case "view":
+            throw new ParseException("Did you mean:\n"
+                    + "  • view client (vc) - View client details\n"
+                    + "  • view pet (vp) - View pet details");
+
         default:
             logger.finer("This user input caused a ParseException: " + commandWord + arguments);
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

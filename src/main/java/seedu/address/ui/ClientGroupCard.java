@@ -27,7 +27,7 @@ public class ClientGroupCard extends UiPart<Region> {
     private VBox groupPane;
 
     @FXML
-    private HBox clientHeader;
+    private FlowPane clientHeader;
 
     @FXML
     private Label clientIndexLabel;
@@ -42,10 +42,7 @@ public class ClientGroupCard extends UiPart<Region> {
     private Label clientEmailLabel;
 
     @FXML
-    private Label clientAddressLabel;
-
-    @FXML
-    private FlowPane clientTagsPane;
+    private HBox clientTagsPane;
 
     @FXML
     private FlowPane petsContainer;
@@ -70,22 +67,22 @@ public class ClientGroupCard extends UiPart<Region> {
         clientPhoneLabel.setText(client.getPhone().value);
         clientEmailLabel.setText(client.getEmail().value);
 
-        // Truncate address if too long
-        String address = client.getAddress().value;
-        if (address.length() > 30) {
-            address = address.substring(0, 27) + "...";
-        }
-        clientAddressLabel.setText(address);
-
         // Add client tags
         clientTagsPane.getChildren().clear();
-        client.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> {
-                    Label tagLabel = new Label(tag.tagName);
-                    tagLabel.getStyleClass().add("client-tag");
-                    clientTagsPane.getChildren().add(tagLabel);
-                });
+        if (client.getTags().isEmpty()) {
+            clientTagsPane.setVisible(false);
+            clientTagsPane.setManaged(false);
+        } else {
+            clientTagsPane.setVisible(true);
+            clientTagsPane.setManaged(true);
+            client.getTags().stream()
+                    .sorted(Comparator.comparing(tag -> tag.tagName))
+                    .forEach(tag -> {
+                        Label tagLabel = new Label(tag.tagName);
+                        tagLabel.getStyleClass().add("client-tag");
+                        clientTagsPane.getChildren().add(tagLabel);
+                    });
+        }
 
         // Add pet cards or show "no pets" message
         List<Pet> pets = List.copyOf(client.getPets());

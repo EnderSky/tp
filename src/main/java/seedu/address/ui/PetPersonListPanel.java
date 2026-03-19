@@ -30,6 +30,9 @@ public class PetPersonListPanel extends UiPart<Region> {
 
         petPersonListView.setItems(personList);
         petPersonListView.setCellFactory(listView -> new ClientGroupListCell());
+
+        // Disable scrolling - make the ListView grow to fit all items
+        petPersonListView.setFixedCellSize(-1); // Variable cell size
     }
 
     /**

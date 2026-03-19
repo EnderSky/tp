@@ -78,7 +78,7 @@ public class EditClientCommandParser implements Parser<EditClientCommand> {
      * {@code Set<Tag>} containing zero tags.
      */
     private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws ParseException {
-        assert tags != null;
+        // assert tags != null;
 
         if (tags.isEmpty()) {
             return Optional.empty();

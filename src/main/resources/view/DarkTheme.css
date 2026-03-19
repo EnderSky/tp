@@ -447,7 +447,7 @@
     -fx-padding: 0;
 }
 
-.client-list-view .scroll-bar:vertical {
+/* .client-list-view .scroll-bar:vertical {
     -fx-opacity: 0;
     -fx-pref-width: 0;
 }
@@ -455,7 +455,7 @@
 .client-list-view .scroll-bar:horizontal {
     -fx-opacity: 0;
     -fx-pref-height: 0;
-}
+} */
 
 .client-list-view .list-cell {
     -fx-background-color: transparent;

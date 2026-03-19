@@ -16,5 +16,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_SPECIES = new Prefix("s/");
     public static final Prefix PREFIX_BREED = new Prefix("b/");
     public static final Prefix PREFIX_DOB = new Prefix("dob/");
+    public static final Prefix PREFIX_NOTE = new Prefix("note/");
+    public static final Prefix PREFIX_PATH = new Prefix("path/");
 
 }

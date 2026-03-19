@@ -14,10 +14,12 @@ public class Pet {
     private final Species species;
     private final Breed breed;
     private final DateOfBirth dateOfBirth;
+    private final GroomingNotes groomingNotes;
+    private final PhotoPath photoPath;
 
     /**
      * Constructs a {@code Pet} with only a name.
-     * Species, breed, and date of birth are set to null (optional fields).
+     * All optional fields are set to null.
      *
      * @param petName A valid pet name.
      */
@@ -27,10 +29,12 @@ public class Pet {
         this.species = null;
         this.breed = null;
         this.dateOfBirth = null;
+        this.groomingNotes = null;
+        this.photoPath = null;
     }
 
     /**
-     * Constructs a {@code Pet} with all fields.
+     * Constructs a {@code Pet} with all fields except grooming notes and photo.
      *
      * @param petName A valid pet name.
      * @param species The pet's species (can be null).
@@ -43,6 +47,48 @@ public class Pet {
         this.species = species;
         this.breed = breed;
         this.dateOfBirth = dateOfBirth;
+        this.groomingNotes = null;
+        this.photoPath = null;
+    }
+
+    /**
+     * Constructs a {@code Pet} with all fields except photo.
+     *
+     * @param petName A valid pet name.
+     * @param species The pet's species (can be null).
+     * @param breed The pet's breed (can be null).
+     * @param dateOfBirth The pet's date of birth (can be null).
+     * @param groomingNotes The pet's grooming notes (can be null).
+     */
+    public Pet(Name petName, Species species, Breed breed, DateOfBirth dateOfBirth, GroomingNotes groomingNotes) {
+        requireNonNull(petName);
+        this.petName = petName;
+        this.species = species;
+        this.breed = breed;
+        this.dateOfBirth = dateOfBirth;
+        this.groomingNotes = groomingNotes;
+        this.photoPath = null;
+    }
+
+    /**
+     * Constructs a {@code Pet} with all fields including photo.
+     *
+     * @param petName A valid pet name.
+     * @param species The pet's species (can be null).
+     * @param breed The pet's breed (can be null).
+     * @param dateOfBirth The pet's date of birth (can be null).
+     * @param groomingNotes The pet's grooming notes (can be null).
+     * @param photoPath The pet's photo path (can be null).
+     */
+    public Pet(Name petName, Species species, Breed breed, DateOfBirth dateOfBirth,
+               GroomingNotes groomingNotes, PhotoPath photoPath) {
+        requireNonNull(petName);
+        this.petName = petName;
+        this.species = species;
+        this.breed = breed;
+        this.dateOfBirth = dateOfBirth;
+        this.groomingNotes = groomingNotes;
+        this.photoPath = photoPath;
     }
 
     public Name getName() {
@@ -59,6 +105,14 @@ public class Pet {
 
     public Optional<DateOfBirth> getDateOfBirth() {
         return Optional.ofNullable(dateOfBirth);
+    }
+
+    public Optional<GroomingNotes> getGroomingNotes() {
+        return Optional.ofNullable(groomingNotes);
+    }
+
+    public Optional<PhotoPath> getPhotoPath() {
+        return Optional.ofNullable(photoPath);
     }
 
     /**
@@ -89,12 +143,14 @@ public class Pet {
         return petName.equals(otherPet.petName)
                 && Objects.equals(species, otherPet.species)
                 && Objects.equals(breed, otherPet.breed)
-                && Objects.equals(dateOfBirth, otherPet.dateOfBirth);
+                && Objects.equals(dateOfBirth, otherPet.dateOfBirth)
+                && Objects.equals(groomingNotes, otherPet.groomingNotes)
+                && Objects.equals(photoPath, otherPet.photoPath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(petName, species, breed, dateOfBirth);
+        return Objects.hash(petName, species, breed, dateOfBirth, groomingNotes, photoPath);
     }
 
     /**

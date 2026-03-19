@@ -6,8 +6,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Breed;
 import seedu.address.model.person.DateOfBirth;
+import seedu.address.model.person.GroomingNotes;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Pet;
+import seedu.address.model.person.PhotoPath;
 import seedu.address.model.person.Species;
 
 /**
@@ -21,6 +23,8 @@ class JsonAdaptedPet {
     private final String species;
     private final String breed;
     private final String dateOfBirth;
+    private final String groomingNotes;
+    private final String photoPath;
 
     /**
      * Constructs a {@code JsonAdaptedPet} with the given pet details.
@@ -29,11 +33,15 @@ class JsonAdaptedPet {
     public JsonAdaptedPet(@JsonProperty("petName") String petName,
                           @JsonProperty("species") String species,
                           @JsonProperty("breed") String breed,
-                          @JsonProperty("dateOfBirth") String dateOfBirth) {
+                          @JsonProperty("dateOfBirth") String dateOfBirth,
+                          @JsonProperty("groomingNotes") String groomingNotes,
+                          @JsonProperty("photoPath") String photoPath) {
         this.petName = petName;
         this.species = species;
         this.breed = breed;
         this.dateOfBirth = dateOfBirth;
+        this.groomingNotes = groomingNotes;
+        this.photoPath = photoPath;
     }
 
     /**
@@ -44,6 +52,8 @@ class JsonAdaptedPet {
         species = source.getSpecies().map(s -> s.value).orElse(null);
         breed = source.getBreed().map(b -> b.value).orElse(null);
         dateOfBirth = source.getDateOfBirth().map(d -> d.toStorageString()).orElse(null);
+        groomingNotes = source.getGroomingNotes().map(g -> g.value).orElse(null);
+        photoPath = source.getPhotoPath().map(p -> p.value).orElse(null);
     }
 
     /**
@@ -94,6 +104,25 @@ class JsonAdaptedPet {
             modelDateOfBirth = null;
         }
 
-        return new Pet(modelName, modelSpecies, modelBreed, modelDateOfBirth);
+        // Validate and parse grooming notes (optional field)
+        final GroomingNotes modelGroomingNotes;
+        if (groomingNotes != null) {
+            if (!GroomingNotes.isValidGroomingNotes(groomingNotes)) {
+                throw new IllegalValueException(GroomingNotes.MESSAGE_CONSTRAINTS);
+            }
+            modelGroomingNotes = new GroomingNotes(groomingNotes);
+        } else {
+            modelGroomingNotes = null;
+        }
+
+        // Parse photo path (optional field, uses fromStorage to skip file existence check)
+        final PhotoPath modelPhotoPath;
+        if (photoPath != null) {
+            modelPhotoPath = PhotoPath.fromStorage(photoPath);
+        } else {
+            modelPhotoPath = null;
+        }
+
+        return new Pet(modelName, modelSpecies, modelBreed, modelDateOfBirth, modelGroomingNotes, modelPhotoPath);
     }
 }

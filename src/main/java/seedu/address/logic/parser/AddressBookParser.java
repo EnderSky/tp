@@ -8,16 +8,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.AddNoteCommand;
 import seedu.address.logic.commands.AddPersonCommand;
 import seedu.address.logic.commands.AddPetCommand;
+import seedu.address.logic.commands.AddPhotoCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DeleteNoteCommand;
 import seedu.address.logic.commands.DeletePersonCommand;
 import seedu.address.logic.commands.DeletePetCommand;
+import seedu.address.logic.commands.DeletePhotoCommand;
 import seedu.address.logic.commands.EditClientCommand;
+import seedu.address.logic.commands.EditNoteCommand;
 import seedu.address.logic.commands.EditPetCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FilterCommand;
+import seedu.address.logic.commands.FindClientCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindPetCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ViewClientCommand;
@@ -118,6 +126,34 @@ public class AddressBookParser {
         case ViewPetCommand.COMMAND_WORD_ALIAS:
             return new ViewPetCommandParser().parse(arguments);
 
+        case FindClientCommand.COMMAND_WORD:
+        case FindClientCommand.COMMAND_WORD_ALIAS:
+            return new FindClientCommandParser().parse(arguments);
+
+        case FindPetCommand.COMMAND_WORD:
+        case FindPetCommand.COMMAND_WORD_ALIAS:
+            return new FindPetCommandParser().parse(arguments);
+
+        case AddNoteCommand.COMMAND_WORD:
+        case AddNoteCommand.COMMAND_WORD_ALIAS:
+            return new AddNoteCommandParser().parse(arguments);
+
+        case EditNoteCommand.COMMAND_WORD:
+        case EditNoteCommand.COMMAND_WORD_ALIAS:
+            return new EditNoteCommandParser().parse(arguments);
+
+        case DeleteNoteCommand.COMMAND_WORD:
+        case DeleteNoteCommand.COMMAND_WORD_ALIAS:
+            return new DeleteNoteCommandParser().parse(arguments);
+
+        case AddPhotoCommand.COMMAND_WORD:
+        case AddPhotoCommand.COMMAND_WORD_ALIAS:
+            return new AddPhotoCommandParser().parse(arguments);
+
+        case DeletePhotoCommand.COMMAND_WORD:
+        case DeletePhotoCommand.COMMAND_WORD_ALIAS:
+            return new DeletePhotoCommandParser().parse(arguments);
+
         default:
             return null; // Not a recognized two-word command
         }
@@ -132,13 +168,13 @@ public class AddressBookParser {
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
-        case FindCommand.COMMAND_WORD:
-        case FindCommand.COMMAND_WORD_ALIAS:
-            return new FindCommandParser().parse(arguments);
-
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_WORD_ALIAS:
             return new ListCommand();
+
+        case FilterCommand.COMMAND_WORD:
+        case FilterCommand.COMMAND_WORD_ALIAS:
+            return new FilterCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
@@ -167,6 +203,11 @@ public class AddressBookParser {
             throw new ParseException("Did you mean:\n"
                     + "  • view client (vc) - View client details\n"
                     + "  • view pet (vp) - View pet details");
+
+        case "find":
+            throw new ParseException("Did you mean:\n"
+                    + "  • find client (fc) - Find clients by name\n"
+                    + "  • find pet (fp) - Find pets by name");
 
         default:
             logger.finer("This user input caused a ParseException: " + commandWord + arguments);

@@ -13,8 +13,10 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Breed;
 import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.GroomingNotes;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.PhotoPath;
 import seedu.address.model.person.Species;
 import seedu.address.model.tag.Tag;
 
@@ -196,5 +198,35 @@ public class ParserUtil {
         } catch (ParseException pe) {
             throw new ParseException(MESSAGE_INVALID_PET_INDEX_FORMAT);
         }
+    }
+
+    /**
+     * Parses a {@code String groomingNotes} into a {@code GroomingNotes}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code groomingNotes} is invalid.
+     */
+    public static GroomingNotes parseGroomingNotes(String groomingNotes) throws ParseException {
+        requireNonNull(groomingNotes);
+        String trimmedNotes = groomingNotes.trim();
+        if (!GroomingNotes.isValidGroomingNotes(trimmedNotes)) {
+            throw new ParseException(GroomingNotes.MESSAGE_CONSTRAINTS);
+        }
+        return new GroomingNotes(trimmedNotes);
+    }
+
+    /**
+     * Parses a {@code String photoPath} into a {@code PhotoPath}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code photoPath} is invalid.
+     */
+    public static PhotoPath parsePhotoPath(String photoPath) throws ParseException {
+        requireNonNull(photoPath);
+        String trimmedPath = photoPath.trim();
+        if (!PhotoPath.isValidPhotoPath(trimmedPath)) {
+            throw new ParseException(PhotoPath.MESSAGE_CONSTRAINTS);
+        }
+        return new PhotoPath(trimmedPath);
     }
 }

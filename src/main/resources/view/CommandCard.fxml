@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
+
+<VBox fx:id="cardPane" styleClass="command-card" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <padding>
+        <Insets top="12" right="16" bottom="12" left="16" />
+    </padding>
+    
+    <!-- Header: Command name + alias + copy button -->
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Label fx:id="commandWordLabel" styleClass="command-word" />
+        <Label fx:id="aliasLabel" styleClass="command-alias" />
+        <Region HBox.hgrow="ALWAYS" />
+        <Button fx:id="copyButton" styleClass="copy-button" text="📋 Copy" onAction="#handleCopy" />
+    </HBox>
+    
+    <!-- Description -->
+    <Label fx:id="descriptionLabel" styleClass="command-description" wrapText="true">
+        <VBox.margin>
+            <Insets top="8" />
+        </VBox.margin>
+    </Label>
+    
+    <!-- Usage section -->
+    <VBox styleClass="command-section">
+        <VBox.margin>
+            <Insets top="10" />
+        </VBox.margin>
+        <Label text="Usage:" styleClass="section-label" />
+        <Label fx:id="usageLabel" styleClass="command-usage" wrapText="true">
+            <VBox.margin>
+                <Insets top="4" left="8" />
+            </VBox.margin>
+        </Label>
+    </VBox>
+    
+    <!-- Example section (conditionally shown) -->
+    <VBox fx:id="exampleSection" styleClass="command-section">
+        <VBox.margin>
+            <Insets top="8" />
+        </VBox.margin>
+        <Label text="Example:" styleClass="section-label" />
+        <Label fx:id="exampleLabel" styleClass="command-example" wrapText="true">
+            <VBox.margin>
+                <Insets top="4" left="8" />
+            </VBox.margin>
+        </Label>
+    </VBox>
+    
+    <!-- Notes section (conditionally shown) -->
+    <VBox fx:id="notesSection" styleClass="command-section">
+        <VBox.margin>
+            <Insets top="8" />
+        </VBox.margin>
+        <Label fx:id="notesLabel" styleClass="command-notes" wrapText="true" />
+    </VBox>
+</VBox>

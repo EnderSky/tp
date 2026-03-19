@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.Objects;
 import java.util.Optional;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Pet;
@@ -31,11 +32,20 @@ public class CommandResult {
     /** The owner of the pet to view (needed for view pet command). */
     private final Person petOwner;
 
+    /** A file picker dialog should be shown to the user. */
+    private final boolean needsFilePicker;
+
+    /** The client index for file picker requests. */
+    private final Index clientIndex;
+
+    /** The pet index for file picker requests. */
+    private final Index petIndex;
+
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
-        this(feedbackToUser, showHelp, exit, null, null, null);
+        this(feedbackToUser, showHelp, exit, null, null, null, false, null, null);
     }
 
     /**
@@ -43,12 +53,24 @@ public class CommandResult {
      */
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit,
                          Person personToView, Pet petToView, Person petOwner) {
+        this(feedbackToUser, showHelp, exit, personToView, petToView, petOwner, false, null, null);
+    }
+
+    /**
+     * Constructs a {@code CommandResult} with all fields including file picker support.
+     */
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit,
+                         Person personToView, Pet petToView, Person petOwner,
+                         boolean needsFilePicker, Index clientIndex, Index petIndex) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
         this.personToView = personToView;
         this.petToView = petToView;
         this.petOwner = petOwner;
+        this.needsFilePicker = needsFilePicker;
+        this.clientIndex = clientIndex;
+        this.petIndex = petIndex;
     }
 
     /**
@@ -70,7 +92,16 @@ public class CommandResult {
      * Creates a {@code CommandResult} for viewing a pet in the detail panel.
      */
     public static CommandResult withPetView(String feedbackToUser, Pet pet, Person owner) {
-        return new CommandResult(feedbackToUser, false, false, null, pet, owner);
+        return new CommandResult(feedbackToUser, false, false, null, pet, owner, false, null, null);
+    }
+
+    /**
+     * Creates a {@code CommandResult} for requesting a file picker dialog.
+     */
+    public static CommandResult withFilePickerRequest(String feedbackToUser,
+                                                      Index clientIndex, Index petIndex) {
+        return new CommandResult(feedbackToUser, false, false, null, null, null,
+                true, clientIndex, petIndex);
     }
 
     public String getFeedbackToUser() {
@@ -120,6 +151,27 @@ public class CommandResult {
         return Optional.ofNullable(petOwner);
     }
 
+    /**
+     * Returns true if this command result requests a file picker dialog.
+     */
+    public boolean needsFilePicker() {
+        return needsFilePicker;
+    }
+
+    /**
+     * Returns the client index for file picker requests.
+     */
+    public Index getClientIndex() {
+        return clientIndex;
+    }
+
+    /**
+     * Returns the pet index for file picker requests.
+     */
+    public Index getPetIndex() {
+        return petIndex;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -137,12 +189,16 @@ public class CommandResult {
                 && exit == otherCommandResult.exit
                 && Objects.equals(personToView, otherCommandResult.personToView)
                 && Objects.equals(petToView, otherCommandResult.petToView)
-                && Objects.equals(petOwner, otherCommandResult.petOwner);
+                && Objects.equals(petOwner, otherCommandResult.petOwner)
+                && needsFilePicker == otherCommandResult.needsFilePicker
+                && Objects.equals(clientIndex, otherCommandResult.clientIndex)
+                && Objects.equals(petIndex, otherCommandResult.petIndex);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, showHelp, exit, personToView, petToView, petOwner);
+        return Objects.hash(feedbackToUser, showHelp, exit, personToView, petToView, petOwner,
+                needsFilePicker, clientIndex, petIndex);
     }
 
     @Override
@@ -154,6 +210,9 @@ public class CommandResult {
                 .add("personToView", personToView)
                 .add("petToView", petToView)
                 .add("petOwner", petOwner)
+                .add("needsFilePicker", needsFilePicker)
+                .add("clientIndex", clientIndex)
+                .add("petIndex", petIndex)
                 .toString();
     }
 

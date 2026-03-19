@@ -7,8 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import seedu.address.model.person.Pet;
 
 /**
@@ -24,7 +24,7 @@ public class PetThumbnailCard extends UiPart<Region> {
     private final int petIndex;
 
     @FXML
-    private VBox cardPane;
+    private HBox cardPane;
 
     @FXML
     private Label indexLabel;
@@ -63,7 +63,7 @@ public class PetThumbnailCard extends UiPart<Region> {
         // Set pet name
         nameLabel.setText(pet.getName().fullName);
 
-        // Set species (centered on its own line)
+        // Set species
         if (pet.getSpecies().isPresent()) {
             speciesLabel.setText(pet.getSpecies().get().value);
             speciesLabel.setVisible(true);
@@ -73,7 +73,7 @@ public class PetThumbnailCard extends UiPart<Region> {
             speciesLabel.setManaged(false);
         }
 
-        // Set breed (centered on its own line below species)
+        // Set breed
         if (pet.getBreed().isPresent()) {
             breedLabel.setText(pet.getBreed().get().value);
             breedLabel.setVisible(true);
@@ -100,7 +100,7 @@ public class PetThumbnailCard extends UiPart<Region> {
             try {
                 String photoPath = pet.getPhotoPath().get().value;
                 File photoFile = new File(photoPath);
-                Image image = new Image(photoFile.toURI().toString(), 80, 80, true, true);
+                Image image = new Image(photoFile.toURI().toString(), 140, 140, true, true);
                 thumbnailView.setImage(image);
                 thumbnailView.setVisible(true);
                 thumbnailView.setManaged(true);
@@ -121,7 +121,7 @@ public class PetThumbnailCard extends UiPart<Region> {
         try {
             // Try to load a placeholder from resources
             Image placeholder = new Image(getClass().getResourceAsStream("/images/pet_placeholder.png"),
-                    80, 80, true, true);
+                    140, 140, true, true);
             thumbnailView.setImage(placeholder);
             thumbnailView.setVisible(true);
             thumbnailView.setManaged(true);

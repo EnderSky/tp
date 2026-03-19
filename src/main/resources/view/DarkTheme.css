@@ -562,8 +562,56 @@
     -fx-text-alignment: center;
 }
 
+.pet-thumbnail-index-overlay {
+    -fx-font-size: 9pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #5a9fd4;
+    -fx-background-color: rgba(29, 29, 29, 0.8);
+    -fx-background-radius: 10;
+    -fx-padding: 2 6 2 6;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 2, 0, 0, 1);
+}
+
 .pet-thumbnail-image {
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 3, 0, 0, 1);
+}
+
+.pet-thumbnail-horizontal-image {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 4, 0, 0, 1);
+    -fx-background-color: derive(#1d1d1d, 10%);
+    -fx-background-radius: 4;
+}
+
+.pet-thumbnail-horizontal-index {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #5a9fd4;
+    -fx-alignment: top-left;
+    -fx-text-alignment: left;
+}
+
+.pet-thumbnail-horizontal-name {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-alignment: top-left;
+    -fx-text-alignment: left;
+}
+
+.pet-thumbnail-horizontal-species {
+    -fx-font-size: 9pt;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #aaaaaa;
+    -fx-alignment: top-left;
+    -fx-text-alignment: left;
+}
+
+.pet-thumbnail-horizontal-breed {
+    -fx-font-size: 9pt;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #aaaaaa;
+    -fx-alignment: top-left;
+    -fx-text-alignment: left;
 }
 
 .pet-thumbnail-name {
@@ -573,6 +621,24 @@
     -fx-padding: 2 0 0 0;
     -fx-alignment: center;
     -fx-text-alignment: center;
+}
+
+.pet-thumbnail-hero-name {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-padding: 5 0 2 0;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+
+.pet-thumbnail-hero-info {
+    -fx-font-size: 9pt;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #aaaaaa;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-padding: 0 0 2 0;
 }
 
 .pet-thumbnail-info {

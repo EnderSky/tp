@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PATH;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -19,6 +18,7 @@ import seedu.address.model.person.PhotoPath;
 
 /**
  * Adds a photo to a pet identified by CLIENT_INDEX.PET_INDEX notation.
+ * The photo file will be selected via a GUI file chooser dialog.
  */
 public class AddPhotoCommand extends Command {
 
@@ -27,20 +27,34 @@ public class AddPhotoCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds a photo to the pet identified by CLIENT_INDEX.PET_INDEX notation.\n"
-            + "Parameters: CLIENT_INDEX.PET_INDEX " + PREFIX_PATH + "FILEPATH\n"
-            + "Example: " + COMMAND_WORD + " 1.2 " + PREFIX_PATH + "C:/photos/fluffy.jpg";
+            + "A file chooser dialog will open to select the photo file.\n"
+            + "Parameters: CLIENT_INDEX.PET_INDEX\n"
+            + "Example: " + COMMAND_WORD + " 1.2";
 
     public static final String MESSAGE_ADD_PHOTO_SUCCESS = "Added photo to pet %1$s (Owner: %2$s): %3$s";
     public static final String MESSAGE_INVALID_PET_INDEX = "The pet index provided is invalid for this client.";
     public static final String MESSAGE_PET_ALREADY_HAS_PHOTO =
             "This pet already has a photo. Use 'delete photo' first to remove the existing photo.";
+    public static final String MESSAGE_SELECT_PHOTO = "Please select a photo file for %1$s (Owner: %2$s)...";
 
     private final Index clientIndex;
     private final Index petIndex;
     private final PhotoPath photoPath;
 
     /**
+     * Creates an AddPhotoCommand to request a file picker for the pet at the specified indices.
+     */
+    public AddPhotoCommand(Index clientIndex, Index petIndex) {
+        requireNonNull(clientIndex);
+        requireNonNull(petIndex);
+        this.clientIndex = clientIndex;
+        this.petIndex = petIndex;
+        this.photoPath = null; // Will be filled in by file picker
+    }
+
+    /**
      * Creates an AddPhotoCommand to add a photo to the pet at the specified indices.
+     * This constructor is used when the photo path has been selected via the file chooser.
      */
     public AddPhotoCommand(Index clientIndex, Index petIndex, PhotoPath photoPath) {
         requireNonNull(clientIndex);
@@ -72,6 +86,14 @@ public class AddPhotoCommand extends Command {
         // Check if pet already has a photo
         if (targetPet.getPhotoPath().isPresent()) {
             throw new CommandException(MESSAGE_PET_ALREADY_HAS_PHOTO);
+        }
+
+        // If no photo path provided, request file picker from UI
+        if (photoPath == null) {
+            return CommandResult.withFilePickerRequest(
+                    String.format(MESSAGE_SELECT_PHOTO, targetPet.getName(), owner.getName().fullName),
+                    clientIndex,
+                    petIndex);
         }
 
         // Create updated pet with photo
@@ -113,9 +135,18 @@ public class AddPhotoCommand extends Command {
         }
 
         AddPhotoCommand otherCommand = (AddPhotoCommand) other;
-        return clientIndex.equals(otherCommand.clientIndex)
-                && petIndex.equals(otherCommand.petIndex)
-                && photoPath.equals(otherCommand.photoPath);
+        boolean indicesEqual = clientIndex.equals(otherCommand.clientIndex)
+                && petIndex.equals(otherCommand.petIndex);
+
+        // Handle null photoPath case
+        if (photoPath == null && otherCommand.photoPath == null) {
+            return indicesEqual;
+        }
+        if (photoPath == null || otherCommand.photoPath == null) {
+            return false;
+        }
+
+        return indicesEqual && photoPath.equals(otherCommand.photoPath);
     }
 
     @Override

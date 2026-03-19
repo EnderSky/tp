@@ -1,17 +1,409 @@
+/* ============================================
+   HAIRY PAWTER HELP WINDOW - PREMIUM DARK THEME
+   ============================================ */
+
+/* Root window styling */
+.help-window-root {
+    -fx-background-color: #1d1d1d;
+    -fx-padding: 0;
+}
+
+/* Header styling */
+.help-header {
+    -fx-background-color: derive(#1d1d1d, 10%);
+    -fx-padding: 15 20 15 20;
+    -fx-border-color: transparent transparent #404040 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.help-title {
+    -fx-font-size: 20pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+/* Search container styling */
+.search-container {
+    -fx-background-color: derive(#1d1d1d, 15%);
+    -fx-background-radius: 6;
+    -fx-padding: 8 12 8 12;
+    -fx-border-color: #404040;
+    -fx-border-radius: 6;
+    -fx-border-width: 1;
+}
+
+.search-container:focused-within {
+    -fx-border-color: #0078d4;
+    -fx-effect: dropshadow(gaussian, rgba(0, 120, 212, 0.3), 4, 0, 0, 0);
+}
+
+.search-icon {
+    -fx-font-size: 14pt;
+    -fx-text-fill: #888888;
+}
+
+.search-field {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-padding: 4 0 4 0;
+    -fx-prompt-text-fill: #888888;
+}
+
+.search-field:focused {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+/* Tab pane styling */
+.help-tabs {
+    -fx-background-color: #1d1d1d;
+    -fx-padding: 0;
+}
+
+.help-tabs .tab-header-area {
+    -fx-padding: 8 0 0 0;
+    -fx-background-color: derive(#1d1d1d, 5%);
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+.help-tabs .tab-header-area .tab-header-background {
+    -fx-background-color: transparent;
+}
+
+.help-tabs .tab {
+    -fx-background-color: derive(#1d1d1d, 10%);
+    -fx-background-radius: 8 8 0 0;
+    -fx-border-color: #404040;
+    -fx-border-width: 1 1 0 1;
+    -fx-border-radius: 8 8 0 0;
+    -fx-padding: 8 16 8 16;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 11pt;
+}
+
+.help-tabs .tab:selected {
+    -fx-background-color: #1d1d1d;
+    -fx-border-color: #0078d4 #404040 #1d1d1d #404040;
+    -fx-border-width: 2 1 2 1;
+}
+
+.help-tabs .tab:hover:!selected {
+    -fx-background-color: derive(#1d1d1d, 15%);
+}
+
+.help-tabs .tab .tab-label {
+    -fx-text-fill: #cccccc;
+    -fx-font-weight: normal;
+}
+
+.help-tabs .tab:selected .tab-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+.help-tabs .tab-content-area {
+    -fx-background-color: #1d1d1d;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0;
+}
+
+/* Tab scroll panes */
+.tab-scroll-pane {
+    -fx-background-color: #1d1d1d;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+    -fx-fit-to-width: true;
+    -fx-fit-to-height: false;
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: as-needed;
+}
+
+.tab-scroll-pane .viewport {
+    -fx-background-color: #1d1d1d;
+}
+
+.tab-scroll-pane .scroll-bar:vertical {
+    -fx-background-color: derive(#1d1d1d, 10%);
+    -fx-pref-width: 14;
+    -fx-min-width: 14;
+    -fx-max-width: 14;
+    -fx-background-radius: 0;
+}
+
+.tab-scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: derive(#1d1d1d, 8%);
+    -fx-background-radius: 0;
+    -fx-border-color: transparent;
+}
+
+.tab-scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #555555;
+    -fx-background-radius: 7;
+    -fx-background-insets: 2;
+}
+
+.tab-scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #666666;
+}
+
+.tab-scroll-pane .scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: #777777;
+}
+
+.tab-scroll-pane .scroll-bar:vertical .increment-button,
+.tab-scroll-pane .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-shape: "";
+}
+
+.tab-scroll-pane .scroll-bar:vertical .increment-arrow,
+.tab-scroll-pane .scroll-bar:vertical .decrement-arrow {
+    -fx-background-color: transparent;
+    -fx-shape: "";
+    -fx-padding: 0;
+}
+
+/* Tab content styling */
+.tab-content {
+    -fx-background-color: #1d1d1d;
+    -fx-padding: 0;
+}
+
+.category-description-pane {
+    -fx-background-color: derive(#1d1d1d, 8%);
+    -fx-background-radius: 0;
+    -fx-border-color: #404040;
+    -fx-border-radius: 0;
+    -fx-border-width: 1;
+    -fx-padding: 12 16 12 16;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 3, 0, 0, 1);
+}
+
+.category-description {
+    -fx-font-size: 13pt;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-text-fill: #cccccc;
+    -fx-font-style: italic;
+    -fx-padding: 0;
+}
+
+/* Command card styling */
+.command-card {
+    -fx-background-color: derive(#1d1d1d, 8%);
+    -fx-background-radius: 0;
+    -fx-border-color: #404040;
+    -fx-border-radius: 0;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 2);
+}
+
+.command-card:hover {
+    -fx-background-color: derive(#1d1d1d, 12%);
+    -fx-border-color: #555555;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 6, 0, 0, 2);
+}
+
+/* Command card elements */
+.command-word {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-text-fill: #0078d4;
+    -fx-font-weight: bold;
+}
+
+.command-alias {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-text-fill: #888888;
+    -fx-font-style: italic;
+}
+
+.command-description {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-text-fill: #ffffff;
+    -fx-wrap-text: true;
+}
+
+.command-section {
+    -fx-spacing: 4;
+}
+
+.section-label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #cccccc;
+    -fx-font-weight: bold;
+}
+
+.command-usage {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-text-fill: #ffd700;
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-radius: 0;
+    -fx-padding: 6 10 6 10;
+    -fx-wrap-text: true;
+}
+
+.command-example {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-text-fill: #90ee90;
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-radius: 0;
+    -fx-padding: 6 10 6 10;
+    -fx-wrap-text: true;
+}
+
+.command-notes {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-text-fill: #ffcc99;
+    -fx-background-color: derive(#1d1d1d, 15%);
+    -fx-background-radius: 0;
+    -fx-padding: 6 10 6 10;
+    -fx-wrap-text: true;
+}
+
+/* Copy button styling */
+.copy-button {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-background-color: #0078d4;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 0;
+    -fx-border-color: transparent;
+    -fx-padding: 5 10 5 10;
+    -fx-cursor: hand;
+}
+
+.copy-button:hover {
+    -fx-background-color: #106ebe;
+}
+
+.copy-button:pressed {
+    -fx-background-color: #005a9e;
+}
+
+.copy-button:disabled {
+    -fx-background-color: #555555;
+    -fx-text-fill: #888888;
+    -fx-cursor: default;
+}
+
+/* Search results styling */
+.search-result-count {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #cccccc;
+    -fx-padding: 0;
+}
+
+.no-results {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-text-fill: #888888;
+    -fx-font-style: italic;
+    -fx-alignment: center;
+    -fx-padding: 0;
+}
+
+/* Footer styling */
+.help-footer {
+    -fx-background-color: derive(#1d1d1d, 5%);
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 5 10 15 10;
+}
+
+.info-section {
+    -fx-background-color: derive(#1d1d1d, 10%);
+    -fx-background-radius: 0;
+    -fx-padding: 12;
+    -fx-border-color: #404040;
+    -fx-border-radius: 0;
+    -fx-border-width: 1;
+}
+
+.info-section-title {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+.info-section-content {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-text-fill: #cccccc;
+    -fx-wrap-text: true;
+    -fx-line-spacing: 2;
+}
+
+.keyboard-hints {
+    -fx-padding: 10 0 5 0;
+}
+
+.hint-text {
+    -fx-font-size: 9pt;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-text-fill: #888888;
+    -fx-background-color: derive(#1d1d1d, 15%);
+    -fx-background-radius: 0;
+    -fx-padding: 4 8 4 8;
+}
+
+.help-url {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-text-fill: #888888;
+}
+
+.url-copy-button {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-background-color: #6c757d;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 0;
+    -fx-border-color: transparent;
+    -fx-padding: 6 10 6 10;
+    -fx-cursor: hand;
+}
+
+.url-copy-button:hover {
+    -fx-background-color: #5a6268;
+}
+
+.url-copy-button:pressed {
+    -fx-background-color: #545b62;
+}
+
+/* Legacy compatibility for existing elements */
 #copyButton, #helpMessage {
     -fx-text-fill: white;
 }
 
 #copyButton {
-    -fx-background-color: dimgray;
+    -fx-background-color: #6c757d;
+    -fx-border-color: transparent;
+    -fx-background-radius: 4;
 }
 
 #copyButton:hover {
-    -fx-background-color: gray;
+    -fx-background-color: #5a6268;
 }
 
 #copyButton:armed {
-    -fx-background-color: darkgray;
+    -fx-background-color: #545b62;
 }
 
 #helpMessageContainer {

@@ -5,39 +5,129 @@
 <?import javafx.scene.Scene?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.stage.Stage?>
 
-<fx:root minWidth="600" minHeight="500" title="Help - Hairy Pawter" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-  <icons>
-    <Image url="@/images/help_icon.png" />
-  </icons>
-  <scene>
-    <Scene>
-      <stylesheets>
-        <URL value="@HelpWindow.css" />
-      </stylesheets>
+<fx:root minWidth="600" minHeight="500" title="Help - Hairy Pawter Command Reference" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <icons>
+        <Image url="@/images/help_icon.png" />
+    </icons>
+    <scene>
+        <Scene>
+            <stylesheets>
+                <URL value="@HelpWindow.css" />
+            </stylesheets>
 
-      <VBox alignment="TOP_CENTER" spacing="10">
-        <padding>
-          <Insets bottom="15" left="15" right="15" top="15" />
-        </padding>
+            <VBox styleClass="help-window-root">
+                <padding>
+                    <Insets bottom="15" left="15" right="15" top="15" />
+                </padding>
 
-        <!-- Command Summary TextArea -->
-        <TextArea fx:id="commandSummary" editable="false" wrapText="true"
-                  prefHeight="400" prefWidth="560"
-                  style="-fx-font-family: 'Consolas', 'Courier New', monospace; -fx-font-size: 12px; -fx-control-inner-background: #2d2d2d; -fx-text-fill: #e0e0e0;">
-        </TextArea>
+                <!-- Header with title and search -->
+                <HBox alignment="CENTER_LEFT" spacing="15" styleClass="help-header">
+                    <Label text="🐾 Hairy Pawter Command Reference" styleClass="help-title" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <HBox alignment="CENTER_RIGHT" spacing="8" styleClass="search-container">
+                        <Label text="🔍" styleClass="search-icon" />
+                        <TextField fx:id="searchField" promptText="Search commands... (Ctrl+F)" 
+                                   prefWidth="220" styleClass="search-field" />
+                    </HBox>
+                </HBox>
 
-        <!-- URL and Copy Button -->
-        <HBox alignment="CENTER" spacing="10">
-          <Label fx:id="helpMessage" text="Label" style="-fx-text-fill: #888888;" />
-          <Button fx:id="copyButton" mnemonicParsing="false" onAction="#copyUrl" text="Copy URL" />
-        </HBox>
-      </VBox>
-    </Scene>
-  </scene>
+                <!-- Tab Pane for categories -->
+                <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS" styleClass="help-tabs">
+                    <!-- Client Tab -->
+                    <Tab fx:id="clientTab" closable="false">
+                        <ScrollPane fitToWidth="true" fitToHeight="false" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="tab-scroll-pane">
+                            <VBox fx:id="clientContent" spacing="0" styleClass="tab-content">
+                                <padding>
+                                    <Insets top="12" right="20" bottom="12" left="20" />
+                                </padding>
+                            </VBox>
+                        </ScrollPane>
+                    </Tab>
+
+                    <!-- Pet Tab -->
+                    <Tab fx:id="petTab" closable="false">
+                        <ScrollPane fitToWidth="true" fitToHeight="false" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="tab-scroll-pane">
+                            <VBox fx:id="petContent" spacing="0" styleClass="tab-content">
+                                <padding>
+                                    <Insets top="12" right="20" bottom="12" left="20" />
+                                </padding>
+                            </VBox>
+                        </ScrollPane>
+                    </Tab>
+
+                    <!-- Notes & Photos Tab -->
+                    <Tab fx:id="notesPhotosTab" closable="false">
+                        <ScrollPane fitToWidth="true" fitToHeight="false" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="tab-scroll-pane">
+                            <VBox fx:id="notesPhotosContent" spacing="0" styleClass="tab-content">
+                                <padding>
+                                    <Insets top="12" right="20" bottom="12" left="20" />
+                                </padding>
+                            </VBox>
+                        </ScrollPane>
+                    </Tab>
+
+                    <!-- Search & Filter Tab -->
+                    <Tab fx:id="searchFilterTab" closable="false">
+                        <ScrollPane fitToWidth="true" fitToHeight="false" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="tab-scroll-pane">
+                            <VBox fx:id="searchFilterContent" spacing="0" styleClass="tab-content">
+                                <padding>
+                                    <Insets top="12" right="20" bottom="12" left="20" />
+                                </padding>
+                            </VBox>
+                        </ScrollPane>
+                    </Tab>
+
+                    <!-- General Tab -->
+                    <Tab fx:id="generalTab" closable="false">
+                        <ScrollPane fitToWidth="true" fitToHeight="false" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="tab-scroll-pane">
+                            <VBox fx:id="generalContent" spacing="0" styleClass="tab-content">
+                                <padding>
+                                    <Insets top="12" right="20" bottom="12" left="20" />
+                                </padding>
+                            </VBox>
+                        </ScrollPane>
+                    </Tab>
+
+                    <!-- All/Search Results Tab (shown when searching) -->
+                    <Tab fx:id="searchResultsTab" closable="false" text="🔎 Search Results">
+                        <ScrollPane fitToWidth="true" fitToHeight="false" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="tab-scroll-pane">
+                            <VBox fx:id="searchResultsContent" spacing="0" styleClass="tab-content">
+                                <padding>
+                                    <Insets top="12" right="20" bottom="12" left="20" />
+                                </padding>
+                            </VBox>
+                        </ScrollPane>
+                    </Tab>
+                </TabPane>
+
+                <!-- Footer with info sections -->
+                <VBox styleClass="help-footer" spacing="10">
+                    <!-- Keyboard shortcuts hint -->
+                    <HBox alignment="CENTER" spacing="20" styleClass="keyboard-hints">
+                        <Label text="Ctrl+1-5: Switch tabs" styleClass="hint-text" />
+                        <Label text="Ctrl+F: Search" styleClass="hint-text" />
+                        <Label text="Esc: Clear search" styleClass="hint-text" />
+                    </HBox>
+
+                    <!-- URL and Copy Button -->
+                    <HBox alignment="CENTER" spacing="10">
+                        <Label fx:id="helpMessage" styleClass="help-url" />
+                        <Button fx:id="copyButton" mnemonicParsing="false" onAction="#copyUrl" 
+                                text="📋 Copy URL" styleClass="url-copy-button" />
+                    </HBox>
+                </VBox>
+            </VBox>
+        </Scene>
+    </scene>
 </fx:root>

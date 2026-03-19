@@ -73,7 +73,7 @@ public class MainWindow extends UiPart<Stage> {
 
         setAccelerators();
 
-        helpWindow = new HelpWindow();
+        helpWindow = new HelpWindow(logic.getModel());
     }
 
     public Stage getPrimaryStage() {
@@ -133,8 +133,11 @@ public class MainWindow extends UiPart<Stage> {
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        // Set the split pane divider position to 70/30
-        splitPane.setDividerPositions(0.7);
+        // Set the split pane divider position to 80/20
+        splitPane.setDividerPositions(0.8);
+
+        // Set initial text on resultDisplay to welcome the user
+        resultDisplay.setFeedbackToUser("Welcome to Hairy Pawter! Type 'help' to see available commands.");
     }
 
     /**
@@ -199,6 +202,12 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
+            // Handle file picker request
+            if (commandResult.needsFilePicker()) {
+                handleFilePickerRequest(commandResult);
+                return commandResult;
+            }
+
             if (commandResult.isShowHelp()) {
                 handleHelp();
             }
@@ -225,6 +234,49 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("An error occurred while executing command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
+        }
+    }
+
+    /**
+     * Handles a file picker request from a command.
+     * Opens a file chooser dialog and re-executes the command with the selected file path.
+     */
+    private void handleFilePickerRequest(CommandResult commandResult) {
+        String selectedPath = FileChooserUtil.showImageFileChooser(primaryStage);
+
+        if (selectedPath != null) {
+            // User selected a file - construct the internal command with the path
+            String completeCommand = String.format(
+                    "add photo %d.%d path/%s",
+                    commandResult.getClientIndex().getOneBased(),
+                    commandResult.getPetIndex().getOneBased(),
+                    selectedPath
+            );
+
+            try {
+                // Execute the command internally with the selected path
+                CommandResult result = logic.executeWithPhotoPath(
+                        commandResult.getClientIndex(),
+                        commandResult.getPetIndex(),
+                        selectedPath);
+                logger.info("Photo added: " + result.getFeedbackToUser());
+                resultDisplay.setFeedbackToUser(result.getFeedbackToUser());
+
+                // Update detail panel if needed
+                if (result.hasPetToView()) {
+                    result.getPetToView().ifPresent(pet -> {
+                        result.getPetOwner().ifPresent(owner -> {
+                            detailPanel.showPetDetails(pet, owner);
+                        });
+                    });
+                }
+            } catch (CommandException e) {
+                logger.info("Error adding photo: " + e.getMessage());
+                resultDisplay.setFeedbackToUser(e.getMessage());
+            }
+        } else {
+            // User cancelled the file picker
+            resultDisplay.setFeedbackToUser("Photo selection cancelled.");
         }
     }
 }

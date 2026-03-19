@@ -192,17 +192,22 @@ public class AddressBookParser {
         case "add":
             throw new ParseException("Did you mean:\n"
                     + "  • add client (ac) - Add a new client\n"
-                    + "  • add pet (ap) - Add a pet to a client");
+                    + "  • add pet (ap) - Add a pet to a client\n"
+                    + "  • add note (an) - Add grooming notes to a pet\n"
+                    + "  • add photo (aph) - Add a photo to a pet");
 
         case "edit":
             throw new ParseException("Did you mean:\n"
                     + "  • edit client (ec) - Edit an existing client\n"
-                    + "  • edit pet (ep) - Edit an existing pet");
+                    + "  • edit pet (ep) - Edit an existing pet\n"
+                    + "  • edit note (en) - Edit grooming notes");
 
         case "delete":
             throw new ParseException("Did you mean:\n"
                     + "  • delete client (dc) - Delete a client\n"
-                    + "  • delete pet (dp) - Delete a pet");
+                    + "  • delete pet (dp) - Delete a pet\n"
+                    + "  • delete note (dn) - Delete grooming notes\n"
+                    + "  • delete photo (dph) - Delete a pet photo");
 
         case "view":
             throw new ParseException("Did you mean:\n"

@@ -4,34 +4,42 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<!-- Pet thumbnail card for grid display (120x110px fixed) -->
-<VBox fx:id="cardPane" styleClass="pet-thumbnail-card" alignment="CENTER"
-      prefWidth="120" prefHeight="110" minWidth="120" maxWidth="120" minHeight="110" maxHeight="110"
+<!-- Pet thumbnail card for grid display - Horizontal Rectangle Layout (180x80px) -->
+<HBox fx:id="cardPane" styleClass="pet-thumbnail-card" alignment="CENTER_LEFT"
+      prefWidth="200" prefHeight="100" minWidth="200" maxWidth="200" minHeight="100" maxHeight="100"
       xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <padding>
     <Insets top="5" right="5" bottom="5" left="5" />
   </padding>
 
-  <!-- Index and thumbnail row -->
-  <VBox alignment="CENTER" spacing="2">
-    <Label fx:id="indexLabel" styleClass="pet-thumbnail-index" />
-    <ImageView fx:id="thumbnailView" fitWidth="48" fitHeight="48" preserveRatio="true" styleClass="pet-thumbnail-image" />
+  <!-- Left side: Pet image (full height) -->
+  <ImageView fx:id="thumbnailView" fitWidth="90" fitHeight="90" preserveRatio="false" styleClass="pet-thumbnail-horizontal-image" />
+
+  <!-- Right side: Text information -->
+  <VBox alignment="TOP_LEFT" spacing="2" HBox.hgrow="ALWAYS">
+    <HBox.margin>
+      <Insets left="8" />
+    </HBox.margin>
+    
+    <!-- Index -->
+    <Label fx:id="indexLabel" styleClass="pet-thumbnail-horizontal-index" />
+    
+    <!-- Pet name -->
+    <Label fx:id="nameLabel" styleClass="pet-thumbnail-horizontal-name" wrapText="true" 
+           maxWidth="95" maxHeight="20" />
+    
+    <!-- Species -->
+    <Label fx:id="speciesLabel" styleClass="pet-thumbnail-horizontal-species" wrapText="true" 
+           maxWidth="95" maxHeight="16" />
+    
+    <!-- Breed -->
+    <Label fx:id="breedLabel" styleClass="pet-thumbnail-horizontal-breed" wrapText="true" 
+           maxWidth="95" maxHeight="16" />
   </VBox>
 
-  <!-- Pet name -->
-  <Label fx:id="nameLabel" styleClass="pet-thumbnail-name" wrapText="true" alignment="CENTER" 
-         textAlignment="CENTER" maxWidth="110" maxHeight="28" />
-
-  <!-- Species info (centered) -->
-  <Label fx:id="speciesLabel" styleClass="pet-thumbnail-species" wrapText="true" alignment="CENTER" 
-         textAlignment="CENTER" maxWidth="110" maxHeight="14" />
-
-  <!-- Breed info (centered, below species) -->
-  <Label fx:id="breedLabel" styleClass="pet-thumbnail-breed" wrapText="true" alignment="CENTER" 
-         textAlignment="CENTER" maxWidth="110" maxHeight="14" />
-
-  <!-- Tags -->
+  <!-- Tags (hidden by default) -->
   <FlowPane fx:id="tagsPane" styleClass="pet-thumbnail-tags" alignment="CENTER" hgap="2" vgap="2" />
-</VBox>
+</HBox>

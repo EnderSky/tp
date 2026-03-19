@@ -60,7 +60,10 @@ public class CommandResultTest {
                 + ", exit=" + commandResult.isExit()
                 + ", personToView=" + commandResult.getPersonToView().orElse(null)
                 + ", petToView=" + commandResult.getPetToView().orElse(null)
-                + ", petOwner=" + commandResult.getPetOwner().orElse(null) + "}";
+                + ", petOwner=" + commandResult.getPetOwner().orElse(null)
+                + ", needsFilePicker=" + commandResult.needsFilePicker()
+                + ", clientIndex=" + commandResult.getClientIndex()
+                + ", petIndex=" + commandResult.getPetIndex() + "}";
         assertEquals(expected, commandResult.toString());
     }
 }

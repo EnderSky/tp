@@ -92,7 +92,7 @@
     -fx-border-width: 2 1 2 1;
 }
 
-.help-tabs .tab:hover:!selected {
+.help-tabs .tab:hover: !selected {
     -fx-background-color: derive(#1d1d1d, 15%);
 }
 
@@ -388,7 +388,8 @@
 }
 
 /* Legacy compatibility for existing elements */
-#copyButton, #helpMessage {
+#copyButton,
+#helpMessage {
     -fx-text-fill: white;
 }
 

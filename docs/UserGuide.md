@@ -160,11 +160,11 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+HairyPawter data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+HairyPawter data are saved automatically as a JSON file `[JAR file location]/data/hairypawter.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 

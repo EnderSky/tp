@@ -94,21 +94,28 @@ public class PetThumbnailCard extends UiPart<Region> {
 
     /**
      * Loads and displays the pet's photo if available.
-     * Uses a placeholder image if no photo is set or if the file is not found.
+     * Uses appropriate placeholder images:
+     * - "photo_not_found.png" if a photo path exists but the file cannot be found
+     * - "pet_placeholder.png" if no photo is assigned to the pet
      */
     private void loadPetPhoto() {
-        if (pet.getPhotoPath().isPresent() && pet.getPhotoPath().get().fileExists()) {
-            try {
-                String photoPath = pet.getPhotoPath().get().value;
-                File photoFile = new File(photoPath);
-                Image image = new Image(photoFile.toURI().toString());
-                configureImageViewWithCropping(image);
-            } catch (Exception e) {
-                // If image loading fails, use placeholder
-                loadPlaceholderImage();
+        if (pet.getPhotoPath().isPresent()) {
+            if (pet.getPhotoPath().get().fileExists()) {
+                try {
+                    String photoPath = pet.getPhotoPath().get().value;
+                    File photoFile = new File(photoPath);
+                    Image image = new Image(photoFile.toURI().toString());
+                    configureImageViewWithCropping(image);
+                } catch (Exception e) {
+                    // If image loading fails, show file not found placeholder
+                    loadFileNotFoundImage();
+                }
+            } else {
+                // Photo path exists but file is missing - show file not found placeholder
+                loadFileNotFoundImage();
             }
         } else {
-            // No photo or file doesn't exist - use placeholder
+            // No photo assigned - use default placeholder
             loadPlaceholderImage();
         }
     }
@@ -155,6 +162,19 @@ public class PetThumbnailCard extends UiPart<Region> {
             // If placeholder doesn't exist, hide the image view
             thumbnailView.setVisible(false);
             thumbnailView.setManaged(false);
+        }
+    }
+
+    /**
+     * Loads a "file not found" placeholder image for pets whose photo file is missing.
+     */
+    private void loadFileNotFoundImage() {
+        try {
+            Image fileNotFound = new Image(getClass().getResourceAsStream("/images/photo_not_found.png"));
+            configureImageViewWithCropping(fileNotFound);
+        } catch (Exception e) {
+            // Fallback to regular placeholder if file not found image is missing
+            loadPlaceholderImage();
         }
     }
 

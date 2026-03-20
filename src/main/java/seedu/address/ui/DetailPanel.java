@@ -163,23 +163,30 @@ public class DetailPanel extends UiPart<Region> {
 
     /**
      * Loads and displays the pet's photo in the detail panel.
-     * Uses a larger size for the detail view compared to the thumbnail.
+     * Uses appropriate placeholder images:
+     * - "photo_not_found.png" if a photo path exists but the file cannot be found
+     * - "pet_placeholder.png" if no photo is assigned to the pet
      */
     private void loadPetPhoto(Pet pet) {
-        if (pet.getPhotoPath().isPresent() && pet.getPhotoPath().get().fileExists()) {
-            try {
-                String photoPath = pet.getPhotoPath().get().value;
-                File photoFile = new File(photoPath);
-                Image image = new Image(photoFile.toURI().toString(), 300, 300, true, true);
-                photoView.setImage(image);
-                photoContainer.setVisible(true);
-                photoContainer.setManaged(true);
-            } catch (Exception e) {
-                // If image loading fails, use placeholder
-                loadPlaceholderPhoto();
+        if (pet.getPhotoPath().isPresent()) {
+            if (pet.getPhotoPath().get().fileExists()) {
+                try {
+                    String photoPath = pet.getPhotoPath().get().value;
+                    File photoFile = new File(photoPath);
+                    Image image = new Image(photoFile.toURI().toString(), 300, 300, true, true);
+                    photoView.setImage(image);
+                    photoContainer.setVisible(true);
+                    photoContainer.setManaged(true);
+                } catch (Exception e) {
+                    // If image loading fails, show file not found placeholder
+                    loadFileNotFoundPhoto();
+                }
+            } else {
+                // Photo path exists but file is missing - show file not found placeholder
+                loadFileNotFoundPhoto();
             }
         } else {
-            // No photo or file doesn't exist - use placeholder
+            // No photo assigned - use default placeholder
             loadPlaceholderPhoto();
         }
     }
@@ -199,6 +206,22 @@ public class DetailPanel extends UiPart<Region> {
             // If placeholder doesn't exist, hide the photo section
             photoContainer.setVisible(false);
             photoContainer.setManaged(false);
+        }
+    }
+
+    /**
+     * Loads a "file not found" placeholder image for pets whose photo file is missing.
+     */
+    private void loadFileNotFoundPhoto() {
+        try {
+            Image fileNotFound = new Image(getClass().getResourceAsStream("/images/photo_not_found.png"),
+                    300, 300, true, true);
+            photoView.setImage(fileNotFound);
+            photoContainer.setVisible(true);
+            photoContainer.setManaged(true);
+        } catch (Exception e) {
+            // Fallback to regular placeholder if file not found image is missing
+            loadPlaceholderPhoto();
         }
     }
 

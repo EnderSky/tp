@@ -77,17 +77,6 @@
                         </ScrollPane>
                     </Tab>
 
-                    <!-- Search & Filter Tab -->
-                    <Tab fx:id="searchFilterTab" closable="false">
-                        <ScrollPane fitToWidth="true" fitToHeight="false" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="tab-scroll-pane">
-                            <VBox fx:id="searchFilterContent" spacing="0" styleClass="tab-content">
-                                <padding>
-                                    <Insets top="12" right="20" bottom="12" left="20" />
-                                </padding>
-                            </VBox>
-                        </ScrollPane>
-                    </Tab>
-
                     <!-- General Tab -->
                     <Tab fx:id="generalTab" closable="false">
                         <ScrollPane fitToWidth="true" fitToHeight="false" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="tab-scroll-pane">
@@ -115,7 +104,7 @@
                 <VBox styleClass="help-footer" spacing="10">
                     <!-- Keyboard shortcuts hint -->
                     <HBox alignment="CENTER" spacing="20" styleClass="keyboard-hints">
-                        <Label text="Ctrl+1-5: Switch tabs" styleClass="hint-text" />
+                        <Label text="Ctrl+1-4: Switch tabs" styleClass="hint-text" />
                         <Label text="Ctrl+F: Search" styleClass="hint-text" />
                         <Label text="Esc: Clear search" styleClass="hint-text" />
                     </HBox>

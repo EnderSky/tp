@@ -23,9 +23,7 @@ import seedu.address.logic.commands.EditClientCommand;
 import seedu.address.logic.commands.EditNoteCommand;
 import seedu.address.logic.commands.EditPetCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FilterCommand;
-import seedu.address.logic.commands.FindClientCommand;
-import seedu.address.logic.commands.FindPetCommand;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ViewCommand;
@@ -121,14 +119,6 @@ public class AddressBookParser {
         case ViewCommand.COMMAND_WORD_ALIAS:
             return new ViewCommandParser().parse(arguments);
 
-        case FindClientCommand.COMMAND_WORD:
-        case FindClientCommand.COMMAND_WORD_ALIAS:
-            return new FindClientCommandParser().parse(arguments);
-
-        case FindPetCommand.COMMAND_WORD:
-        case FindPetCommand.COMMAND_WORD_ALIAS:
-            return new FindPetCommandParser().parse(arguments);
-
         case AddNoteCommand.COMMAND_WORD:
         case AddNoteCommand.COMMAND_WORD_ALIAS:
             return new AddNoteCommandParser().parse(arguments);
@@ -172,9 +162,9 @@ public class AddressBookParser {
         case ListCommand.COMMAND_WORD_ALIAS:
             return new ListCommand();
 
-        case FilterCommand.COMMAND_WORD:
-        case FilterCommand.COMMAND_WORD_ALIAS:
-            return new FilterCommandParser().parse(arguments);
+        case FindCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_WORD_ALIAS:
+            return new FindCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
@@ -207,11 +197,6 @@ public class AddressBookParser {
                     + "  • delete pet (dp) - Delete a pet\n"
                     + "  • delete note (dn) - Delete grooming notes\n"
                     + "  • delete photo (dph) - Delete a pet photo");
-
-        case "find":
-            throw new ParseException("Did you mean:\n"
-                    + "  • find client (fc) - Find clients by name\n"
-                    + "  • find pet (fp) - Find pets by name");
 
         case "clear":
             throw new ParseException("Did you mean:\n"

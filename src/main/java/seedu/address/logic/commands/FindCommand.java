@@ -3,27 +3,35 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.UnifiedSearchPredicate;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case insensitive.
+ * Finds and lists all clients and pets whose attributes contain any of the argument keywords.
+ * Searches across all attributes including client name, phone, email, address, tags,
+ * and pet name, species, breed.
+ * Keyword matching is case-insensitive and uses partial "contains" matching.
  */
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
     public static final String COMMAND_WORD_ALIAS = "f";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clients and pets whose attributes "
+            + "contain any of the specified keywords (case-insensitive, partial match).\n"
+            + "Searches: client name, phone, email, address, tags, pet name, species, breed\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+            + "Examples:\n"
+            + "  " + COMMAND_WORD + " alice - finds clients/pets with 'alice' in any field\n"
+            + "  " + COMMAND_WORD + " dog golden - finds dogs or golden retrievers\n"
+            + "  " + COMMAND_WORD + " 91234567 - finds by phone number\n"
+            + "Alias: " + COMMAND_WORD_ALIAS;
 
-    private final NameContainsKeywordsPredicate predicate;
+    public static final String MESSAGE_FIND_SUCCESS = "%1$d client(s) found matching '%2$s'";
 
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
+    private final UnifiedSearchPredicate predicate;
+
+    public FindCommand(UnifiedSearchPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -32,7 +40,9 @@ public class FindCommand extends Command {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+                String.format(MESSAGE_FIND_SUCCESS,
+                        model.getFilteredPersonList().size(),
+                        String.join(", ", predicate.getKeywords())));
     }
 
     @Override
@@ -41,7 +51,6 @@ public class FindCommand extends Command {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof FindCommand)) {
             return false;
         }

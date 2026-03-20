@@ -46,8 +46,6 @@ public class HelpWindow extends UiPart<Stage> {
             new KeyCodeCombination(KeyCode.DIGIT3, KeyCombination.CONTROL_DOWN);
     private static final KeyCodeCombination SHORTCUT_TAB_4 =
             new KeyCodeCombination(KeyCode.DIGIT4, KeyCombination.CONTROL_DOWN);
-    private static final KeyCodeCombination SHORTCUT_TAB_5 =
-            new KeyCodeCombination(KeyCode.DIGIT5, KeyCombination.CONTROL_DOWN);
 
     private Model model;
     private String sampleClientIndex = "1";
@@ -63,8 +61,6 @@ public class HelpWindow extends UiPart<Stage> {
     @FXML
     private Tab notesPhotosTab;
     @FXML
-    private Tab searchFilterTab;
-    @FXML
     private Tab generalTab;
     @FXML
     private Tab searchResultsTab;
@@ -75,8 +71,6 @@ public class HelpWindow extends UiPart<Stage> {
     private VBox petContent;
     @FXML
     private VBox notesPhotosContent;
-    @FXML
-    private VBox searchFilterContent;
     @FXML
     private VBox generalContent;
     @FXML
@@ -181,14 +175,12 @@ public class HelpWindow extends UiPart<Stage> {
         clientTab.setText(CommandCategory.CLIENT.getTabTitle());
         petTab.setText(CommandCategory.PET.getTabTitle());
         notesPhotosTab.setText(CommandCategory.NOTES_PHOTOS.getTabTitle());
-        searchFilterTab.setText(CommandCategory.SEARCH_FILTER.getTabTitle());
         generalTab.setText(CommandCategory.GENERAL.getTabTitle());
 
         // Populate each tab with commands
         populateTabContent(clientContent, CommandCategory.CLIENT);
         populateTabContent(petContent, CommandCategory.PET);
         populateTabContent(notesPhotosContent, CommandCategory.NOTES_PHOTOS);
-        populateTabContent(searchFilterContent, CommandCategory.SEARCH_FILTER);
         populateTabContent(generalContent, CommandCategory.GENERAL);
 
         // Hide search results tab initially
@@ -313,9 +305,6 @@ public class HelpWindow extends UiPart<Stage> {
                 event.consume();
             } else if (SHORTCUT_TAB_4.match(event)) {
                 selectCategoryTab(3);
-                event.consume();
-            } else if (SHORTCUT_TAB_5.match(event)) {
-                selectCategoryTab(4);
                 event.consume();
             }
         });

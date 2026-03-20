@@ -8,7 +8,6 @@ public enum CommandCategory {
     CLIENT("Clients", "📋", "Commands for managing client information"),
     PET("Pets", "🐾", "Commands for managing pets"),
     NOTES_PHOTOS("Notes & Photos", "📝", "Commands for notes and photo attachments"),
-    SEARCH_FILTER("Search & Filter", "🔍", "Commands for finding and filtering data"),
     GENERAL("General", "ℹ", "General application commands");
 
     private final String displayName;

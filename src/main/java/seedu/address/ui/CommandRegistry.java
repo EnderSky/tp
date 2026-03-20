@@ -45,15 +45,6 @@ public class CommandRegistry {
         ));
 
         commands.add(new CommandInfo(
-                "find client", "fc",
-                "Find clients by name keywords",
-                "find client KEYWORD [MORE_KEYWORDS]...",
-                "find client alice bob",
-                CommandCategory.CLIENT,
-                "Search is case-insensitive. Clients matching ANY keyword are shown."
-        ));
-
-        commands.add(new CommandInfo(
                 "clear clients", "cc",
                 "Remove all clients and their pets from the address book",
                 "clear clients",
@@ -91,31 +82,12 @@ public class CommandRegistry {
         ));
 
         commands.add(new CommandInfo(
-                "find pet", "fp",
-                "Find pets by name keywords",
-                "find pet KEYWORD [MORE_KEYWORDS]...",
-                "find pet fluffy buddy",
-                CommandCategory.PET,
-                "Search is case-insensitive. Shows clients with matching pets."
-        ));
-
-        commands.add(new CommandInfo(
                 "clear pets", "cp",
                 "Remove all pets while keeping clients",
                 "clear pets",
                 "clear pets",
                 CommandCategory.PET,
                 "Removes all pets from all clients. Clients are preserved."
-        ));
-
-        // ===================== SEARCH & FILTER COMMANDS =====================
-        commands.add(new CommandInfo(
-                "filter", "f",
-                "Filter clients by pet species and/or tags",
-                "filter [s/SPECIES] [t/TAG]...",
-                "filter s/Dog t/VIP",
-                CommandCategory.SEARCH_FILTER,
-                "At least one filter criterion required. Multiple tags act as OR."
         ));
 
         // ===================== NOTES & PHOTOS COMMANDS =====================
@@ -166,12 +138,22 @@ public class CommandRegistry {
 
         // ===================== GENERAL COMMANDS =====================
         commands.add(new CommandInfo(
+                "find", "f",
+                "Search clients and pets by any attribute",
+                "find KEYWORD [MORE_KEYWORDS]...",
+                "find alice dog golden 91234567",
+                CommandCategory.GENERAL,
+                "Searches client name, phone, email, address, tags, pet name, species, breed. "
+                        + "Case-insensitive partial matching. Use 'list' to clear search results."
+        ));
+
+        commands.add(new CommandInfo(
                 "list", "l",
                 "List all clients and pets",
                 "list",
                 "list",
                 CommandCategory.GENERAL,
-                "Shows all clients and their pets. Clears any active filters."
+                "Shows all clients and their pets. Clears any active search."
         ));
 
         commands.add(new CommandInfo(

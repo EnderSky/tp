@@ -40,6 +40,20 @@ public class Person {
     }
 
     /**
+     * Constructor with all fields including pets.
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Pet> pets) {
+        requireAllNonNull(name, phone, email, address, tags, pets);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.tags.addAll(tags);
+        this.pets.addAll(pets);
+    }
+
+    /**
      * Every field must be present and not null.
      */
     public Person(Person person, Set<Pet> pets) {

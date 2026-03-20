@@ -97,6 +97,7 @@ public class EditNoteCommand extends Command {
         // Create updated person with the modified pet
         Person updatedOwner = new Person(owner, updatedPets);
         model.setPerson(owner, updatedOwner);
+        model.commitAddressBook();
 
         return new CommandResult(String.format(MESSAGE_EDIT_NOTE_SUCCESS,
                 targetPet.getName(), owner.getName().fullName, groomingNotes.value));

@@ -169,4 +169,122 @@ public class ModelManagerTest {
         // Should not throw and filtered list should still contain the person
         assertTrue(model.getFilteredPersonList().stream().anyMatch(p -> p.getPhone().equals(person.getPhone())));
     }
+
+    // ======================= UNDO/REDO TESTS =======================
+
+    @Test
+    public void commitAddressBook_success() {
+        // Should not throw
+        modelManager.commitAddressBook();
+    }
+
+    @Test
+    public void canUndoAddressBook_initialState_returnsFalse() {
+        assertFalse(modelManager.canUndoAddressBook());
+    }
+
+    @Test
+    public void canRedoAddressBook_initialState_returnsFalse() {
+        assertFalse(modelManager.canRedoAddressBook());
+    }
+
+    @Test
+    public void canUndoAddressBook_afterCommit_returnsTrue() {
+        modelManager.addPerson(ALICE);
+        modelManager.commitAddressBook();
+        assertTrue(modelManager.canUndoAddressBook());
+    }
+
+    @Test
+    public void canRedoAddressBook_afterUndo_returnsTrue() {
+        modelManager.addPerson(ALICE);
+        modelManager.commitAddressBook();
+        modelManager.undoAddressBook();
+        assertTrue(modelManager.canRedoAddressBook());
+    }
+
+    @Test
+    public void undoAddressBook_afterCommit_success() {
+        AddressBook initialState = new AddressBook(modelManager.getAddressBook());
+
+        modelManager.addPerson(ALICE);
+        modelManager.commitAddressBook();
+
+        modelManager.undoAddressBook();
+        assertEquals(initialState, modelManager.getAddressBook());
+    }
+
+    @Test
+    public void redoAddressBook_afterUndo_success() {
+        modelManager.addPerson(ALICE);
+        AddressBook stateWithAlice = new AddressBook(modelManager.getAddressBook());
+        modelManager.commitAddressBook();
+
+        modelManager.undoAddressBook();
+        modelManager.redoAddressBook();
+
+        assertEquals(stateWithAlice, modelManager.getAddressBook());
+    }
+
+    @Test
+    public void undoAddressBook_noHistory_throwsRuntimeException() {
+        assertThrows(RuntimeException.class, () -> modelManager.undoAddressBook());
+    }
+
+    @Test
+    public void redoAddressBook_noHistory_throwsRuntimeException() {
+        assertThrows(RuntimeException.class, () -> modelManager.redoAddressBook());
+    }
+
+    @Test
+    public void multipleUndoRedo_maintainsStateConsistency() {
+        // State 0: empty
+        AddressBook state0 = new AddressBook(modelManager.getAddressBook());
+
+        // State 1: has ALICE
+        modelManager.addPerson(ALICE);
+        modelManager.commitAddressBook();
+        AddressBook state1 = new AddressBook(modelManager.getAddressBook());
+
+        // State 2: has ALICE and BENSON
+        modelManager.addPerson(BENSON);
+        modelManager.commitAddressBook();
+        AddressBook state2 = new AddressBook(modelManager.getAddressBook());
+
+        // Undo to state1
+        modelManager.undoAddressBook();
+        assertEquals(state1, modelManager.getAddressBook());
+
+        // Undo to state0
+        modelManager.undoAddressBook();
+        assertEquals(state0, modelManager.getAddressBook());
+
+        // Redo to state1
+        modelManager.redoAddressBook();
+        assertEquals(state1, modelManager.getAddressBook());
+
+        // Redo to state2
+        modelManager.redoAddressBook();
+        assertEquals(state2, modelManager.getAddressBook());
+    }
+
+    @Test
+    public void commitAfterUndo_clearsRedoHistory() {
+        modelManager.addPerson(ALICE);
+        modelManager.commitAddressBook();
+
+        modelManager.addPerson(BENSON);
+        modelManager.commitAddressBook();
+
+        // Undo once
+        modelManager.undoAddressBook();
+        assertTrue(modelManager.canRedoAddressBook());
+
+        // Make new change and commit
+        modelManager.deletePerson(ALICE);
+        modelManager.commitAddressBook();
+
+        // Should no longer be able to redo
+        assertFalse(modelManager.canRedoAddressBook());
+    }
 }

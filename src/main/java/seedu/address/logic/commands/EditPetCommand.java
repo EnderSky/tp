@@ -104,6 +104,7 @@ public class EditPetCommand extends Command {
         Person editedPerson = new Person(personWithPet, updatedPets);
         model.setPerson(personWithPet, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.commitAddressBook();
 
         return new CommandResult(String.format(MESSAGE_EDIT_PET_SUCCESS,
                 Messages.format(editedPet), editedPerson.getName().fullName),

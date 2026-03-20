@@ -92,6 +92,7 @@ public class DeletePhotoCommand extends Command {
         // Create updated person with the modified pet
         Person updatedOwner = new Person(owner, updatedPets);
         model.setPerson(owner, updatedOwner);
+        model.commitAddressBook();
 
         return new CommandResult(String.format(MESSAGE_DELETE_PHOTO_SUCCESS,
                 targetPet.getName(), owner.getName().fullName));

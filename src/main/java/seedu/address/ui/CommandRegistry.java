@@ -175,6 +175,24 @@ public class CommandRegistry {
         ));
 
         commands.add(new CommandInfo(
+                "undo", "u",
+                "Undo the last data-modifying command",
+                "undo",
+                "undo",
+                CommandCategory.GENERAL,
+                "Reverts the most recent change. Can be used multiple times to undo further."
+        ));
+
+        commands.add(new CommandInfo(
+                "redo", "r",
+                "Redo the last undone command",
+                "redo",
+                "redo",
+                CommandCategory.GENERAL,
+                "Re-applies a previously undone change. Only available after using undo."
+        ));
+
+        commands.add(new CommandInfo(
                 "exit", null,
                 "Exit the application",
                 "exit",

@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.EditPetCommand.EditPetDescriptor;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -50,6 +49,7 @@ public class EditPetCommandTest {
         pets.add(SNOOPY);
         Person personWithAddedPet = new PersonBuilder(personWithPet).withPetSet(pets).build();
         model.setPerson(personWithPet, personWithAddedPet);
+        model.commitAddressBook();
 
         // Build edited pet from SNOOPY to preserve DOB
         Pet editedPet = new PetBuilder(SNOOPY).withName(VALID_PETNAME_DOGGY)
@@ -60,15 +60,25 @@ public class EditPetCommandTest {
         String expectedMessage = String.format(EditPetCommand.MESSAGE_EDIT_PET_SUCCESS,
                 Messages.format(editedPet), personWithAddedPet.getName().fullName);
 
+        // Create expectedModel from the initial address book state and make same modifications
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Person expectedPersonWithPet = expectedModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Set<Pet> expectedPets = new LinkedHashSet<>();
-        expectedPets.add(editedPet);
-        Person expectedPerson = new PersonBuilder(personWithAddedPet).withPetSet(expectedPets).build();
+        expectedPets.add(SNOOPY);
+        Person expectedPersonWithAddedPet = new PersonBuilder(expectedPersonWithPet).withPetSet(expectedPets).build();
+        expectedModel.setPerson(expectedPersonWithPet, expectedPersonWithAddedPet);
+        expectedModel.commitAddressBook();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPerson(personWithAddedPet, expectedPerson);
+        // Apply the edit to expected model
+        Set<Pet> finalExpectedPets = new LinkedHashSet<>();
+        finalExpectedPets.add(editedPet);
+        Person finalExpectedPerson = new PersonBuilder(expectedPersonWithAddedPet)
+                .withPetSet(finalExpectedPets).build();
+        expectedModel.setPerson(expectedPersonWithAddedPet, finalExpectedPerson);
+        expectedModel.commitAddressBook();
 
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                expectedPerson, editedPet, expectedPerson);
+                finalExpectedPerson, editedPet, finalExpectedPerson);
         assertCommandSuccess(editPetCommand, model, expectedCommandResult, expectedModel);
     }
 
@@ -80,6 +90,7 @@ public class EditPetCommandTest {
         pets.add(SNOOPY);
         Person personWithAddedPet = new PersonBuilder(personWithPet).withPetSet(pets).build();
         model.setPerson(personWithPet, personWithAddedPet);
+        model.commitAddressBook();
 
         Pet editedPet = new PetBuilder(SNOOPY).withName(VALID_PETNAME_DOGGY).build();
         EditPetDescriptor descriptor = new EditPetDescriptorBuilder().withName(VALID_PETNAME_DOGGY).build();
@@ -88,15 +99,25 @@ public class EditPetCommandTest {
         String expectedMessage = String.format(EditPetCommand.MESSAGE_EDIT_PET_SUCCESS,
                 Messages.format(editedPet), personWithAddedPet.getName().fullName);
 
+        // Create expectedModel from the initial address book state and make same modifications
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Person expectedPersonWithPet = expectedModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Set<Pet> expectedPets = new LinkedHashSet<>();
-        expectedPets.add(editedPet);
-        Person expectedPerson = new PersonBuilder(personWithAddedPet).withPetSet(expectedPets).build();
+        expectedPets.add(SNOOPY);
+        Person expectedPersonWithAddedPet = new PersonBuilder(expectedPersonWithPet).withPetSet(expectedPets).build();
+        expectedModel.setPerson(expectedPersonWithPet, expectedPersonWithAddedPet);
+        expectedModel.commitAddressBook();
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPerson(personWithAddedPet, expectedPerson);
+        // Apply the edit to expected model
+        Set<Pet> finalExpectedPets = new LinkedHashSet<>();
+        finalExpectedPets.add(editedPet);
+        Person finalExpectedPerson = new PersonBuilder(expectedPersonWithAddedPet)
+                .withPetSet(finalExpectedPets).build();
+        expectedModel.setPerson(expectedPersonWithAddedPet, finalExpectedPerson);
+        expectedModel.commitAddressBook();
 
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                expectedPerson, editedPet, expectedPerson);
+                finalExpectedPerson, editedPet, finalExpectedPerson);
         assertCommandSuccess(editPetCommand, model, expectedCommandResult, expectedModel);
     }
 
@@ -108,6 +129,7 @@ public class EditPetCommandTest {
         pets.add(SNOOPY);
         Person personWithAddedPet = new PersonBuilder(personWithPet).withPetSet(pets).build();
         model.setPerson(personWithPet, personWithAddedPet);
+        model.commitAddressBook();
 
         EditPetCommand editPetCommand = new EditPetCommand(INDEX_FIRST_PERSON, Index.fromOneBased(1),
                 new EditPetDescriptor());
@@ -115,11 +137,21 @@ public class EditPetCommandTest {
         String expectedMessage = String.format(EditPetCommand.MESSAGE_EDIT_PET_SUCCESS,
                 Messages.format(SNOOPY), personWithAddedPet.getName().fullName);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        // Create expectedModel from the initial address book state and make same modifications
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Person expectedPersonWithPet = expectedModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Set<Pet> expectedPets = new LinkedHashSet<>();
+        expectedPets.add(SNOOPY);
+        Person expectedPersonWithAddedPet = new PersonBuilder(expectedPersonWithPet).withPetSet(expectedPets).build();
+        expectedModel.setPerson(expectedPersonWithPet, expectedPersonWithAddedPet);
+        expectedModel.commitAddressBook();
+
+        // For no field edit, the person should remain the same after the command, just need one more commit
+        expectedModel.commitAddressBook();
 
         // When no fields are edited, the person stays the same
         CommandResult expectedCommandResult = new CommandResult(expectedMessage, false, false,
-                personWithAddedPet, SNOOPY, personWithAddedPet);
+                expectedPersonWithAddedPet, SNOOPY, expectedPersonWithAddedPet);
         assertCommandSuccess(editPetCommand, model, expectedCommandResult, expectedModel);
     }
 

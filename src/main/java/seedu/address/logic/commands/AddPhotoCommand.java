@@ -119,6 +119,7 @@ public class AddPhotoCommand extends Command {
         // Create updated person with the modified pet
         Person updatedOwner = new Person(owner, updatedPets);
         model.setPerson(owner, updatedOwner);
+        model.commitAddressBook();
 
         return new CommandResult(String.format(MESSAGE_ADD_PHOTO_SUCCESS,
                 targetPet.getName(), owner.getName().fullName, photoPath.value));

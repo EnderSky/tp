@@ -59,6 +59,7 @@ public class AddPetCommand extends Command {
 
         try {
             model.addPet(toAdd, ownerPhone);
+            model.commitAddressBook();
             return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
         } catch (PersonNotFoundException e) {
             throw new CommandException(String.format(MESSAGE_OWNER_NOT_FOUND, ownerPhone));

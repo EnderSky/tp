@@ -70,6 +70,7 @@ public class DeletePetCommand extends Command {
         Person updatedOwner = new Person(owner, updatedPets);
 
         model.setPerson(owner, updatedOwner);
+        model.commitAddressBook();
 
         return new CommandResult(String.format(MESSAGE_DELETE_PET_SUCCESS,
                 Messages.format(petToDelete), owner.getName().fullName));

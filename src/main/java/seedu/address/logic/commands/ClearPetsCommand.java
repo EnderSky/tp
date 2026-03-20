@@ -42,6 +42,7 @@ public class ClearPetsCommand extends Command {
             return new CommandResult(MESSAGE_NO_PETS);
         }
 
+        model.commitAddressBook();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

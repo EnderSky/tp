@@ -1,11 +1,15 @@
 package seedu.address.testutil;
 
+import java.util.HashSet;
+import java.util.Set;
 
 import seedu.address.model.person.Breed;
 import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Pet;
 import seedu.address.model.person.Species;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building Pet objects.
@@ -18,6 +22,7 @@ public class PetBuilder {
     private Species species;
     private Breed breed;
     private DateOfBirth dateOfBirth;
+    private Set<Tag> tags;
 
     /**
      * Creates a {@code PetBuilder} with the default details.
@@ -27,6 +32,7 @@ public class PetBuilder {
         species = null;
         breed = null;
         dateOfBirth = null;
+        tags = new HashSet<>();
     }
 
     /**
@@ -37,6 +43,7 @@ public class PetBuilder {
         species = petToCopy.getSpecies().orElse(null);
         breed = petToCopy.getBreed().orElse(null);
         dateOfBirth = petToCopy.getDateOfBirth().orElse(null);
+        tags = new HashSet<>(petToCopy.getTags());
     }
 
     /**
@@ -71,7 +78,15 @@ public class PetBuilder {
         return this;
     }
 
+    /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Pet} that we are building.
+     */
+    public PetBuilder withTags(String ... tags) {
+        this.tags = SampleDataUtil.getTagSet(tags);
+        return this;
+    }
+
     public Pet build() {
-        return new Pet(name, species, breed, dateOfBirth);
+        return new Pet(name, species, breed, dateOfBirth, tags);
     }
 }

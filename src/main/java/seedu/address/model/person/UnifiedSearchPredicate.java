@@ -9,7 +9,7 @@ import seedu.address.commons.util.ToStringBuilder;
  * Tests that a {@code Person} or any of their {@code Pet}s match any of the keywords given.
  * Searches across all attributes including:
  * - Client: name, phone, email, address, tags
- * - Pet: name, species, breed
+ * - Pet: name, species, breed, tags
  * Matching is case-insensitive and uses partial "contains" matching.
  */
 public class UnifiedSearchPredicate implements Predicate<Person> {
@@ -78,6 +78,12 @@ public class UnifiedSearchPredicate implements Predicate<Person> {
         // Check pet breed
         if (pet.getBreed().isPresent()
                 && containsIgnoreCase(pet.getBreed().get().value, lowerKeyword)) {
+            return true;
+        }
+
+        // Check pet tags
+        if (pet.getTags().stream()
+                .anyMatch(tag -> containsIgnoreCase(tag.tagName, lowerKeyword))) {
             return true;
         }
 

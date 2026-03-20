@@ -75,6 +75,7 @@ public class DeleteNoteCommand extends Command {
                 targetPet.getSpecies().orElse(null),
                 targetPet.getBreed().orElse(null),
                 targetPet.getDateOfBirth().orElse(null),
+                targetPet.getTags(),
                 null, // Remove grooming notes
                 targetPet.getPhotoPath().orElse(null)
         );

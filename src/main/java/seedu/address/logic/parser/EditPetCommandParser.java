@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditPetCommand;
@@ -25,7 +26,7 @@ public class EditPetCommandParser implements Parser<EditPetCommand> {
     public EditPetCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
-                PREFIX_NAME, PREFIX_SPECIES, PREFIX_BREED, PREFIX_DOB);
+                PREFIX_NAME, PREFIX_SPECIES, PREFIX_BREED, PREFIX_DOB, PREFIX_TAG);
 
         Index[] indices;
         try {
@@ -55,6 +56,10 @@ public class EditPetCommandParser implements Parser<EditPetCommand> {
         if (argMultimap.getValue(PREFIX_DOB).isPresent()) {
             editPetDescriptor.setDateOfBirth(
                     ParserUtil.parseDateOfBirth(argMultimap.getValue(PREFIX_DOB).get()));
+        }
+
+        if (argMultimap.getValue(PREFIX_TAG).isPresent()) {
+            editPetDescriptor.setTags(ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG)));
         }
 
         if (!editPetDescriptor.isAnyFieldEdited()) {

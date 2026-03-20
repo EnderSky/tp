@@ -102,6 +102,7 @@ public class AddPhotoCommand extends Command {
                 targetPet.getSpecies().orElse(null),
                 targetPet.getBreed().orElse(null),
                 targetPet.getDateOfBirth().orElse(null),
+                targetPet.getTags(),
                 targetPet.getGroomingNotes().orElse(null),
                 photoPath
         );

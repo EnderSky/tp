@@ -117,10 +117,6 @@ public class AddressBookParser {
         case EditPetCommand.COMMAND_WORD_ALIAS:
             return new EditPetCommandParser().parse(arguments);
 
-        case ViewCommand.COMMAND_WORD:
-        case ViewCommand.COMMAND_WORD_ALIAS:
-            return new ViewCommandParser().parse(arguments);
-
         case AddNoteCommand.COMMAND_WORD:
         case AddNoteCommand.COMMAND_WORD_ALIAS:
             return new AddNoteCommandParser().parse(arguments);
@@ -155,7 +151,7 @@ public class AddressBookParser {
     }
 
     /**
-     * Parses single-word commands (e.g., "list", "help").
+     * Parses single-word commands (e.g., "list", "help") and single-word aliases for two-word commands.
      */
     private Command parseSingleWordCommand(String commandWord, String arguments) throws ParseException {
         switch (commandWord) {
@@ -186,6 +182,46 @@ public class AddressBookParser {
         case ViewCommand.COMMAND_WORD:
         case ViewCommand.COMMAND_WORD_ALIAS:
             return new ViewCommandParser().parse(arguments);
+
+        // Single-word aliases for two-word commands
+        case AddPersonCommand.COMMAND_WORD_ALIAS:
+            return new AddPersonCommandParser().parse(arguments);
+
+        case AddPetCommand.COMMAND_WORD_ALIAS:
+            return new AddPetCommandParser().parse(arguments);
+
+        case DeletePersonCommand.COMMAND_WORD_ALIAS:
+            return new DeletePersonCommandParser().parse(arguments);
+
+        case DeletePetCommand.COMMAND_WORD_ALIAS:
+            return new DeletePetCommandParser().parse(arguments);
+
+        case EditClientCommand.COMMAND_WORD_ALIAS:
+            return new EditClientCommandParser().parse(arguments);
+
+        case EditPetCommand.COMMAND_WORD_ALIAS:
+            return new EditPetCommandParser().parse(arguments);
+
+        case AddNoteCommand.COMMAND_WORD_ALIAS:
+            return new AddNoteCommandParser().parse(arguments);
+
+        case EditNoteCommand.COMMAND_WORD_ALIAS:
+            return new EditNoteCommandParser().parse(arguments);
+
+        case DeleteNoteCommand.COMMAND_WORD_ALIAS:
+            return new DeleteNoteCommandParser().parse(arguments);
+
+        case AddPhotoCommand.COMMAND_WORD_ALIAS:
+            return new AddPhotoCommandParser().parse(arguments);
+
+        case DeletePhotoCommand.COMMAND_WORD_ALIAS:
+            return new DeletePhotoCommandParser().parse(arguments);
+
+        case ClearPetsCommand.COMMAND_WORD_ALIAS:
+            return new ClearPetsCommand();
+
+        case ClearClientsCommand.COMMAND_WORD_ALIAS:
+            return new ClearClientsCommand();
 
         // Command hints for ambiguous commands
         case "add":

@@ -5,9 +5,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +28,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Pet;
 import seedu.address.model.person.Species;
+import seedu.address.model.tag.Tag;
 
 /**
  * Edits the details of an existing pet of a person in the address book.
@@ -42,11 +45,13 @@ public class EditPetCommand extends Command {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_SPECIES + "SPECIES] "
             + "[" + PREFIX_BREED + "BREED] "
-            + "[" + PREFIX_DOB + "DATE_OF_BIRTH] \n"
+            + "[" + PREFIX_DOB + "DATE_OF_BIRTH] "
+            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1.2 "
             + PREFIX_NAME + "Fluffy Jr. "
             + PREFIX_SPECIES + "Dog "
-            + PREFIX_BREED + "Golden Retriever";
+            + PREFIX_BREED + "Golden Retriever "
+            + PREFIX_TAG + "Anxious";
 
     public static final String MESSAGE_EDIT_PET_SUCCESS = "Edited Pet: %1$s (Owner: %2$s)";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -123,10 +128,12 @@ public class EditPetCommand extends Command {
         Breed updatedBreed = editPetDescriptor.getBreed().orElse(petToEdit.getBreed().orElse(null));
         DateOfBirth updatedDateOfBirth = editPetDescriptor.getDateOfBirth()
                 .orElse(petToEdit.getDateOfBirth().orElse(null));
+        Set<Tag> updatedTags = editPetDescriptor.getTags().orElse(petToEdit.getTags());
 
         // Preserve existing photo path and grooming notes during editing
         return new Pet(updatedName, updatedSpecies, updatedBreed, updatedDateOfBirth,
-                petToEdit.getGroomingNotes().orElse(null), petToEdit.getPhotoPath().orElse(null));
+                updatedTags, petToEdit.getGroomingNotes().orElse(null),
+                petToEdit.getPhotoPath().orElse(null));
     }
 
     @Override
@@ -164,6 +171,7 @@ public class EditPetCommand extends Command {
         private Species species;
         private Breed breed;
         private DateOfBirth dateOfBirth;
+        private Set<Tag> tags;
 
         public EditPetDescriptor() {}
 
@@ -175,13 +183,14 @@ public class EditPetCommand extends Command {
             setSpecies(toCopy.species);
             setBreed(toCopy.breed);
             setDateOfBirth(toCopy.dateOfBirth);
+            setTags(toCopy.tags);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, species, breed, dateOfBirth);
+            return CollectionUtil.isAnyNonNull(name, species, breed, dateOfBirth, tags);
         }
 
         public void setName(Name name) {
@@ -216,6 +225,23 @@ public class EditPetCommand extends Command {
             return Optional.ofNullable(dateOfBirth);
         }
 
+        /**
+         * Sets {@code tags} to this object's {@code tags}.
+         * A defensive copy of {@code tags} is used internally.
+         */
+        public void setTags(Set<Tag> tags) {
+            this.tags = (tags != null) ? new LinkedHashSet<>(tags) : null;
+        }
+
+        /**
+         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code tags} is null.
+         */
+        public Optional<Set<Tag>> getTags() {
+            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -231,7 +257,8 @@ public class EditPetCommand extends Command {
             return Objects.equals(name, otherEditPetDescriptor.name)
                     && Objects.equals(species, otherEditPetDescriptor.species)
                     && Objects.equals(breed, otherEditPetDescriptor.breed)
-                    && Objects.equals(dateOfBirth, otherEditPetDescriptor.dateOfBirth);
+                    && Objects.equals(dateOfBirth, otherEditPetDescriptor.dateOfBirth)
+                    && Objects.equals(tags, otherEditPetDescriptor.tags);
         }
 
         @Override
@@ -241,6 +268,7 @@ public class EditPetCommand extends Command {
                     .add("species", species)
                     .add("breed", breed)
                     .add("dateOfBirth", dateOfBirth)
+                    .add("tags", tags)
                     .toString();
         }
     }

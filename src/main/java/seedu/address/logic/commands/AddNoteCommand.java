@@ -80,6 +80,7 @@ public class AddNoteCommand extends Command {
                 targetPet.getSpecies().orElse(null),
                 targetPet.getBreed().orElse(null),
                 targetPet.getDateOfBirth().orElse(null),
+                targetPet.getTags(),
                 groomingNotes,
                 targetPet.getPhotoPath().orElse(null)
         );

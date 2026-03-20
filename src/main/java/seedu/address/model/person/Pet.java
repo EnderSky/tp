@@ -2,8 +2,13 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents a Pet in the address book.
@@ -14,12 +19,13 @@ public class Pet {
     private final Species species;
     private final Breed breed;
     private final DateOfBirth dateOfBirth;
+    private final Set<Tag> tags;
     private final GroomingNotes groomingNotes;
     private final PhotoPath photoPath;
 
     /**
      * Constructs a {@code Pet} with only a name.
-     * All optional fields are set to null.
+     * All optional fields are set to null or empty.
      *
      * @param petName A valid pet name.
      */
@@ -29,6 +35,25 @@ public class Pet {
         this.species = null;
         this.breed = null;
         this.dateOfBirth = null;
+        this.tags = new HashSet<>();
+        this.groomingNotes = null;
+        this.photoPath = null;
+    }
+
+    /**
+     * Constructs a {@code Pet} with name and tags.
+     *
+     * @param petName A valid pet name.
+     * @param tags A set of tags for the pet (can be empty).
+     */
+    public Pet(Name petName, Set<Tag> tags) {
+        requireNonNull(petName);
+        requireNonNull(tags);
+        this.petName = petName;
+        this.species = null;
+        this.breed = null;
+        this.dateOfBirth = null;
+        this.tags = new HashSet<>(tags);
         this.groomingNotes = null;
         this.photoPath = null;
     }
@@ -47,6 +72,28 @@ public class Pet {
         this.species = species;
         this.breed = breed;
         this.dateOfBirth = dateOfBirth;
+        this.tags = new HashSet<>();
+        this.groomingNotes = null;
+        this.photoPath = null;
+    }
+
+    /**
+     * Constructs a {@code Pet} with all basic fields including tags.
+     *
+     * @param petName A valid pet name.
+     * @param species The pet's species (can be null).
+     * @param breed The pet's breed (can be null).
+     * @param dateOfBirth The pet's date of birth (can be null).
+     * @param tags A set of tags for the pet (can be empty).
+     */
+    public Pet(Name petName, Species species, Breed breed, DateOfBirth dateOfBirth, Set<Tag> tags) {
+        requireNonNull(petName);
+        requireNonNull(tags);
+        this.petName = petName;
+        this.species = species;
+        this.breed = breed;
+        this.dateOfBirth = dateOfBirth;
+        this.tags = new HashSet<>(tags);
         this.groomingNotes = null;
         this.photoPath = null;
     }
@@ -58,14 +105,18 @@ public class Pet {
      * @param species The pet's species (can be null).
      * @param breed The pet's breed (can be null).
      * @param dateOfBirth The pet's date of birth (can be null).
+     * @param tags A set of tags for the pet (can be empty).
      * @param groomingNotes The pet's grooming notes (can be null).
      */
-    public Pet(Name petName, Species species, Breed breed, DateOfBirth dateOfBirth, GroomingNotes groomingNotes) {
+    public Pet(Name petName, Species species, Breed breed, DateOfBirth dateOfBirth, Set<Tag> tags,
+               GroomingNotes groomingNotes) {
         requireNonNull(petName);
+        requireNonNull(tags);
         this.petName = petName;
         this.species = species;
         this.breed = breed;
         this.dateOfBirth = dateOfBirth;
+        this.tags = new HashSet<>(tags);
         this.groomingNotes = groomingNotes;
         this.photoPath = null;
     }
@@ -77,16 +128,19 @@ public class Pet {
      * @param species The pet's species (can be null).
      * @param breed The pet's breed (can be null).
      * @param dateOfBirth The pet's date of birth (can be null).
+     * @param tags A set of tags for the pet (can be empty).
      * @param groomingNotes The pet's grooming notes (can be null).
      * @param photoPath The pet's photo path (can be null).
      */
-    public Pet(Name petName, Species species, Breed breed, DateOfBirth dateOfBirth,
+    public Pet(Name petName, Species species, Breed breed, DateOfBirth dateOfBirth, Set<Tag> tags,
                GroomingNotes groomingNotes, PhotoPath photoPath) {
         requireNonNull(petName);
+        requireNonNull(tags);
         this.petName = petName;
         this.species = species;
         this.breed = breed;
         this.dateOfBirth = dateOfBirth;
+        this.tags = new HashSet<>(tags);
         this.groomingNotes = groomingNotes;
         this.photoPath = photoPath;
     }
@@ -113,6 +167,10 @@ public class Pet {
 
     public Optional<PhotoPath> getPhotoPath() {
         return Optional.ofNullable(photoPath);
+    }
+
+    public Set<Tag> getTags() {
+        return Collections.unmodifiableSet(tags);
     }
 
     /**
@@ -144,13 +202,14 @@ public class Pet {
                 && Objects.equals(species, otherPet.species)
                 && Objects.equals(breed, otherPet.breed)
                 && Objects.equals(dateOfBirth, otherPet.dateOfBirth)
+                && tags.equals(otherPet.tags)
                 && Objects.equals(groomingNotes, otherPet.groomingNotes)
                 && Objects.equals(photoPath, otherPet.photoPath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(petName, species, breed, dateOfBirth, groomingNotes, photoPath);
+        return Objects.hash(petName, species, breed, dateOfBirth, tags, groomingNotes, photoPath);
     }
 
     /**
@@ -172,6 +231,12 @@ public class Pet {
                 sb.append(breed);
             }
             sb.append(")");
+        }
+
+        // Add tags if present
+        if (!tags.isEmpty()) {
+            sb.append(" ");
+            tags.forEach(tag -> sb.append(tag));
         }
 
         return sb.toString();

@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.io.File;
+import java.util.Comparator;
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
@@ -146,9 +147,22 @@ public class DetailPanel extends UiPart<Region> {
             detail4Label.setManaged(false);
         }
 
-        // Tags section - pets don't have tags yet, hide for now
-        tagsSection.setVisible(false);
-        tagsSection.setManaged(false);
+        // Tags section
+        tagsPane.getChildren().clear();
+        if (!pet.getTags().isEmpty()) {
+            tagsSection.setVisible(true);
+            tagsSection.setManaged(true);
+            pet.getTags().stream()
+                    .sorted(Comparator.comparing(tag -> tag.tagName))
+                    .forEach(tag -> {
+                        Label tagLabel = new Label(tag.tagName);
+                        tagLabel.getStyleClass().add("detail-tag"); // Use detail-tag for detail panels
+                        tagsPane.getChildren().add(tagLabel);
+                    });
+        } else {
+            tagsSection.setVisible(false);
+            tagsSection.setManaged(false);
+        }
 
         // Secondary info - owner details
         secondaryHeader.setText("OWNER");

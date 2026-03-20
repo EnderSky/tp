@@ -38,8 +38,10 @@
     <!-- Breed -->
     <Label fx:id="breedLabel" styleClass="pet-thumbnail-horizontal-breed" wrapText="true" 
            maxWidth="95" maxHeight="16" />
+    
+    <!-- Tags -->
+    <FlowPane fx:id="tagsPane" styleClass="pet-thumbnail-tags" alignment="CENTER_LEFT" hgap="2" vgap="2" 
+              maxWidth="95" />
   </VBox>
 
-  <!-- Tags (hidden by default) -->
-  <FlowPane fx:id="tagsPane" styleClass="pet-thumbnail-tags" alignment="CENTER" hgap="2" vgap="2" />
 </HBox>

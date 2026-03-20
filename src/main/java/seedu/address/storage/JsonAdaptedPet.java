@@ -1,5 +1,11 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,6 +17,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Pet;
 import seedu.address.model.person.PhotoPath;
 import seedu.address.model.person.Species;
+import seedu.address.model.tag.Tag;
 
 /**
  * Jackson-friendly version of {@link Pet}.
@@ -23,6 +30,7 @@ class JsonAdaptedPet {
     private final String species;
     private final String breed;
     private final String dateOfBirth;
+    private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String groomingNotes;
     private final String photoPath;
 
@@ -34,12 +42,16 @@ class JsonAdaptedPet {
                           @JsonProperty("species") String species,
                           @JsonProperty("breed") String breed,
                           @JsonProperty("dateOfBirth") String dateOfBirth,
+                          @JsonProperty("tags") List<JsonAdaptedTag> tags,
                           @JsonProperty("groomingNotes") String groomingNotes,
                           @JsonProperty("photoPath") String photoPath) {
         this.petName = petName;
         this.species = species;
         this.breed = breed;
         this.dateOfBirth = dateOfBirth;
+        if (tags != null) {
+            this.tags.addAll(tags);
+        }
         this.groomingNotes = groomingNotes;
         this.photoPath = photoPath;
     }
@@ -52,6 +64,9 @@ class JsonAdaptedPet {
         species = source.getSpecies().map(s -> s.value).orElse(null);
         breed = source.getBreed().map(b -> b.value).orElse(null);
         dateOfBirth = source.getDateOfBirth().map(d -> d.toStorageString()).orElse(null);
+        tags.addAll(source.getTags().stream()
+                .map(JsonAdaptedTag::new)
+                .collect(Collectors.toList()));
         groomingNotes = source.getGroomingNotes().map(g -> g.value).orElse(null);
         photoPath = source.getPhotoPath().map(p -> p.value).orElse(null);
     }
@@ -62,6 +77,11 @@ class JsonAdaptedPet {
      * @throws IllegalValueException if there were any data constraints violated in the adapted pet.
      */
     public Pet toModelType() throws IllegalValueException {
+        final List<Tag> petTags = new ArrayList<>();
+        for (JsonAdaptedTag tag : tags) {
+            petTags.add(tag.toModelType());
+        }
+
         // Validate and parse pet name (required field)
         if (petName == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
@@ -123,6 +143,8 @@ class JsonAdaptedPet {
             modelPhotoPath = null;
         }
 
-        return new Pet(modelName, modelSpecies, modelBreed, modelDateOfBirth, modelGroomingNotes, modelPhotoPath);
+        final Set<Tag> modelTags = new HashSet<>(petTags);
+        return new Pet(modelName, modelSpecies, modelBreed, modelDateOfBirth, modelTags,
+                modelGroomingNotes, modelPhotoPath);
     }
 }

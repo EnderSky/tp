@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -30,13 +31,15 @@ public class AddPetCommand extends Command {
             + PREFIX_PHONE + "OWNER'S PHONE "
             + "[" + PREFIX_SPECIES + "SPECIES] "
             + "[" + PREFIX_BREED + "BREED] "
-            + "[" + PREFIX_DOB + "DATE_OF_BIRTH]\n"
+            + "[" + PREFIX_DOB + "DATE_OF_BIRTH] "
+            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Fluffy "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_SPECIES + "Dog "
             + PREFIX_BREED + "Golden Retriever "
-            + PREFIX_DOB + "2020-03-15";
+            + PREFIX_DOB + "2020-03-15 "
+            + PREFIX_TAG + "Anxious";
 
     public static final String MESSAGE_SUCCESS = "New pet added: %1$s";
     public static final String MESSAGE_OWNER_NOT_FOUND = "No client found with phone number: %1$s";

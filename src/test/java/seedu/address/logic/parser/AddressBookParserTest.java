@@ -97,6 +97,25 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_listAlias() throws Exception {
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD_ALIAS) instanceof ListCommand);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD_ALIAS + " 3") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_helpAlias() throws Exception {
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD_ALIAS) instanceof HelpCommand);
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD_ALIAS + " 3") instanceof HelpCommand);
+    }
+
+    @Test
+    public void parseCommand_addPersonAlias() throws Exception {
+        // Test alias for AddPersonCommand with minimal valid arguments
+        String aliasCommand = "ac n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25";
+        assertTrue(parser.parseCommand(aliasCommand) instanceof AddPersonCommand);
+    }
+
+    @Test
     public void parseCommand_unrecognisedInput_throwsParseException() {
         assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE), ()
             -> parser.parseCommand(""));

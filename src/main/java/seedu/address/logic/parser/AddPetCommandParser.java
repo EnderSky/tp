@@ -6,7 +6,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddPetCommand;
@@ -17,6 +20,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Pet;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Species;
+import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new AddPetCommand object
@@ -31,7 +35,7 @@ public class AddPetCommandParser implements Parser<AddPetCommand> {
     public AddPetCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_SPECIES,
-                        PREFIX_BREED, PREFIX_DOB);
+                        PREFIX_BREED, PREFIX_DOB, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -60,7 +64,12 @@ public class AddPetCommandParser implements Parser<AddPetCommand> {
             dateOfBirth = ParserUtil.parseDateOfBirth(argMultimap.getValue(PREFIX_DOB).get());
         }
 
-        Pet pet = new Pet(name, species, breed, dateOfBirth);
+        Set<Tag> tags = new HashSet<>();
+        if (argMultimap.getValue(PREFIX_TAG).isPresent()) {
+            tags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        }
+
+        Pet pet = new Pet(name, species, breed, dateOfBirth, tags);
 
         return new AddPetCommand(pet, phone);
     }

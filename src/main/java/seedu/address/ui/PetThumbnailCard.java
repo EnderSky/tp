@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
 import java.io.File;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
@@ -87,9 +89,37 @@ public class PetThumbnailCard extends UiPart<Region> {
         // Load pet thumbnail image if photo path exists
         loadPetPhoto();
 
-        // Pet tags - currently pets don't have tags, so hide for now
-        tagsPane.setVisible(false);
-        tagsPane.setManaged(false);
+        // Set pet tags (with truncation for card size constraints)
+        tagsPane.getChildren().clear();
+        if (!pet.getTags().isEmpty()) {
+            tagsPane.setVisible(true);
+            tagsPane.setManaged(true);
+
+            // Sort tags alphabetically like client tags
+            List<String> sortedTagNames = pet.getTags().stream()
+                    .map(tag -> tag.tagName)
+                    .sorted()
+                    .collect(Collectors.toList());
+
+            // Limit to maximum 3 tags to prevent overflow in thumbnail card
+            int maxTags = Math.min(sortedTagNames.size(), 3);
+
+            for (int i = 0; i < maxTags; i++) {
+                Label tagLabel = new Label(sortedTagNames.get(i));
+                tagLabel.getStyleClass().add("client-tag"); // Use same styling as client tags
+                tagsPane.getChildren().add(tagLabel);
+            }
+
+            // Add "..." indicator if there are more tags
+            if (sortedTagNames.size() > maxTags) {
+                Label moreLabel = new Label("...");
+                moreLabel.getStyleClass().add("client-tag");
+                tagsPane.getChildren().add(moreLabel);
+            }
+        } else {
+            tagsPane.setVisible(false);
+            tagsPane.setManaged(false);
+        }
     }
 
     /**

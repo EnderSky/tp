@@ -23,24 +23,24 @@
     <HBox.margin>
       <Insets left="8" />
     </HBox.margin>
-    
+
     <!-- Index -->
     <Label fx:id="indexLabel" styleClass="pet-thumbnail-horizontal-index" />
-    
+
     <!-- Pet name -->
-    <Label fx:id="nameLabel" styleClass="pet-thumbnail-horizontal-name" wrapText="true" 
+    <Label fx:id="nameLabel" styleClass="pet-thumbnail-horizontal-name" wrapText="true"
            maxWidth="95" maxHeight="20" />
-    
+
     <!-- Species -->
-    <Label fx:id="speciesLabel" styleClass="pet-thumbnail-horizontal-species" wrapText="true" 
+    <Label fx:id="speciesLabel" styleClass="pet-thumbnail-horizontal-species" wrapText="true"
            maxWidth="95" maxHeight="16" />
-    
+
     <!-- Breed -->
-    <Label fx:id="breedLabel" styleClass="pet-thumbnail-horizontal-breed" wrapText="true" 
+    <Label fx:id="breedLabel" styleClass="pet-thumbnail-horizontal-breed" wrapText="true"
            maxWidth="95" maxHeight="16" />
-    
+
     <!-- Tags -->
-    <FlowPane fx:id="tagsPane" styleClass="pet-thumbnail-tags" alignment="CENTER_LEFT" hgap="2" vgap="2" 
+    <FlowPane fx:id="tagsPane" styleClass="pet-thumbnail-tags" alignment="CENTER_LEFT" hgap="2" vgap="2"
               maxWidth="95" />
   </VBox>
 

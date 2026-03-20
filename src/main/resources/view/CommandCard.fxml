@@ -11,7 +11,7 @@
     <padding>
         <Insets top="12" right="16" bottom="12" left="16" />
     </padding>
-    
+
     <!-- Header: Command name + alias + copy button -->
     <HBox alignment="CENTER_LEFT" spacing="10">
         <Label fx:id="commandWordLabel" styleClass="command-word" />
@@ -19,14 +19,14 @@
         <Region HBox.hgrow="ALWAYS" />
         <Button fx:id="copyButton" styleClass="copy-button" text="📋 Copy" onAction="#handleCopy" />
     </HBox>
-    
+
     <!-- Description -->
     <Label fx:id="descriptionLabel" styleClass="command-description" wrapText="true">
         <VBox.margin>
             <Insets top="8" />
         </VBox.margin>
     </Label>
-    
+
     <!-- Usage section -->
     <VBox styleClass="command-section">
         <VBox.margin>
@@ -39,7 +39,7 @@
             </VBox.margin>
         </Label>
     </VBox>
-    
+
     <!-- Example section (conditionally shown) -->
     <VBox fx:id="exampleSection" styleClass="command-section">
         <VBox.margin>
@@ -52,7 +52,7 @@
             </VBox.margin>
         </Label>
     </VBox>
-    
+
     <!-- Notes section (conditionally shown) -->
     <VBox fx:id="notesSection" styleClass="command-section">
         <VBox.margin>

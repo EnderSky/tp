@@ -283,7 +283,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * prefers typing to mouse interactions
 * is reasonably comfortable typing simple commands
 
-**Value proposition**: 
+**Value proposition**:
 
 * fast retrieval of pet and client information
 * clear pet -> client (owner) relationship tracking
@@ -310,9 +310,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | user     | search for clients by name | quickly locate a specific client's details |
 | `* *`    | user     | search for pets by name    | quickly find a specific pet's details |
 | `* *`    | user     | search for a client and see all the pets they own | quickly retrieve their pets' information when they arrive |
-| `* *`    | user     | search for a pet and see their owner's details | quickly retrieve the owner's contact information | 
+| `* *`    | user     | search for a pet and see their owner's details | quickly retrieve the owner's contact information |
 | `* *`    | user     | attach photos to pets      | record what the pets look like in real life |
-| `* *`    | user     | view a pet's photos        | identify pets quickly in real life | 
+| `* *`    | user     | view a pet's photos        | identify pets quickly in real life |
 | `* *`    | user     | delete a pet's photos      | remove outdated pet photos |
 | `* *`    | new user | purge (delete all) existing pets | clear any dummy pet information once I have familiarised with the app |
 | `* *`    | new user | purge (delete all) existing clients | clear any dummy client information once I have familiarised with the app |
@@ -321,9 +321,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | user     | update grooming notes for a pet | update a pet's requirements as they change |
 | `* *`    | user     | delete grooming notes for a pet | remove outdated information |
 | `* *`    | experienced user | filter pets by animal type | view my client demographic |
-| `* *`    | experienced user | attach tags to clients | categorize different types of clients | 
+| `* *`    | experienced user | attach tags to clients | categorize different types of clients |
 | `* *`    | experienced user | attach tags to pets    | flag out pets with special requirements |
-| `* *`    | experienced user | filter clients by tags | retrieve all clients of that category   | 
+| `* *`    | experienced user | filter clients by tags | retrieve all clients of that category   |
 | `* *`    | experienced user | filter pets by tags    | retrieve all pets of that category      |
 | `* * *`  | user     | ensure my data persists automatically | preserve my records after closing the app |
 | `* *`    | user     | add appointment | schedule future appointments |

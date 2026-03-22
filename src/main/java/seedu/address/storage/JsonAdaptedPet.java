@@ -58,26 +58,26 @@ public class JsonAdaptedPet {
         final Name modelPetName = new Name(petName);
 
         if (species == null) {
-            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Species"));
         }
         if (!Name.isValidName(species)) {
-            throw new IllegalValueException(String.format(Name.MESSAGE_SPECIAL_CONSTRAINTS, "Species"));
+            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
         final Name modelSpecies = new Name(species);
 
         if (breed == null) {
-            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Breed"));
         }
         if (!Name.isValidName(breed)) {
-            throw new IllegalValueException(String.format(Name.MESSAGE_SPECIAL_CONSTRAINTS, "Breed"));
+            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
         final Name modelBreed = new Name(breed);
 
         if (note == null) {
-            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Note"));
         }
         if (!Name.isValidName(note)) {
-            throw new IllegalValueException(String.format(Name.MESSAGE_SPECIAL_CONSTRAINTS, "Note"));
+            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
         final Name modelNote = new Name(note);
 

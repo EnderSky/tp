@@ -12,10 +12,10 @@ import seedu.address.model.person.Name;
 
 
 public class JsonAdaptedPetTest {
-    private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_SPECIES = "C@t";
-    private static final String INVALID_BREED = "Sh@orthair";
-    private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_NAME = "  ";
+    private static final String INVALID_SPECIES = "  ";
+    private static final String INVALID_BREED = "  ";
+    private static final String INVALID_TAG = "  ";
 
     private static final String VALID_PET_NAME = SNOOPY.getName().toString();
     private static final String VALID_PET_SPECIES = SNOOPY.getSpecies().toString();
@@ -46,7 +46,7 @@ public class JsonAdaptedPetTest {
     @Test
     public void toModelType_invalidPetSpecies_throwsIllegalValueException() {
         JsonAdaptedPet pet = new JsonAdaptedPet(VALID_PET_NAME, INVALID_SPECIES, VALID_PET_BREED, VALID_PET_NOTE);
-        String expectedMessage = String.format(Name.MESSAGE_SPECIAL_CONSTRAINTS, "Species");
+        String expectedMessage = String.format(Name.MESSAGE_CONSTRAINTS);
         assertThrows(IllegalValueException.class, expectedMessage, pet::toModelType);
     }
 
@@ -60,7 +60,7 @@ public class JsonAdaptedPetTest {
     @Test
     public void toModelType_invalidPetBreed_throwsIllegalValueException() {
         JsonAdaptedPet pet = new JsonAdaptedPet(VALID_PET_NAME, VALID_PET_SPECIES, INVALID_BREED, VALID_PET_NOTE);
-        String expectedMessage = String.format(Name.MESSAGE_SPECIAL_CONSTRAINTS, "Breed");
+        String expectedMessage = String.format(Name.MESSAGE_CONSTRAINTS);
         assertThrows(IllegalValueException.class, expectedMessage, pet::toModelType);
     }
 
@@ -74,7 +74,7 @@ public class JsonAdaptedPetTest {
     @Test
     public void toModelType_invalidPetNote_throwsIllegalValueException() {
         JsonAdaptedPet pet = new JsonAdaptedPet(VALID_PET_NAME, VALID_PET_SPECIES, VALID_PET_BREED, INVALID_TAG);
-        String expectedMessage = String.format(Name.MESSAGE_SPECIAL_CONSTRAINTS, "Note");
+        String expectedMessage = String.format(Name.MESSAGE_CONSTRAINTS);
         assertThrows(IllegalValueException.class, expectedMessage, pet::toModelType);
     }
 

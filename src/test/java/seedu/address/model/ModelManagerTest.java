@@ -169,6 +169,7 @@ public class ModelManagerTest {
     public void removePet_updatesFilteredList() {
         modelManager.addPerson(ALICE);
         modelManager.addPet(SNOOPY, ALICE.getPhone());
+        modelManager.removePet(SNOOPY, ALICE.getPhone());
         assertTrue(modelManager.getFilteredPersonList().stream()
                 .anyMatch(p -> !(p.getPets().contains(SNOOPY))));
     }

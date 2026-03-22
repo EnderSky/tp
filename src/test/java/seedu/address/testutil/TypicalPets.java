@@ -11,7 +11,10 @@ import seedu.address.model.person.Pet;
  */
 public class TypicalPets {
 
-    public static final Pet SNOOPY = new PetBuilder().withName("Snoopy").build();
+    public static final Pet SNOOPY = new PetBuilder()
+            .withName("Snoopy")
+            .withSpecies("")
+            .withBreed("").build();
     public static final Pet DOGGY = new PetBuilder().withName("Doggy").build();
 
     private TypicalPets() {} // prevents instantiation

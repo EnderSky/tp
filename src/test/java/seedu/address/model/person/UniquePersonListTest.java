@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.PetBuilder;
 
 public class UniquePersonListTest {
 
@@ -63,15 +64,15 @@ public class UniquePersonListTest {
 
     @Test
     public void containsPet_petInList_returnsTrue() {
-        Person validPerson = new PersonBuilder(ALICE).withPets("Barkus").build();
-        Pet validPet = new Pet(new Name("Barkus"), "", "");
+        Person validPerson = new PersonBuilder(ALICE).withPet(new PetBuilder().build()).build();
+        Pet validPet = new PetBuilder().build();
         uniquePersonList.add(validPerson);
         assertTrue(uniquePersonList.containsPet(validPerson.getPhone(), validPet));
     }
 
     @Test
     public void containsPet_petNotInList_returnsFalse() {
-        Pet validPet = new Pet(new Name("Barkus"), "", "");
+        Pet validPet = new PetBuilder().build();
         uniquePersonList.add(ALICE);
         assertFalse(uniquePersonList.containsPet(ALICE.getPhone(), validPet));
     }
@@ -257,7 +258,7 @@ public class UniquePersonListTest {
 
     @Test
     public void removePet_existingPet_removesPet() {
-        Person personWithPet = new PersonBuilder(ALICE).withPets("Snoopy").build();
+        Person personWithPet = new PersonBuilder(ALICE).withPet(SNOOPY).build();
         uniquePersonList.add(personWithPet);
         uniquePersonList.removePet(SNOOPY, ALICE.getPhone());
         Person expectedPerson = new PersonBuilder(ALICE).build(); // without pets

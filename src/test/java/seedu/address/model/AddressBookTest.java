@@ -18,11 +18,11 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Pet;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.PetBuilder;
 
 public class AddressBookTest {
 
@@ -82,15 +82,15 @@ public class AddressBookTest {
 
     @Test
     public void hasPet_petInList_returnsTrue() {
-        Person validPerson = new PersonBuilder(ALICE).withPets("Barkus").build();
-        Pet validPet = new Pet(new Name("Barkus"), "", "");
+        Person validPerson = new PersonBuilder(ALICE).withPet(new PetBuilder().build()).build();
+        Pet validPet = new PetBuilder().build();
         addressBook.addPerson(validPerson);
         assertTrue(addressBook.hasPet(validPerson.getPhone(), validPet));
     }
 
     @Test
     public void hasPet_petNotInList_returnsFalse() {
-        Pet validPet = new Pet(new Name("Barkus"), "", "");
+        Pet validPet = new PetBuilder().build();
         addressBook.addPerson(ALICE);
         assertFalse(addressBook.hasPet(ALICE.getPhone(), validPet));
     }
@@ -143,9 +143,10 @@ public class AddressBookTest {
     @Test
     public void removePet_removesPetFromPerson() {
         AddressBook ab = new AddressBook();
-        Person person = new seedu.address.testutil.PersonBuilder().withPhone("88888888").withPets("Catty").build();
+        Person person = new seedu.address.testutil.PersonBuilder().withPhone("88888888")
+                .withPet(new PetBuilder().build()).build();
         ab.addPerson(person);
-        Pet pet = new seedu.address.model.person.Pet(new seedu.address.model.person.Name("Catty"), "", "");
+        Pet pet = new PetBuilder().build();
         ab.removePet(pet, person.getPhone());
         Person found = ab.getPersonList().stream().filter(
                 p -> p.getPhone().equals(person.getPhone())).findFirst().get();

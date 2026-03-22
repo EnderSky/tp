@@ -1,6 +1,8 @@
 package seedu.address.testutil;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
@@ -27,7 +29,7 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private Set<Tag> tags;
-    private Set<Pet> pets;
+    private List<Pet> pets;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -38,7 +40,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
-        pets = new HashSet<>();
+        pets = new ArrayList<>();
     }
 
     /**
@@ -50,7 +52,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
-        pets = new HashSet<>(personToCopy.getPets());
+        pets = new ArrayList<>(personToCopy.getPets());
     }
 
     /**
@@ -70,10 +72,10 @@ public class PersonBuilder {
     }
 
     /**
-     * Parses the {@code pets} into a {@code Set<Pet>} and set it to the {@code Person} that we are building.
+     * Adds the {@code Pet} to the {@code Person} that we are building.
      */
-    public PersonBuilder withPets(String ... pets) {
-        this.pets = SampleDataUtil.getPetSet(pets);
+    public PersonBuilder withPet(Pet pet) {
+        this.pets.add(pet);
         return this;
     }
 

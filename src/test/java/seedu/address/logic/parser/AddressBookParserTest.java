@@ -17,8 +17,10 @@ import seedu.address.logic.commands.AddPersonCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeletePersonCommand;
 import seedu.address.logic.commands.DeletePetCommand;
-import seedu.address.logic.commands.EditClientCommand;
-import seedu.address.logic.commands.EditClientCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditPersonCommand;
+import seedu.address.logic.commands.EditPersonCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditPetCommand;
+import seedu.address.logic.commands.EditPetCommand.EditPetDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindClientCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -26,16 +28,20 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Pet;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.EditPetDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.PetBuilder;
+
 
 public class AddressBookParserTest {
 
     private final AddressBookParser parser = new AddressBookParser();
 
     @Test
-    public void parseCommand_add() throws Exception {
+    public void parseCommand_addPerson() throws Exception {
         Person person = new PersonBuilder().build();
         AddPersonCommand command = (AddPersonCommand) parser.parseCommand(PersonUtil.getAddPersonCommand(person));
         assertEquals(new AddPersonCommand(person), command);
@@ -62,12 +68,21 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_edit() throws Exception {
+    public void parseCommand_editPerson() throws Exception {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
-        EditClientCommand command = (EditClientCommand) parser.parseCommand(EditClientCommand.COMMAND_WORD + " "
+        EditPersonCommand command = (EditPersonCommand) parser.parseCommand(EditPersonCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditClientCommand(INDEX_FIRST_PERSON, descriptor), command);
+        assertEquals(new EditPersonCommand(INDEX_FIRST_PERSON, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_editPet() throws Exception {
+        Pet pet = new PetBuilder().build();
+        EditPetDescriptor descriptor = new EditPetDescriptorBuilder(pet).build();
+        EditPetCommand command = (EditPetCommand) parser.parseCommand(EditPetCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + new PetBuilder().getCommandFormat());
+        assertEquals(new EditPetCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
     @Test

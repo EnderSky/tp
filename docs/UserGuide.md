@@ -110,6 +110,19 @@ Examples:
 *  `editClient 1 p/91234567 e/johndoe@example.com` Edits the details of the client in `POSITION` 1.
 *  `editClient 2 n/Betsy Crower t/` Changes the name of the client in `POSITION` 2 to `Betsy Crower` and clears their tags.
 
+### Editing a pet : `editPet`
+
+Edits an existing pet.
+
+* Edits the pet at the specified `POSITION`. The `POSITION` refers to the number shown next to the pet.​
+* Specified values will override old values.
+
+Format: `editPet POSITION [n/NAME] [s/SPECIES] [b/BREED]​`
+
+Examples:
+*  `editPet 1 s/cat` Edits the species of the pet in `POSITION` 1.
+*  `editPet 2 n/Gunner` Changes the name of the pet in `POSITION` 2 to `Gunner`
+
 ### Locating clients by name: `findClient`
 
 Finds clients whose names contain **any** of the given keywords.
@@ -206,6 +219,8 @@ Action     | Format, Examples
 **DeleteClient** | `deleteClient POSITION`<br> e.g., `deleteClient 3`
 **DeletePet** | `deletePet n/NAME p/PHONE_NUMBER`<br> e.g., `deletePet n/Meowy p/22224444`
 **EditClient**   | `editClient POSITION [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`editClient 2 n/James Lee e/jameslee@example.com`
+**EditPet**   | `editPet POSITION [n/NAME] [s/SPECIES] [b/BREED]`<br>
+e.g.,`editPet 2 n/Pongo`
 **Exit**   | `exit`
 **FindClient**   | `findClient KEYWORD [MORE_KEYWORDS]`<br> e.g., `findClient James Jake`
 **Help**   | `help`

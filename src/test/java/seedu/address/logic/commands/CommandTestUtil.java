@@ -3,9 +3,11 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.Assert.assertThrows;
 
@@ -34,7 +36,6 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
-    public static final String VALID_PET_DOG = "Woofer";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
@@ -58,13 +59,18 @@ public class CommandTestUtil {
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
-    public static final String VALID_PETNAME_SNOOPY = "Snoopy";
-    public static final String VALID_PETNAME_DOGGY = "Doggy";
-    public static final String NAME_DESC_SNOOPY = " " + PREFIX_NAME + VALID_PETNAME_SNOOPY;
-    public static final String NAME_DESC_DOGGY = " " + PREFIX_NAME + VALID_PETNAME_DOGGY;
+    public static final String VALID_PET_NAME = "Snoopy";
+    public static final String VALID_PET_SPECIES = "dog";
+    public static final String VALID_PET_BREED = "beagle";
+    public static final String VALID_PET_NAME_DESC = " " + PREFIX_NAME + VALID_PET_NAME;
+    public static final String VALID_PET_SPECIES_DESC = " " + PREFIX_SPECIES + VALID_PET_SPECIES;
+    public static final String VALID_PET_BREED_DESC = " " + PREFIX_BREED + VALID_PET_BREED;
 
-    public static final EditClientCommand.EditPersonDescriptor DESC_AMY;
-    public static final EditClientCommand.EditPersonDescriptor DESC_BOB;
+    public static final String INVALID_PET_NAME = " ";
+    public static final String INVALID_PET_NAME_DESC = " " + PREFIX_NAME + INVALID_PET_NAME;
+
+    public static final EditPersonCommand.EditPersonDescriptor DESC_AMY;
+    public static final EditPersonCommand.EditPersonDescriptor DESC_BOB;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)

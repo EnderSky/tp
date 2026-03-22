@@ -15,12 +15,12 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Pet;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.PetBuilder;
 
 public class ModelManagerTest {
 
@@ -94,15 +94,15 @@ public class ModelManagerTest {
 
     @Test
     public void hasPet_petInList_returnsTrue() {
-        Person validPerson = new PersonBuilder(ALICE).withPets("Barkus").build();
-        Pet validPet = new Pet(new Name("Barkus"), "", "");
+        Person validPerson = new PersonBuilder(ALICE).withPet(new PetBuilder().build()).build();
+        Pet validPet = new PetBuilder().build();
         modelManager.addPerson(validPerson);
         assertTrue(modelManager.hasPet(validPerson.getPhone(), validPet));
     }
 
     @Test
     public void hasPet_petNotInList_returnsFalse() {
-        Pet validPet = new Pet(new Name("Barkus"), "", "");
+        Pet validPet = new PetBuilder().build();
         modelManager.addPerson(ALICE);
         assertFalse(modelManager.hasPet(ALICE.getPhone(), validPet));
     }
@@ -180,10 +180,9 @@ public class ModelManagerTest {
     public void removePet_updatesFilteredList() {
         ModelManager model = new ModelManager();
         seedu.address.model.person.Person person = new seedu.address.testutil.PersonBuilder()
-                .withPhone("99999999").withPets("Doggy").build();
+                .withPhone("99999999").withPet(new PetBuilder().build()).build();
         model.addPerson(person);
-        seedu.address.model.person.Pet pet = new seedu.address.model.person.Pet(
-                new seedu.address.model.person.Name("Doggy"), "", "");
+        seedu.address.model.person.Pet pet = new PetBuilder().build();
         model.removePet(pet, person.getPhone());
         // Should not throw and filtered list should still contain the person
         assertTrue(model.getFilteredPersonList().stream().anyMatch(p -> p.getPhone().equals(person.getPhone())));

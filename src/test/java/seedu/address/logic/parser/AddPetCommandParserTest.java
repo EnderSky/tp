@@ -4,14 +4,14 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_SNOOPY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PETNAME_SNOOPY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PET_BREED_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PET_NAME;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PET_NAME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PET_SPECIES_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalPets.SNOOPY;
 
 import org.junit.jupiter.api.Test;
 
@@ -26,11 +26,12 @@ public class AddPetCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Pet expectedPet = new PetBuilder(SNOOPY).build();
+        Pet expectedPet = new PetBuilder().build();
 
         // whitespace only preamble
-        assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_SNOOPY + PHONE_DESC_AMY,
-                new AddPetCommand(expectedPet, new Phone("999")));
+        assertParseSuccess(parser, VALID_PET_NAME_DESC + VALID_PET_BREED_DESC
+                + VALID_PET_SPECIES_DESC + PHONE_DESC_AMY,
+                new AddPetCommand(expectedPet, new Phone(VALID_PHONE_AMY)));
     }
 
     @Test
@@ -38,10 +39,10 @@ public class AddPetCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPetCommand.MESSAGE_USAGE);
 
         // missing name prefix
-        assertParseFailure(parser, VALID_PETNAME_SNOOPY + PHONE_DESC_AMY, expectedMessage);
+        assertParseFailure(parser, VALID_PET_NAME + PHONE_DESC_AMY, expectedMessage);
 
         // missing phone prefix
-        assertParseFailure(parser, NAME_DESC_SNOOPY + VALID_PHONE_AMY,
+        assertParseFailure(parser, VALID_PET_NAME + VALID_PHONE_AMY,
                 expectedMessage);
     }
 

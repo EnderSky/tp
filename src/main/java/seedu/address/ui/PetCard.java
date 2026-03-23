@@ -43,8 +43,8 @@ public class PetCard extends UiPart<Region> {
         if (displayedIndex != 0) {
             petId.setText(displayedIndex + ". ");
         }
-        petName.setText(pet.getName().fullName);
-        petSpecies.setText(pet.getSpecies());
-        petBreed.setText(pet.getBreed());
+        petName.setText(pet.getName().toString());
+        petSpecies.setText(pet.getSpecies().toString());
+        petBreed.setText(pet.getBreed().toString());
     }
 }

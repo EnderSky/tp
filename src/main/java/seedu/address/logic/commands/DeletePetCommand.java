@@ -78,7 +78,8 @@ public class DeletePetCommand extends Command {
         }
 
         DeletePetCommand otherDeletePetCommand = (DeletePetCommand) other;
-        return toDelete.equals(otherDeletePetCommand.toDelete);
+        return toDelete.equals(otherDeletePetCommand.toDelete)
+                && ownerPhone.equals(otherDeletePetCommand.ownerPhone);
     }
 
     @Override

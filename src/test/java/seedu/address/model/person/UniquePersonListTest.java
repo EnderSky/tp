@@ -63,17 +63,15 @@ public class UniquePersonListTest {
 
     @Test
     public void containsPet_petInList_returnsTrue() {
-        Person validPerson = new PersonBuilder(ALICE).withPets("Barkus").build();
-        Pet validPet = new Pet(new Name("Barkus"), "", "");
+        Person validPerson = new PersonBuilder(ALICE).withPets(SNOOPY).build();
         uniquePersonList.add(validPerson);
-        assertTrue(uniquePersonList.containsPet(validPerson.getPhone(), validPet));
+        assertTrue(uniquePersonList.containsPet(validPerson.getPhone(), SNOOPY));
     }
 
     @Test
     public void containsPet_petNotInList_returnsFalse() {
-        Pet validPet = new Pet(new Name("Barkus"), "", "");
         uniquePersonList.add(ALICE);
-        assertFalse(uniquePersonList.containsPet(ALICE.getPhone(), validPet));
+        assertFalse(uniquePersonList.containsPet(ALICE.getPhone(), SNOOPY));
     }
 
     @Test
@@ -257,7 +255,7 @@ public class UniquePersonListTest {
 
     @Test
     public void removePet_existingPet_removesPet() {
-        Person personWithPet = new PersonBuilder(ALICE).withPets("Snoopy").build();
+        Person personWithPet = new PersonBuilder(ALICE).withPets(SNOOPY).build();
         uniquePersonList.add(personWithPet);
         uniquePersonList.removePet(SNOOPY, ALICE.getPhone());
         Person expectedPerson = new PersonBuilder(ALICE).build(); // without pets

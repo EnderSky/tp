@@ -61,10 +61,8 @@ public class SampleDataUtil {
     /**
      * Returns a pet set containing the list of strings given.
      */
-    public static Set<Pet> getPetSet(String... strings) {
-        return Arrays.stream(strings)
-                .map(Name::new)
-                .map(name -> new Pet(name, "", ""))
+    public static Set<Pet> getPetSet(Pet... pets) {
+        return Arrays.stream(pets)
                 .collect(Collectors.toSet());
     }
 }

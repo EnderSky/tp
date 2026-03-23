@@ -21,7 +21,6 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Pet;
 import seedu.address.model.person.Phone;
@@ -37,7 +36,8 @@ public class DeletePetCommandTest {
 
     @Test
     public void constructor_nullPhone_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new DeletePetCommand(new Pet(new Name("Dog"), "", ""), null));
+        Pet validPet = new PetBuilder().build();
+        assertThrows(NullPointerException.class, () -> new DeletePetCommand(validPet, null));
     }
 
     @Test

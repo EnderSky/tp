@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalPets.SNOOPY;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -20,7 +21,6 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Pet;
 import seedu.address.model.person.Phone;
@@ -30,13 +30,20 @@ import seedu.address.testutil.PetBuilder;
 public class AddPetCommandTest {
 
     @Test
-    public void constructor_nullPet_throwsNullPointerException() {
+    public void constructor_nullAll_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new AddPetCommand(null, null));
     }
 
     @Test
+    public void constructor_nullPet_throwsNullPointerException() {
+        Phone validPhone = new Phone("98765432");
+        assertThrows(NullPointerException.class, () -> new AddPetCommand(null, validPhone));
+    }
+
+    @Test
     public void constructor_nullPhone_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddPetCommand(new Pet(new Name("Dog"), "", ""), null));
+        Pet validPet = new PetBuilder().build();
+        assertThrows(NullPointerException.class, () -> new AddPetCommand(validPet, null));
     }
 
     @Test
@@ -56,14 +63,15 @@ public class AddPetCommandTest {
     public void equals() {
         Pet snoopy = new PetBuilder().withName("Snoopy").build();
         Pet doggy = new PetBuilder().withName("Doggy").build();
-        AddPetCommand addSnoopyCommand = new AddPetCommand(snoopy, new Phone("99999999"));
-        AddPetCommand addDoggyCommand = new AddPetCommand(doggy, new Phone("99999999"));
+        Phone phone = new Phone("98765432");
+        AddPetCommand addSnoopyCommand = new AddPetCommand(snoopy, phone);
+        AddPetCommand addDoggyCommand = new AddPetCommand(doggy, phone);
 
         // same object -> returns true
         assertTrue(addSnoopyCommand.equals(addSnoopyCommand));
 
         // same values -> returns true
-        AddPetCommand addSnoopyCommandCopy = new AddPetCommand(snoopy, new Phone("99999999"));
+        AddPetCommand addSnoopyCommandCopy = new AddPetCommand(snoopy, phone);
         assertTrue(addSnoopyCommand.equals(addSnoopyCommandCopy));
 
         // different types -> returns false
@@ -78,9 +86,9 @@ public class AddPetCommandTest {
 
     @Test
     public void toStringMethod() {
-        Pet snoopy = new PetBuilder().withName("Snoopy").build();
-        AddPetCommand addPetCommand = new AddPetCommand(snoopy, new Phone("99999999"));
-        String expected = AddPetCommand.class.getCanonicalName() + "{addPet=" + snoopy + "}";
+        Phone phone = new Phone("98765432");
+        AddPetCommand addPetCommand = new AddPetCommand(SNOOPY, phone);
+        String expected = AddPetCommand.class.getCanonicalName() + "{addPet=" + SNOOPY + "}";
         assertEquals(expected, addPetCommand.toString());
     }
 

@@ -3,8 +3,14 @@ package seedu.address.model.person;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.testutil.TypicalPets.BARKUS;
+import static seedu.address.testutil.TypicalPets.DOGGY;
+import static seedu.address.testutil.TypicalPets.MEOWY;
+import static seedu.address.testutil.TypicalPets.SNOOPY;
 
 import org.junit.jupiter.api.Test;
+
+import seedu.address.testutil.PetBuilder;
 
 public class PetTest {
 
@@ -17,13 +23,13 @@ public class PetTest {
         assertTrue(pet.equals(similarPet));
 
         // same object -> returns true
-        assertTrue(pet.equals(pet));
+        assertTrue(SNOOPY.equals(SNOOPY));
 
         // null -> returns false
-        assertFalse(pet.equals(null));
+        assertFalse(SNOOPY.equals(null));
 
         // different type -> returns false
-        assertFalse(pet.equals(5));
+        assertFalse(SNOOPY.equals(5));
 
         // different name -> returns false
         Pet differentNamePet = new Pet(new Name("Woofy"), "Dog", "Bulldog");
@@ -32,8 +38,7 @@ public class PetTest {
 
     @Test
     public void toStringMethod() {
-        Pet pet = new Pet(new Name("Barkus"), "", "");
-        String expected = "[" + "Barkus" + "]";
-        assertEquals(expected, pet.toString());
+        String expected = "[" + "Snoopy" + "]";
+        assertEquals(expected, SNOOPY.toString());
     }
 }

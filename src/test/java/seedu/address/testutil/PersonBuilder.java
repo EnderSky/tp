@@ -72,7 +72,7 @@ public class PersonBuilder {
     /**
      * Parses the {@code pets} into a {@code Set<Pet>} and set it to the {@code Person} that we are building.
      */
-    public PersonBuilder withPets(String ... pets) {
+    public PersonBuilder withPets(Pet ... pets) {
         this.pets = SampleDataUtil.getPetSet(pets);
         return this;
     }

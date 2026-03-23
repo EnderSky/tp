@@ -7,6 +7,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPets.SNOOPY;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,10 +16,8 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Pet;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.PersonBuilder;
 
@@ -94,17 +93,15 @@ public class ModelManagerTest {
 
     @Test
     public void hasPet_petInList_returnsTrue() {
-        Person validPerson = new PersonBuilder(ALICE).withPets("Barkus").build();
-        Pet validPet = new Pet(new Name("Barkus"), "", "");
-        modelManager.addPerson(validPerson);
-        assertTrue(modelManager.hasPet(validPerson.getPhone(), validPet));
+        Person editedAlice = new PersonBuilder(ALICE).withPets(SNOOPY).build();
+        modelManager.addPerson(editedAlice);
+        assertTrue(modelManager.hasPet(editedAlice.getPhone(), SNOOPY));
     }
 
     @Test
     public void hasPet_petNotInList_returnsFalse() {
-        Pet validPet = new Pet(new Name("Barkus"), "", "");
         modelManager.addPerson(ALICE);
-        assertFalse(modelManager.hasPet(ALICE.getPhone(), validPet));
+        assertFalse(modelManager.hasPet(ALICE.getPhone(), SNOOPY));
     }
 
     @Test
@@ -120,9 +117,7 @@ public class ModelManagerTest {
     @Test
     public void removePet_nullPhone_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () ->
-                modelManager.removePet(
-                        new seedu.address.model.person.Pet(new seedu.address.model.person.Name("Test"), "", ""),
-                        null));
+                modelManager.removePet(SNOOPY, null));
     }
 
     @Test
@@ -164,28 +159,18 @@ public class ModelManagerTest {
 
     @Test
     public void addPet_updatesFilteredList() {
-        ModelManager model = new ModelManager();
-        seedu.address.model.person.Person person = new seedu.address.testutil
-                .PersonBuilder().withPhone("99999999").build();
-        model.addPerson(person);
-        seedu.address.model.person.Pet pet = new seedu.address.model.person.Pet(
-                new seedu.address.model.person.Name("Doggy"), "", "");
-        model.addPet(pet, person.getPhone());
-        // Should not throw and filtered list should still contain a person with the same phone
-        assertTrue(model.getFilteredPersonList().stream()
-                .anyMatch(p -> p.getPhone().equals(person.getPhone())));
+        modelManager.addPerson(ALICE);
+        modelManager.addPet(SNOOPY, ALICE.getPhone());
+        assertTrue(modelManager.getFilteredPersonList().stream()
+                .anyMatch(p -> p.getPets().contains(SNOOPY)));
     }
 
     @Test
     public void removePet_updatesFilteredList() {
-        ModelManager model = new ModelManager();
-        seedu.address.model.person.Person person = new seedu.address.testutil.PersonBuilder()
-                .withPhone("99999999").withPets("Doggy").build();
-        model.addPerson(person);
-        seedu.address.model.person.Pet pet = new seedu.address.model.person.Pet(
-                new seedu.address.model.person.Name("Doggy"), "", "");
-        model.removePet(pet, person.getPhone());
-        // Should not throw and filtered list should still contain the person
-        assertTrue(model.getFilteredPersonList().stream().anyMatch(p -> p.getPhone().equals(person.getPhone())));
+        modelManager.addPerson(ALICE);
+        modelManager.addPet(SNOOPY, ALICE.getPhone());
+        modelManager.removePet(SNOOPY, ALICE.getPhone());
+        assertTrue(modelManager.getFilteredPersonList().stream()
+                .anyMatch(p -> !(p.getPets().contains(SNOOPY))));
     }
 }

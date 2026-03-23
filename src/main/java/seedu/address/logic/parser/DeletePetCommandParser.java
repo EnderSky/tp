@@ -35,7 +35,7 @@ public class DeletePetCommandParser implements Parser<DeletePetCommand> {
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
 
-        Pet pet = new Pet(name, "", "");
+        Pet pet = new Pet(name, new Name("dummy species"), new Name("dummy breed"), new Name("dummmy grooming notes"));
 
         return new DeletePetCommand(pet, phone);
     }

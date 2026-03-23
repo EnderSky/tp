@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 
@@ -26,21 +27,21 @@ public class AddPetCommandParser implements Parser<AddPetCommand> {
      */
     public AddPetCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_SPECIES, PREFIX_BREED);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_SPECIES, PREFIX_BREED, PREFIX_NOTE);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPetCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_SPECIES, PREFIX_BREED, PREFIX_NOTE);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
-        String species = argMultimap.getValue(PREFIX_SPECIES).orElse("");
-        String breed = argMultimap.getValue(PREFIX_BREED).orElse("");
+        Name species = ParserUtil.parseName(argMultimap.getValue(PREFIX_SPECIES).orElse("Unknown"));
+        Name breed = ParserUtil.parseName(argMultimap.getValue(PREFIX_BREED).orElse("Unknown"));
+        Name note = ParserUtil.parseName(argMultimap.getValue(PREFIX_NOTE).orElse("None"));
 
-        Pet pet = new Pet(name, species, breed);
-
+        Pet pet = new Pet(name, species, breed, note);
         return new AddPetCommand(pet, phone);
     }
 

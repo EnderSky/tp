@@ -18,7 +18,7 @@ You can register clients and their pets, so that after grooming a pet, you can f
 
 1. [Install](https://se-education.org/guides/tutorials/javaInstallation.html) Java `17` or higher to your computer.
 
-1. Click on `tp.jar` to download it from [here](https://github.com/AY2526S2-CS2103T-F14-2/tp/releases).
+1. Download `tp.jar` from [here](https://github.com/AY2526S2-CS2103T-F14-2/tp/releases).
 
 1. Move `tp.jar` to the folder you want to use as the _home folder_ for this app.
 
@@ -223,4 +223,3 @@ e.g.,`editPet 2 n/Pongo`
 **Find**   | `find KEYWORD...`<br> e.g., `find James dog`
 **Help**   | `help`
 **List**   | `list`
-

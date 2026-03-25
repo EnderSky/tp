@@ -1,7 +1,8 @@
 package seedu.address.logic.parser;
 
 /**
- * Contains Command Line Interface (CLI) syntax definitions common to multiple commands
+ * Contains Command Line Interface (CLI) syntax definitions common to multiple
+ * commands
  */
 public class CliSyntax {
 
@@ -14,4 +15,9 @@ public class CliSyntax {
     public static final Prefix PREFIX_SPECIES = new Prefix("s/");
     public static final Prefix PREFIX_BREED = new Prefix("b/");
     public static final Prefix PREFIX_NOTE = new Prefix("nt/");
+    public static final Prefix PREFIX_PHOTO = new Prefix("ph/");
+
+    /* Default file paths */
+    public static final String PLACEHOLDER_IMAGE_PATH = "src/main/resources/images/placeholder-pet-logo.png";
+    public static final String IMG_NOT_FOUND_PATH = "src/main/resources/images/image-not-found.png";
 }

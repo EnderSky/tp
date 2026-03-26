@@ -33,10 +33,11 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="petName" text="\$name" styleClass="cell_big_label" />
+        <Label fx:id="petName" text="\$name" styleClass="cell_big_label" wrapText="true" minHeight="-Infinity" />
       </HBox>
-      <Label fx:id="petSpecies" styleClass="cell_small_label" text="\$species" />
-      <Label fx:id="petBreed" styleClass="cell_small_label" text="\$breed" />
+      <Label fx:id="petSpecies" styleClass="cell_small_label" text="\$species" wrapText="true" minHeight="-Infinity" />
+      <Label fx:id="petBreed" styleClass="cell_small_label" text="\$breed" wrapText="true" minHeight="-Infinity" />
+      <Label fx:id="petNote" styleClass="cell_small_label" text="\$note" wrapText="true" minHeight="-Infinity" />
     </VBox>
   </GridPane>
 </HBox>

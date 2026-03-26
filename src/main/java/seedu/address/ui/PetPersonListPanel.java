@@ -1,11 +1,7 @@
 package seedu.address.ui;
 
-import static seedu.address.logic.parser.CliSyntax.PLACEHOLDER_IMAGE_PATH;
-
 import java.util.logging.Logger;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -15,11 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Pet;
-import seedu.address.model.person.PetAndPerson;
-import seedu.address.model.person.PhotoPath;
 
 /**
  * Panel containing the list of persons.
@@ -35,9 +27,7 @@ public class PetPersonListPanel extends UiPart<Region> {
     private Label clientHeaderLabel;
 
     @FXML
-    private ListView<PetAndPerson> petPersonListView;
-
-    private final ObservableList<PetAndPerson> petPersonList = FXCollections.observableArrayList();
+    private ListView<Person> personListView;
 
     /**
      * Creates a {@code PetPersonListPanel} with the given {@code ObservableList}.
@@ -45,68 +35,34 @@ public class PetPersonListPanel extends UiPart<Region> {
     public PetPersonListPanel(ObservableList<Person> personList) {
         super(FXML);
 
-        HBox.setHgrow(petHeaderLabel, Priority.ALWAYS);
-        HBox.setHgrow(clientHeaderLabel, Priority.ALWAYS);
-
-        petHeaderLabel.setMaxWidth(Double.MAX_VALUE);
-        clientHeaderLabel.setMaxWidth(Double.MAX_VALUE);
-
         petHeaderLabel.setText("Pet");
         clientHeaderLabel.setText("Client");
 
-        createPetPersonList(personList);
-
-        personList.addListener((ListChangeListener<Person>) change -> {
-            createPetPersonList(personList);
-        });
-
-        petPersonListView.setItems(petPersonList);
-        petPersonListView.setCellFactory(listView -> new PetPersonListViewCell());
+        personListView.setItems(personList);
+        personListView.setCellFactory(listView -> new PetPersonListViewCell());
     }
 
     /**
-     * Clears the current PetAndPerson list and creates it from the Person list.
+     * Custom {@code ListCell} that displays the graphics of a {@code Person} and
+     * all the {@code Pet}s they have
      */
-    private void createPetPersonList(ObservableList<Person> personList) {
-        petPersonList.clear(); // remove the old data
-
-        int petCounter = 1;
-        int personCounter = 1;
-
-        for (Person person : personList) {
-            if (person.getPets().isEmpty()) {
-                Pet noPet = new Pet(
-                        new Name("No pets for this person"),
-                        new Name("NIL"),
-                        new Name("NIL"),
-                        new Name("NIL"),
-                        new PhotoPath(PLACEHOLDER_IMAGE_PATH));
-                petPersonList.add(new PetAndPerson(noPet, person, 0, personCounter));
-            } else {
-                for (Pet pet : person.getPets()) {
-                    petPersonList.add(new PetAndPerson(pet, person, petCounter, personCounter));
-                    petCounter++;
-                }
-            }
-            personCounter++;
-        }
-    }
-
-    /**
-     * Custom {@code ListCell} that displays the graphics of a {@code Pet} and
-     * {@code Person} using
-     * a {@code PetPersonCard}.
-     */
-    class PetPersonListViewCell extends ListCell<PetAndPerson> {
+    class PetPersonListViewCell extends ListCell<Person> {
         @Override
-        protected void updateItem(PetAndPerson item, boolean empty) {
-            super.updateItem(item, empty);
+        protected void updateItem(Person person, boolean empty) {
+            super.updateItem(person, empty);
 
-            if (empty || item == null) {
+            if (empty || person == null) {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new PetPersonCard(item).getRoot());
+                int startingPetIndex = 1;
+                ObservableList<Person> personList = personListView.getItems();
+
+                for (int i = 0; i < getIndex(); i++) {
+                    startingPetIndex += personList.get(i).getPets().size();
+                }
+
+                setGraphic(new PetPersonCard(person, getIndex() + 1, startingPetIndex).getRoot());
             }
         }
     }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.geometry.Insets?>
+<GridPane fx:id="petPersonCardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" >
+
+    <columnConstraints>
+        <ColumnConstraints percentWidth="50.0" />
+        <ColumnConstraints percentWidth="50.0" />
+    </columnConstraints>
+
+    <VBox fx:id="petsContainer">
+        <padding>
+            <Insets top="0" right="5" bottom="0" left="0" />
+        </padding>
+    </VBox>
+
+</GridPane>

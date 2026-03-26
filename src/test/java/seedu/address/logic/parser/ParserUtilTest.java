@@ -18,6 +18,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.PhotoPath;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -26,6 +27,7 @@ public class ParserUtilTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_PHOTO_PATH = "invalid/photo/path";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "+(65) 123456";
@@ -33,6 +35,7 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_PHOTO_PATH = "/images/clock.png";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -192,5 +195,21 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parsePhotoPath_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parsePhotoPath((String) null));
+    }
+
+    @Test
+    public void parsePhotoPath_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parsePhotoPath(INVALID_PHOTO_PATH));
+    }
+
+    @Test
+    public void parsePhotoPath_validPath_success() throws Exception {
+        PhotoPath expectedPhotoPath = new PhotoPath(VALID_PHOTO_PATH);
+        assertEquals(expectedPhotoPath, ParserUtil.parsePhotoPath(VALID_PHOTO_PATH));
     }
 }

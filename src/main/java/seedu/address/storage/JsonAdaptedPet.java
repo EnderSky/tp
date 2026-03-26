@@ -1,11 +1,14 @@
 package seedu.address.storage;
 
+import static seedu.address.logic.parser.CliSyntax.PLACEHOLDER_IMAGE_PATH;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Pet;
+import seedu.address.model.person.PhotoPath;
 
 /**
  * Jackson-friendly version of {@link Pet}.
@@ -18,19 +21,22 @@ public class JsonAdaptedPet {
     private final String species;
     private final String breed;
     private final String note;
+    private final String photoPath;
 
     /**
      * Constructs a {@code JsonAdaptedPet} with the given {@code petName}.
      */
     @JsonCreator
     public JsonAdaptedPet(@JsonProperty("petName") String petName,
-                          @JsonProperty("species") String species,
-                          @JsonProperty("breed") String breed,
-                          @JsonProperty("note") String note) {
+            @JsonProperty("species") String species,
+            @JsonProperty("breed") String breed,
+            @JsonProperty("note") String note,
+            @JsonProperty("photoPath") String photoPath) {
         this.petName = petName;
         this.species = species;
         this.breed = breed;
         this.note = note;
+        this.photoPath = photoPath;
     }
 
     /**
@@ -41,12 +47,16 @@ public class JsonAdaptedPet {
         species = source.getSpecies().fullName;
         breed = source.getBreed().fullName;
         note = source.getNote().fullName;
+        photoPath = source.getPhotoPath().toString();
+
     }
 
     /**
-     * Converts this Jackson-friendly adapted pet object into the model's {@code Pet} object.
+     * Converts this Jackson-friendly adapted pet object into the model's
+     * {@code Pet} object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted pet.
+     * @throws IllegalValueException if there were any data constraints violated in
+     *                               the adapted pet.
      */
     public Pet toModelType() throws IllegalValueException {
         if (petName == null) {
@@ -81,6 +91,12 @@ public class JsonAdaptedPet {
         }
         final Name modelNote = new Name(note);
 
-        return new Pet(modelPetName, modelSpecies, modelBreed, modelNote);
+        String editedPath = photoPath;
+        if (photoPath == null || !PhotoPath.isValidPhotoPath(photoPath)) {
+            editedPath = PLACEHOLDER_IMAGE_PATH.toString();
+        }
+        final PhotoPath modelPhotoPath = new PhotoPath(editedPath);
+
+        return new Pet(modelPetName, modelSpecies, modelBreed, modelNote, modelPhotoPath);
     }
 }

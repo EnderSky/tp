@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Pet;
+import seedu.address.model.person.PhotoPath;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -34,11 +36,14 @@ public class EditPetCommand extends Command {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_SPECIES + "SPECIES] "
             + "[" + PREFIX_BREED + "BREED] "
+            + "[" + PREFIX_NOTE + "NOTE] "
+            + "[" + PREFIX_PHOTO + "PHOTO PATH] "
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + "Meowy"
             + PREFIX_SPECIES + "cat"
             + PREFIX_BREED + "persian"
-            + PREFIX_NOTE + "Good kitty";
+            + PREFIX_NOTE + "Good kitty"
+            + PREFIX_PHOTO + "C:\\Users\\DummyUser\\Photos\\meowy.png";
 
     public static final String MESSAGE_EDIT_PET_SUCCESS = "Edited Pet: %1$s";
     public static final String MESSAGE_INDEX_TOO_SMALL = "The POSITION provided should be 1 or more";
@@ -99,8 +104,9 @@ public class EditPetCommand extends Command {
         Name updatedName = editPetDescriptor.getName().orElse(petToEdit.getName());
         Name updatedSpecies = editPetDescriptor.getSpecies().orElse(petToEdit.getSpecies());
         Name updatedBreed = editPetDescriptor.getBreed().orElse(petToEdit.getBreed());
-        Name updatedNote = editPetDescriptor.getBreed().orElse(petToEdit.getBreed());
-        return new Pet(updatedName, updatedSpecies, updatedBreed, updatedNote);
+        Name updatedNote = editPetDescriptor.getNote().orElse(petToEdit.getNote());
+        PhotoPath updatedPhotoPath = editPetDescriptor.getPhotoPath().orElse(petToEdit.getPhotoPath());
+        return new Pet(updatedName, updatedSpecies, updatedBreed, updatedNote, updatedPhotoPath);
     }
 
     @Override
@@ -137,6 +143,7 @@ public class EditPetCommand extends Command {
         private Name species;
         private Name breed;
         private Name note;
+        private PhotoPath photoPath;
 
         public EditPetDescriptor() {
         }
@@ -150,13 +157,14 @@ public class EditPetCommand extends Command {
             setSpecies(toCopy.species);
             setBreed(toCopy.breed);
             setNote(toCopy.note);
+            setPhotoPath(toCopy.photoPath);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, species, breed, note);
+            return CollectionUtil.isAnyNonNull(name, species, breed, note, photoPath);
         }
 
         public void setName(Name name) {
@@ -191,6 +199,14 @@ public class EditPetCommand extends Command {
             return Optional.ofNullable(note);
         }
 
+        public void setPhotoPath(PhotoPath photoPath) {
+            this.photoPath = photoPath;
+        }
+
+        public Optional<PhotoPath> getPhotoPath() {
+            return Optional.ofNullable(photoPath);
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -206,7 +222,8 @@ public class EditPetCommand extends Command {
             return Objects.equals(name, otherEditPetDescriptor.name)
                     && Objects.equals(species, otherEditPetDescriptor.species)
                     && Objects.equals(breed, otherEditPetDescriptor.breed)
-                    && Objects.equals(note, otherEditPetDescriptor.note);
+                    && Objects.equals(note, otherEditPetDescriptor.note)
+                    && Objects.equals(photoPath, otherEditPetDescriptor.photoPath);
         }
 
         @Override
@@ -216,6 +233,7 @@ public class EditPetCommand extends Command {
                     .add("species", species)
                     .add("breed", breed)
                     .add("note", note)
+                    .add("photoPath", photoPath)
                     .toString();
         }
     }

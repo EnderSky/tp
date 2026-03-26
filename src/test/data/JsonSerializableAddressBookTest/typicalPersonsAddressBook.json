@@ -16,7 +16,8 @@
       "petName" : "Snoopy",
       "species" : "Dog",
       "breed" : "Labrador",
-      "note" : "Very friendly"
+      "note" : "Very friendly",
+      "photoPath" : "src/main/resources/images/placeholder-pet-logo.png"
     } ]
   }, {
     "name" : "Carl Kurz",

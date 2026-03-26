@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -27,18 +28,19 @@ public class AddPetCommand extends Command {
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "OWNER's PHONE "
             + PREFIX_SPECIES + "SPECIES "
-            + PREFIX_BREED + "BREED"
-            + PREFIX_NOTE + "NOTES"
+            + PREFIX_BREED + "BREED "
+            + PREFIX_NOTE + "NOTES "
+            + PREFIX_PHOTO + "PHOTO PATH "
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Doggy "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_SPECIES + "Dog "
-            + PREFIX_BREED + "Labrador"
-            + PREFIX_NOTE + "hyper and requires extra care";
+            + PREFIX_BREED + "Labrador "
+            + PREFIX_NOTE + "hyper and requires extra care "
+            + PREFIX_PHOTO + "C:\\Users\\DummyUser\\Photos\\doggy.png";
 
     public static final String MESSAGE_SUCCESS = "New pet added: %1$s";
-    public static final String MESSAGE_NONEXISTENT_PERSON = "The person with this phone number"
-        + " does not exist in the address book";
+    public static final String MESSAGE_NONEXISTENT_PERSON = "There is no client with this phone number";
 
     private final Pet toAdd;
     private final Phone ownerPhone;

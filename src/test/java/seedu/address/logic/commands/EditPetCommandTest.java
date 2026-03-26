@@ -24,6 +24,7 @@ import seedu.address.model.person.Pet;
 import seedu.address.model.person.Phone;
 import seedu.address.testutil.EditPetDescriptorBuilder;
 import seedu.address.testutil.PetBuilder;
+
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
  * EditPetCommand.
@@ -34,6 +35,7 @@ public class EditPetCommandTest {
     private static final String SECOND_PERSON_PHONE = "98765432";
     private static final String DEFAULT_PET_NAME = PetBuilder.DEFAULT_NAME;
     private static final String DIFFERENT_PET_NAME = "not same as petbuilder";
+
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -52,7 +54,7 @@ public class EditPetCommandTest {
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() {
-        //edit name
+        // edit name
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Pet original = new PetBuilder().build();
         model.addPet(original, new Phone(FIRST_PERSON_PHONE));
@@ -68,7 +70,7 @@ public class EditPetCommandTest {
 
         assertCommandSuccess(editPetCommand, model, expectedMessage, expectedModel);
 
-        //edit species
+        // edit species
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         model.addPet(original, new Phone(FIRST_PERSON_PHONE));
         editedPet = new PetBuilder().withSpecies(DIFFERENT_PET_NAME).build();
@@ -82,7 +84,7 @@ public class EditPetCommandTest {
 
         assertCommandSuccess(editPetCommand, model, expectedMessage, expectedModel);
 
-        //edit breed
+        // edit breed
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         model.addPet(original, new Phone(FIRST_PERSON_PHONE));
         editedPet = new PetBuilder().withBreed(DIFFERENT_PET_NAME).build();
@@ -96,7 +98,7 @@ public class EditPetCommandTest {
 
         assertCommandSuccess(editPetCommand, model, expectedMessage, expectedModel);
 
-        //edit note
+        // edit note
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         model.addPet(original, new Phone(FIRST_PERSON_PHONE));
         editedPet = new PetBuilder().withNote(DIFFERENT_PET_NAME).build();
@@ -113,7 +115,7 @@ public class EditPetCommandTest {
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
-        //pet not changed if descriptor empty
+        // pet not changed if descriptor empty
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Pet original = new PetBuilder().build();
         model.addPet(original, new Phone(FIRST_PERSON_PHONE));
@@ -131,7 +133,7 @@ public class EditPetCommandTest {
 
     @Test
     public void execute_filteredList_success() {
-        //filter second pet to position 1 and edit position 1
+        // filter second pet to position 1 and edit position 1
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Pet distraction = new PetBuilder().withName("distraction").build();
         Pet target = new PetBuilder().build();
@@ -202,6 +204,17 @@ public class EditPetCommandTest {
         // different descriptor -> returns false
         EditPetDescriptor differentDescriptor = new EditPetDescriptorBuilder().withName(DEFAULT_PET_NAME).build();
         assertFalse(standardCommand.equals(new EditPetCommand(INDEX_FIRST_PERSON, differentDescriptor)));
+
+        // different photopath -> returns false
+        EditPetDescriptor descriptorWithPhoto1 = new EditPetDescriptorBuilder().withPhotoPath("/images/clock.png")
+                .build();
+        EditPetDescriptor descriptorWithPhoto2 = new EditPetDescriptorBuilder().withPhotoPath("/images/fail.png")
+                .build();
+
+        EditPetCommand commandWithPhoto1 = new EditPetCommand(INDEX_FIRST_PERSON, descriptorWithPhoto1);
+        EditPetCommand commandWithPhoto2 = new EditPetCommand(INDEX_FIRST_PERSON, descriptorWithPhoto2);
+
+        assertFalse(commandWithPhoto1.equals(commandWithPhoto2));
     }
 
     @Test

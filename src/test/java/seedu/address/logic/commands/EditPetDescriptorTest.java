@@ -51,6 +51,10 @@ public class EditPetDescriptorTest {
         // different note -> returns false
         edited = new EditPetDescriptorBuilder(descriptor).withNote("note").build();
         assertFalse(descriptor.equals(edited));
+
+        // different photoPath -> returns false
+        edited = new EditPetDescriptorBuilder(descriptor).withPhotoPath("/images/clock.png").build();
+        assertFalse(descriptor.equals(edited));
     }
 
     @Test
@@ -60,7 +64,8 @@ public class EditPetDescriptorTest {
                 + editPetDescriptor.getName().orElse(null) + ", species="
                 + editPetDescriptor.getSpecies().orElse(null) + ", breed="
                 + editPetDescriptor.getBreed().orElse(null) + ", note="
-                + editPetDescriptor.getNote().orElse(null) + "}";
+                + editPetDescriptor.getNote().orElse(null) + ", photoPath="
+                + editPetDescriptor.getPhotoPath().orElse(null) + "}";
         assertEquals(expected, editPetDescriptor.toString());
     }
 }

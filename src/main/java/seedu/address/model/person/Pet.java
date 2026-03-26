@@ -11,18 +11,20 @@ public class Pet {
     private final Name species;
     private final Name breed;
     private final Name note;
+    private final PhotoPath photoPath;
 
     /**
      * Constructs a {@code Pet}.
      *
      * @param petName A valid pet name.
      */
-    public Pet(Name petName, Name species, Name breed, Name note) {
+    public Pet(Name petName, Name species, Name breed, Name note, PhotoPath photoPath) {
         requireNonNull(petName);
         this.petName = petName;
         this.species = species;
         this.breed = breed;
         this.note = note;
+        this.photoPath = photoPath;
     }
 
     public Name getName() {
@@ -39,6 +41,10 @@ public class Pet {
 
     public Name getNote() {
         return note;
+    }
+
+    public PhotoPath getPhotoPath() {
+        return photoPath;
     }
 
     @Override

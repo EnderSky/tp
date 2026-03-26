@@ -5,6 +5,7 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 
 import seedu.address.commons.core.index.Index;
@@ -27,7 +28,7 @@ public class EditPetCommandParser implements Parser<EditPetCommand> {
     public EditPetCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
-                PREFIX_NAME, PREFIX_SPECIES, PREFIX_BREED, PREFIX_NOTE);
+                PREFIX_NAME, PREFIX_SPECIES, PREFIX_BREED, PREFIX_NOTE, PREFIX_PHOTO);
         Index index;
 
         try {
@@ -38,7 +39,7 @@ public class EditPetCommandParser implements Parser<EditPetCommand> {
                     pe);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_SPECIES, PREFIX_BREED, PREFIX_NOTE);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_SPECIES, PREFIX_BREED, PREFIX_NOTE, PREFIX_PHOTO);
 
         EditPetDescriptor editPetDescriptor = new EditPetDescriptor();
 
@@ -53,6 +54,9 @@ public class EditPetCommandParser implements Parser<EditPetCommand> {
         }
         if (argMultimap.getValue(PREFIX_NOTE).isPresent()) {
             editPetDescriptor.setNote(ParserUtil.parseName(argMultimap.getValue(PREFIX_NOTE).get()));
+        }
+        if (argMultimap.getValue(PREFIX_PHOTO).isPresent()) {
+            editPetDescriptor.setPhotoPath(ParserUtil.parsePhotoPath(argMultimap.getValue(PREFIX_PHOTO).get()));
         }
 
         if (!editPetDescriptor.isAnyFieldEdited()) {

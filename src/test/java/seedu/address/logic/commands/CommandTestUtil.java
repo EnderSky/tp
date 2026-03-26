@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.parser.CliSyntax.PLACEHOLDER_IMAGE_PATH;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -46,7 +47,7 @@ public class CommandTestUtil {
     public static final String VALID_PET_BREED_LABRADOR = "Labrador";
     public static final String VALID_PET_NOTE_CUTE = "Very cute";
     public static final String VALID_PET_NOTE_FRIENDLY = "Friendly";
-
+    public static final String VALID_PET_PHOTO_PATH = PLACEHOLDER_IMAGE_PATH;
 
     public static final String NAME_DESC_SNOOPY = " " + PREFIX_NAME + VALID_PET_NAME_SNOOPY;
     public static final String NAME_DESC_DOGGY = " " + PREFIX_NAME + VALID_PET_NAME_DOGGY;

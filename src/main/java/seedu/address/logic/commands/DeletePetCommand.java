@@ -28,9 +28,8 @@ public class DeletePetCommand extends Command {
             + PREFIX_PHONE + "98765432 ";
 
     public static final String MESSAGE_SUCCESS = "Deleted pet: %1$s";
-    public static final String MESSAGE_NONEXISTENT_PERSON = "The person with this phone number"
-            + " does not exist in the address book";
-    public static final String MESSAGE_NONEXISTENT_PET = "The person with this phone number"
+    public static final String MESSAGE_NONEXISTENT_PERSON = "There is no client with this phone number";
+    public static final String MESSAGE_NONEXISTENT_PET = "The client with this phone number"
             + " does not have a pet with this name";
 
     private final Pet toDelete;

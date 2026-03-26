@@ -13,7 +13,7 @@
       <Insets top="10" right="10" bottom="10" left="15" />
     </padding>
     <Label fx:id="petHeaderLabel" styleClass="header-label" />
-    <Region prefWidth="40" minWidth="40" />
+    <Region prefWidth="120" minWidth="120" />
     <Label fx:id="clientHeaderLabel" styleClass="header-label" />
   </HBox>
 

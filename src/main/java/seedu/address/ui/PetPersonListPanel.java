@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.parser.CliSyntax.PLACEHOLDER_IMAGE_PATH;
+
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
@@ -17,6 +19,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Pet;
 import seedu.address.model.person.PetAndPerson;
+import seedu.address.model.person.PhotoPath;
 
 /**
  * Panel containing the list of persons.
@@ -76,7 +79,8 @@ public class PetPersonListPanel extends UiPart<Region> {
                         new Name("No pets for this person"),
                         new Name("NIL"),
                         new Name("NIL"),
-                        new Name("NIL"));
+                        new Name("NIL"),
+                        new PhotoPath(PLACEHOLDER_IMAGE_PATH));
                 petPersonList.add(new PetAndPerson(noPet, person, 0, personCounter));
             } else {
                 for (Pet pet : person.getPets()) {
@@ -89,7 +93,8 @@ public class PetPersonListPanel extends UiPart<Region> {
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code Pet} and {@code Person} using
+     * Custom {@code ListCell} that displays the graphics of a {@code Pet} and
+     * {@code Person} using
      * a {@code PetPersonCard}.
      */
     class PetPersonListViewCell extends ListCell<PetAndPerson> {

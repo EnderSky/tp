@@ -19,6 +19,11 @@ Class Email
 Class Name
 Class Phone
 Class Tag
+Class Pet
+Class "Name" as PetName
+Class Species
+Class Breed
+Class Note
 
 Class I #FFFFFF
 }
@@ -42,13 +47,24 @@ Person *--> Phone
 Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
+Person *-> Pet
 
+Pet *--> PetName
+Pet *--> Species
+Pet *--> Breed
+Pet *--> Note
+
+ModelManager --> "~* filtered" Person
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
 
 Name -[hidden]right-> Phone
 Phone -[hidden]right-> Address
 Address -[hidden]right-> Email
+Email -[hidden]right-> Tag
 
-ModelManager --> "~* filtered" Person
+PetName -[hidden]right-> Species
+Species -[hidden]right-> Breed
+Breed -[hidden]right-> Note
+
 @enduml

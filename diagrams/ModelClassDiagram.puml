@@ -5,27 +5,28 @@ skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
 
 Package Model as ModelPackage <<Rectangle>>{
-Class "<<interface>>\nReadOnlyAddressBook" as ReadOnlyAddressBook
-Class "<<interface>>\nReadOnlyUserPrefs" as ReadOnlyUserPrefs
-Class "<<interface>>\nModel" as Model
-Class AddressBook
-Class ModelManager
-Class UserPrefs
+    Class "<<interface>>\nReadOnlyAddressBook" as ReadOnlyAddressBook
+    Class "<<interface>>\nReadOnlyUserPrefs" as ReadOnlyUserPrefs
+    Class "<<interface>>\nModel" as Model
+    Class AddressBook
+    Class ModelManager
+    Class UserPrefs
 
-Class UniquePersonList
-Class Person
-Class Address
-Class Email
-Class Name
-Class Phone
-Class Tag
-Class Pet
-Class "Name" as PetName
-Class Species
-Class Breed
-Class Note
+    Class UniquePersonList
+    Class Person
+    Class Address
+    Class Email
+    Class Name
+    Class Phone
+    Class Tag
+    Class Pet
+    Class "Name" as PetName
+    Class Species
+    Class Breed
+    Class Note
+    Class PhotoPath
 
-Class I #FFFFFF
+    Class I #FFFFFF
 }
 
 Class HiddenOutside #FFFFFF
@@ -53,6 +54,7 @@ Pet *--> PetName
 Pet *--> Species
 Pet *--> Breed
 Pet *--> Note
+Pet *--> PhotoPath
 
 ModelManager --> "~* filtered" Person
 Person -[hidden]up--> I
@@ -66,5 +68,6 @@ Email -[hidden]right-> Tag
 PetName -[hidden]right-> Species
 Species -[hidden]right-> Breed
 Breed -[hidden]right-> Note
+Note -[hidden]right-> PhotoPath
 
 @enduml

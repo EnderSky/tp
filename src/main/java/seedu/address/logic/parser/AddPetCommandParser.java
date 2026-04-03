@@ -13,10 +13,13 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddPetCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Breed;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Note;
 import seedu.address.model.person.Pet;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.PhotoPath;
+import seedu.address.model.person.Species;
 
 /**
  * Parses input arguments and creates a new AddPersonCommand object
@@ -43,9 +46,9 @@ public class AddPetCommandParser implements Parser<AddPetCommand> {
                 PREFIX_PHOTO);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
-        Name species = ParserUtil.parseName(argMultimap.getValue(PREFIX_SPECIES).orElse("Unknown"));
-        Name breed = ParserUtil.parseName(argMultimap.getValue(PREFIX_BREED).orElse("Unknown"));
-        Name note = ParserUtil.parseName(argMultimap.getValue(PREFIX_NOTE).orElse("None"));
+        Species species = ParserUtil.parseSpecies(argMultimap.getValue(PREFIX_SPECIES).orElse("Unknown"));
+        Breed breed = ParserUtil.parseBreed(argMultimap.getValue(PREFIX_BREED).orElse("Unknown"));
+        Note note = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE).orElse("None"));
         PhotoPath photoPath = ParserUtil
                 .parsePhotoPath(argMultimap.getValue(PREFIX_PHOTO).orElse(PLACEHOLDER_IMAGE_PATH));
 

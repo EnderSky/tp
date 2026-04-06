@@ -4,12 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPets.SNOOPY;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.Messages;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -48,7 +51,7 @@ public class AddPetCommandTest {
 
     @Test
     public void execute_petAcceptedByModel_addSuccessful() throws Exception {
-        Person validPerson = new PersonBuilder().build();
+        Person validPerson = new PersonBuilder().withPhone("98765432").withPets(new ArrayList<>()).build();
         ModelStubAcceptingPetAdded modelStub = new ModelStubAcceptingPetAdded(validPerson);
         Pet validPet = new PetBuilder().build();
 
@@ -56,7 +59,19 @@ public class AddPetCommandTest {
 
         assertEquals(String.format(AddPetCommand.MESSAGE_SUCCESS, Messages.format(validPet)),
                 commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validPet), modelStub.petsAdded);
+        assertTrue(modelStub.hasPet(validPerson.getPhone(), validPet));
+    }
+
+    @Test
+    public void execute_duplicatePet_throwsCommandException() {
+        Pet validPet = new PetBuilder().build();
+        Phone validPhone = new Phone("98765432");
+        Person validPerson = new PersonBuilder().withPhone("98765432").withPets(new ArrayList<>()).build();
+        ModelStub modelStub = new ModelStubWithPetAndOwner(validPerson, validPet);
+        AddPetCommand addPetCommand = new AddPetCommand(validPet, validPhone);
+
+        assertThrows(CommandException.class,
+                AddPetCommand.MESSAGE_DUPLICATE_PET, () -> addPetCommand.execute(modelStub));
     }
 
     @Test
@@ -192,18 +207,22 @@ public class AddPetCommandTest {
     }
 
     /**
-     * A Model stub that contains a single person.
+     * A Model stub that contains a single person and single pet.
      */
-    private class ModelStubWithPerson extends ModelStub {
+    private class ModelStubWithPetAndOwner extends ModelStub {
+        private final Pet pet;
         private final Person person;
 
-        ModelStubWithPerson(Person person) {
-            requireNonNull(person);
+        ModelStubWithPetAndOwner(Person person, Pet pet) {
+            requireAllNonNull(pet, person);
+            this.pet = pet;
             this.person = person;
         }
 
-        protected Person getPerson() {
-            return this.person;
+        @Override
+        public boolean hasPet(Phone phone, Pet pet) {
+            requireNonNull(pet);
+            return this.pet.equals(pet);
         }
 
         @Override
@@ -211,28 +230,49 @@ public class AddPetCommandTest {
             requireNonNull(person);
             return this.person.isSamePerson(person);
         }
+
+        @Override
+        public boolean hasPhone(Phone phone) {
+            requireNonNull(phone);
+            return this.person.getPhone().equals(phone);
+        }
     }
 
     /**
      * A Model stub that always accept the pet being added.
+     * It contains a single person, specified with the phone number upon construction.
      */
-    private class ModelStubAcceptingPetAdded extends ModelStubWithPerson {
-        final ArrayList<Pet> petsAdded = new ArrayList<>();
+    private class ModelStubAcceptingPetAdded extends ModelStub {
+        final ArrayList<Phone> phonesAdded = new ArrayList<>();
+        final Map<Phone, ArrayList<Pet>> petsAdded = new HashMap<>();
 
         ModelStubAcceptingPetAdded(Person person) {
-            super(person);
+            requireNonNull(person);
+            Phone phone = person.getPhone();
+            phonesAdded.add(phone);
+            petsAdded.put(phone, new ArrayList<>());
         }
 
         @Override
         public boolean hasPhone(Phone phone) {
             requireNonNull(phone);
-            return this.getPerson().getPhone().equals(phone);
+            return phonesAdded.stream().anyMatch(existingPhone -> existingPhone.equals(phone));
+        }
+
+        @Override
+        public boolean hasPet(Phone phone, Pet pet) {
+            requireAllNonNull(phone, pet);
+            return petsAdded.getOrDefault(phone, new ArrayList<>())
+                    .stream()
+                    .anyMatch(existingPet -> existingPet.equals(pet));
         }
 
         @Override
         public void addPet(Pet pet, Phone phone) {
-            requireNonNull(pet);
-            petsAdded.add(pet);
+            requireAllNonNull(phone, pet);
+            phonesAdded.add(phone);
+            petsAdded.putIfAbsent(phone, new ArrayList<>());
+            petsAdded.get(phone).add(pet);
         }
 
         @Override
@@ -240,5 +280,4 @@ public class AddPetCommandTest {
             return new AddressBook();
         }
     }
-
 }

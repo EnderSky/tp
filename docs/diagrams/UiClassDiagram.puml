@@ -58,6 +58,7 @@ PetCard .> Model
 PersonCard .> Model
 UiManager -right-> Logic
 MainWindow -left-> Logic
+Logic -down> Model
 
 PetPersonListPanel -[hidden]left- HelpWindow
 HelpWindow -[hidden]left- CommandBox

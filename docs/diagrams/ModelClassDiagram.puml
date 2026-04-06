@@ -48,7 +48,7 @@ Person *--> Phone
 Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
-Person *-> Pet
+Person *---> Pet
 
 Pet *--> PetName
 Pet *--> Species

@@ -4,27 +4,29 @@ skinparam arrowThickness 1.1
 skinparam arrowColor LOGIC_COLOR_T4
 skinparam classBackgroundColor LOGIC_COLOR
 
+package "Parser classes" {
 Class "{abstract}\nCommand" as Command
+Class "<<interface>>\nParser" as Parser
 Class XYZCommand
 
-package "Parser classes"{
-Class "<<interface>>\nParser" as Parser
 Class AddressBookParser
 Class XYZCommandParser
+
+package "Helper classes"{
 Class CliSyntax
 Class ParserUtil
 Class ArgumentMultimap
 Class ArgumentTokenizer
 Class Prefix
 }
-
+}
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> AddressBookParser
 
 AddressBookParser .down.> XYZCommandParser: <<create>>
 
 XYZCommandParser ..> XYZCommand : <<create>>
-AddressBookParser ..> Command : <<use>>
+AddressBookParser .left> Command : <<use>>
 XYZCommandParser .up.|> Parser
 XYZCommandParser ..> ArgumentMultimap
 XYZCommandParser ..> ArgumentTokenizer

@@ -557,25 +557,122 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-### Deleting a person
+### Adding a client
 
-1. Deleting a person while all persons are being shown
+1. Adding a client
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Test case: `addClient n/name p/12345678 e/a@gmail.com a/#11-11 11 Eleven Road, 111111 t/11/11/11`<br>
+      Expected: Client is added to the list. Details of the client shown in the status message.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   1. Other correct commands to try: Case-insensitive, alias `ac`, reordered fields, missing fields<br>
       Expected: Similar to previous.
+
+   1. Test case: `addClient  n/name e/1@gmail.com a/#11-11 11 Eleven Road, 111111 t/11/11/11`<br>
+      Expected: No client is added. Error details shown in the status message.
+
+   1. Other incorrect commands to try: `addClient`, repeat parameters<br>
+      Expected: Similar to previous.
+
+### Editing a client
+
+1. Editing a client using their index
+
+   1. Test case: `editClient 1 n/new name p/22 e/2@gmail.com a/"22 Next Door" t/`<br>
+      Expected: Client with index 1 is changed. Details of the client shown in the status message.
+
+   1. Other correct commands to try: Case-insensitive, alias `ec`, reordered fields, missing fields<br>
+      Expected: Similar to previous.
+
+   1. Test case: `editClient p/123`, where there already is a client with phone number 123<br>
+      Expected: No change in the list. Error details shown in the status message.
+
+   1. Other incorrect commands to try: `editClient`, repeat parameters<br>
+      Expected: Similar to previous.
+
+### Deleting a client
+
+1. Deleting a client using their index
+
+   1. Prerequisites: List all clients using the `list` command. Multiple persons in the list.
+
+   1. Test case: `deleteClient 1`<br>
+      Expected: Client with index 1 is deleted from the list. Details of the deleted client shown in the status message.
+
+   1. Other correct commands to try: Case-insensitive, alias `dc`, filtered list using `find`<br>
+      Expected: Similar to previous.
+
+   1. Test case: `deleteClient 0`<br>
+      Expected: No client is deleted. Error details shown in the status message.
+
+   1. Other incorrect commands to try: `deleteClient`, `deleteClient x`, `...` (where x is larger than the list size)<br>
+      Expected: Similar to previous.
+
+### Adding a pet
+
+1. Adding a pet
+
+   1. Test case: `addPet n/name p/87438807 s/dog b/beagle nt/paws sensitive` where the client with the phone number already exists<br>
+      Expected: Pet is added beside the client. Details of the pet shown in the status message.
+
+   1. Other correct commands to try: Case-insensitive, alias `ap`, reordered fields, missing fields, adding photo path<br>
+      Expected: Similar to previous.
+
+   1. Test case: `addPet n/name`<br>
+      Expected: No pet is added. Error details shown in the status message.
+
+   1. Other incorrect commands to try: `addPet`, repeat parameters<br>
+      Expected: Similar to previous.
+
+### Editing a pet
+
+1. Editing a pet using its index
+
+   1. Prerequisites: List all pets using the `list` command. Multiple pets in the list.
+
+   1. Test case: `editPet 1 n/nyeow s/Cat b/Tabby nt/skin allergies`<br>
+      Expected: Pet with index 1 is edited. Details of the pet shown in the status message.
+
+   1. Other correct commands to try: Case-insensitive, alias `ep`, filtered list using `find`<br>
+      Expected: Similar to previous.
+
+   1. Test case: `editPet 0 n/that`<br>
+      Expected: No edit happens. Error details shown in the status message.
+
+   1. Other incorrect commands to try: `editPet`, `editPet x`, (where x is larger than the list size), editing to a pet with the same name and owner as another<br>
+      Expected: Similar to previous.
+
+### Deleting a pet
+
+1. Deleting a pet using its index
+
+   1. Prerequisites: List all pets using the `list` command. Multiple pets in the list.
+
+   1. Test case: `deletePet 1`<br>
+      Expected: Pet with index 1 is deleted from the list. Details of the deleted pet shown in the status message.
+
+   1. Other correct commands to try: Case-insensitive, alias `dp`, filtered list using `find`<br>
+      Expected: Similar to previous.
+
+   1. Test case: `deletePet 0`<br>
+      Expected: No pet is deleted. Error details shown in the status message.
+
+   1. Other incorrect commands to try: `deletePet`, `deletePet x`, `...` (where x is larger than the list size)<br>
+      Expected: Similar to previous.
+
+### Finding clients and pets
+
+1. Finding clients and pets that (partially) match **all** keywords.
+
+   1. Test case: `find alex`, given client `Alex Yeoh` exists and nobody else matches alex<br>
+      Expected: Only client `Alex Yeoh` is displayed.
+
+   1. Other correct commands to try: Partial matches across all keywords, matching across owner and pet<br>
+      Expected: If a client or pet matches the keywords, the client and all their pets are displayed.
 
 ## **Appendix: Effort**
 
 Our project extended AB3 by including pets as an additional attribute for person.
-We made big changes to the UI to make it more appealing.
+We changed the layout of the UI to make it more appealing.
 Extending the existing commands to include a new entity should have saved a significant amount of effort, but adapting the tests turned out to be very tedious.
 An unexpected challenge was addressing pets with indexes, since we only had a ObservablePersonList to work with.
 

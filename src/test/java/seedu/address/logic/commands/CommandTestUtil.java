@@ -66,12 +66,11 @@ public class CommandTestUtil {
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
-    public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + " "; // empty string not allowed for names
-    public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE; // empty string not allowed for phones
-    public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
-    public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
-    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
-    // empty string not allowed for pet names
+    public static final String INVALID_NAME_DESC = " " + PREFIX_NAME;
+    public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE;
+    public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL;
+    public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS;
+    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + " " + PREFIX_TAG;
     public static final String INVALID_PET_SPECIES_DESC = " " + PREFIX_SPECIES;
     public static final String INVALID_PET_BREED_DESC = " " + PREFIX_BREED;
     public static final String INVALID_PET_NOTE_DESC = " " + PREFIX_NOTE;

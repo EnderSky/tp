@@ -32,7 +32,8 @@ import seedu.address.model.tag.Tag;
  */
 public class EditPersonCommand extends Command {
 
-    public static final String COMMAND_WORD = "editClient";
+    public static final String COMMAND_WORD = "editclient";
+    public static final String ALIAS = "ec";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the client "
             + "with the given POSITION. "

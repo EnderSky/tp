@@ -17,7 +17,7 @@ public class JsonAdaptedPetTest {
     private static final String INVALID_NAME = "  ";
     private static final String INVALID_SPECIES = "  ";
     private static final String INVALID_BREED = "  ";
-    private static final String INVALID_TAG = "  ";
+    private static final String INVALID_NOTE = "  ";
 
     private static final String VALID_PET_NAME = SNOOPY.getName().toString();
     private static final String VALID_PET_SPECIES = SNOOPY.getSpecies().toString();
@@ -81,7 +81,7 @@ public class JsonAdaptedPetTest {
 
     @Test
     public void toModelType_invalidPetNote_throwsIllegalValueException() {
-        JsonAdaptedPet pet = new JsonAdaptedPet(VALID_PET_NAME, VALID_PET_SPECIES, VALID_PET_BREED, INVALID_TAG,
+        JsonAdaptedPet pet = new JsonAdaptedPet(VALID_PET_NAME, VALID_PET_SPECIES, VALID_PET_BREED, INVALID_NOTE,
                 VALID_PET_PHOTO_PATH);
         String expectedMessage = String.format(Name.MESSAGE_CONSTRAINTS);
         assertThrows(IllegalValueException.class, expectedMessage, pet::toModelType);

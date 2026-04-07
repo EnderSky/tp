@@ -17,7 +17,8 @@ import seedu.address.model.person.Pet;
  */
 public class DeletePetCommand extends Command {
 
-    public static final String COMMAND_WORD = "deletePet";
+    public static final String COMMAND_WORD = "deletepet";
+    public static final String ALIAS = "dp";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the pet with the given POSITION.\n"

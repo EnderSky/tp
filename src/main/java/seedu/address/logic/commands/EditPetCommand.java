@@ -26,7 +26,8 @@ import seedu.address.model.person.PhotoPath;
  */
 public class EditPetCommand extends Command {
 
-    public static final String COMMAND_WORD = "editPet";
+    public static final String COMMAND_WORD = "editpet";
+    public static final String ALIAS = "ep";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the pet "
             + "with the given POSITION. "

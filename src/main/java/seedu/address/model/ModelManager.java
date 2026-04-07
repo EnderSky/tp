@@ -141,6 +141,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void addPersonToFront(Person person) {
+        addressBook.addPersonToFront(person);
+    }
+
+    @Override
     public void addPet(Pet pet, Phone ownerPhone) {
         addressBook.addPet(pet, ownerPhone);
     }

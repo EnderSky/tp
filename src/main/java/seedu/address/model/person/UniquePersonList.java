@@ -66,6 +66,18 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Adds a person to the front of the list.
+     * The person must not already exist in the list.
+     */
+    public void addPersonToFront(Person toAdd) {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicatePersonException();
+        }
+        internalList.add(0, toAdd);
+    }
+
+    /**
      * Returns the person with the given phone number.
      * The person must exist in the list.
      * @param phone The phone number to search for.

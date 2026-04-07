@@ -97,6 +97,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(p);
     }
 
+    /**
+     * Adds a person to the front of the address book.
+     * The person must not already exist in the address book.
+     */
+    public void addPersonToFront(Person p) {
+        persons.addPersonToFront(p);
+    }
+
     public void addPet(Pet pet, Phone ownerPhone) {
         persons.addPet(pet, ownerPhone);
     }

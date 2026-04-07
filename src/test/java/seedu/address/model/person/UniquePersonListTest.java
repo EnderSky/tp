@@ -86,6 +86,17 @@ public class UniquePersonListTest {
     }
 
     @Test
+    public void addPersonToFront_nullPerson_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniquePersonList.addPersonToFront(null));
+    }
+
+    @Test
+    public void addPersonToFront_duplicatePerson_throwsDuplicatePersonException() {
+        uniquePersonList.add(ALICE);
+        assertThrows(DuplicatePersonException.class, () -> uniquePersonList.addPersonToFront(ALICE));
+    }
+
+    @Test
     public void setPerson_nullTargetPerson_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> uniquePersonList.setPerson(null, ALICE));
     }

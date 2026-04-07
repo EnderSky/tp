@@ -6,8 +6,11 @@
 
 # Hairy Pawter User Guide
 
-Hairy Pawter is a desktop app that helps you store details of clients and pets.
-You can register clients and their pets, so that after grooming a pet, you can find the details of the owner and contact them.
+Hairy Pawter is a desktop app created to help pet groomers reach their clients.
+It works independently of other apps, and can help groomers with existing scheduling systems.
+
+Use Hairy Pawter to quickly jot down contact details of clients and their pets when they arrive,
+so that after grooming a pet, you can quickly find the details of the owner and contact them.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -17,16 +20,29 @@ You can register clients and their pets, so that after grooming a pet, you can f
 ## Installation
 
 1. [Install](https://se-education.org/guides/tutorials/javaInstallation.html) Java `17` or higher to your computer.
+* Java `17` is the programming language that Hairy Pawter runs on.
 
 1. Download `hairypawter.jar` from the latest release [here](https://github.com/AY2526S2-CS2103T-F14-2/tp/releases).
+* You should be able to see it inside your Downloads folder.
 
 1. Move `hairypawter.jar` to the folder you want to use as the _home folder_ for this app.
+* You can create a folder called Hairypawter and drag `hairypawter.jar` inside it.
 
-1. Open a command terminal (Command Prompt for Windows, Terminal for Mac)
+1. Double-click on `hairypawter.jar` to run it
+
+<box type="warning" seamless>
+
+**If double-clicking does not run the app:**<br>
+1. Open a command terminal
+* Windows users can use the search bar on the bottom of the screen to search for `Command Prompt` and run it.
+* Mac users can use spotlight search `Cmd` + `SPACE` to search for `Terminal` and run it.
 
 1. In the command terminal, enter the command `cd PATH` where PATH is the location of _home folder_ (e.g. `cd C:\Users\jeff\Desktop\HairyPawter\`)
+* You can right click on the _home folder_ and select the option most similar to `Copy as path`, then paste it after `cd `.
 
 1. In the command terminal, enter the command `java -jar hairypawter.jar` to start the app.<br>
+* If the app starts, you can ignore the rest of the logs on the command terminal.
+</box>
 
 ![Ui](images/Ui.png)
 
@@ -49,7 +65,7 @@ In the app, type a command in the command box and press Enter to execute it. (e.
 * Items with `…`​ can be used multiple times.<br>
   e.g. `[t/TAG]…​` can be used as `t/friend t/family`
 
-* Inputs can be in any order.<br>
+* Items can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -72,10 +88,10 @@ Registers a new client. The new client will be shown on the list.
 
 <box type="tip" seamless>
 
-**Important:** Clients can have the same name, but never the same phone number
+**Important:** Clients cannot have the same phone number
 </box>
 
-Format: `addClient n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `addClient p/PHONE_NUMBER [n/NAME] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
 Examples:
 * `addClient n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
@@ -85,7 +101,7 @@ Examples:
 
 Registers a new pet of a client. The name of the pet and the **phone number of the client** are needed.
 
-Format: `addPet n/NAME p/PHONE_NUMBER​ [s/SPECIES] [b/BREED]`
+Format: `addPet n/NAME p/PHONE_NUMBER​ [s/SPECIES] [b/BREED] [nt/NOTES] [ph/PHOTO]`
 
 Examples:
 * `addPet n/Snowy p/0000 s/Dog b/Wire Fox Terrier (White)`
@@ -120,7 +136,7 @@ Edits an existing pet.
 * Edits the pet at the specified `POSITION`. The `POSITION` refers to the number shown next to the pet.​
 * Specified values will override old values.
 
-Format: `editPet POSITION [n/NAME] [s/SPECIES] [b/BREED]​`
+Format: `editPet POSITION [n/NAME] [s/SPECIES] [b/BREED]​ [nt/NOTES] [ph/PHOTO]`
 
 Examples:
 *  `editPet 1 s/cat` Edits the species of the pet in `POSITION` 1.
@@ -155,13 +171,14 @@ Examples:
 
 ### Deleting a pet : `deletePet`
 
-Deletes the pet with the specified name, belonging to the **owner with the phone number**.
+Deletes a pet.
 
-Format: `deletePet n/NAME p/PHONE_NUMBER`
+* Deletes the pet at the specified `POSITION`.
+* The `POSITION` refers to the `POSITION` number shown next to the pet.​
+Format: `deletePet POSITION`
 
 Examples:
-* `deletePet n/Snowy p/0000`
-* `deletePet n/Meowy p/123456`
+* `deletePet 1`
 
 ### Clearing all records : `clear`
 
@@ -214,7 +231,7 @@ _Details coming soon ..._
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**AddClient** | `addClient n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `addClient n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
+**AddClient** | `addClient p/PHONE_NUMBER [n/NAME] [e/EMAIL] [a/ADDRESS] [t/TAG]…​` <br> e.g., `addClient n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
 **AddPet** | `addPet n/NAME p/PHONE_NUMBER​` <br> e.g., `addPet n/Meowy p/22224444`
 **Clear**  | `clear`
 **DeleteClient** | `deleteClient POSITION`<br> e.g., `deleteClient 3`
@@ -226,3 +243,12 @@ e.g.,`editPet 2 n/Pongo`
 **Find**   | `find KEYWORD...`<br> e.g., `find James dog`
 **Help**   | `help`
 **List**   | `list`
+
+## Short-form commands
+For advanced users, Hair Pawter supports short-forms for some commands.
+* `AddClient` can be shortened to `ac`
+* `AddPet` can be shortened to `ap`
+* `EditClient` can be shortened to `ec`
+* `EditPet` can be shortened to `ep`
+* `DeleteClient` can be shortened to `dc`
+* `DeletePet` can be shortened to `dp`

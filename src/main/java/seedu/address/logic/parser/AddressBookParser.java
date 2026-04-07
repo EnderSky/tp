@@ -55,25 +55,37 @@ public class AddressBookParser {
         // Lower level log messages are used sparingly to minimize noise in the code.
         logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
 
-        switch (commandWord) {
+        switch (commandWord.toLowerCase()) {
 
         case AddPersonCommand.COMMAND_WORD:
+            // Fallthrough
+        case AddPersonCommand.ALIAS:
             return new AddPersonCommandParser().parse(arguments);
 
         case AddPetCommand.COMMAND_WORD:
+            // Fallthrough
+        case AddPetCommand.ALIAS:
             return new AddPetCommandParser().parse(arguments);
 
-        case DeletePetCommand.COMMAND_WORD:
-            return new DeletePetCommandParser().parse(arguments);
-
         case EditPersonCommand.COMMAND_WORD:
+            // Fallthrough
+        case EditPersonCommand.ALIAS:
             return new EditPersonCommandParser().parse(arguments);
 
         case EditPetCommand.COMMAND_WORD:
+            // Fallthrough
+        case EditPetCommand.ALIAS:
             return new EditPetCommandParser().parse(arguments);
 
         case DeletePersonCommand.COMMAND_WORD:
+            // Fallthrough
+        case DeletePersonCommand.ALIAS:
             return new DeletePersonCommandParser().parse(arguments);
+
+        case DeletePetCommand.COMMAND_WORD:
+            // Fallthrough
+        case DeletePetCommand.ALIAS:
+            return new DeletePetCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();

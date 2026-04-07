@@ -6,8 +6,7 @@
 # About Us
 
 We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg).
-
-You can reach us at the email `seer[at]comp.nus.edu.sg`
+We extended [AddressBook Level-3](https://se-education.org/addressbook-level3/) as a brownfield team project for course CS2103T.
 
 ## Project team
 
@@ -47,7 +46,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](http://github.com/xiuxikwey)]
 
 * Role: Team Lead
-* Responsibilities:
+* Responsibilities: Development + Documentation
 
 ### Subramanian Ramasamy
 

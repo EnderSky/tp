@@ -19,10 +19,10 @@ import seedu.address.model.util.SampleDataUtil;
  */
 public class PersonBuilder {
 
-    public static final String DEFAULT_NAME = "Amy Bee";
+    public static final String DEFAULT_NAME = "-";
     public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_EMAIL = "amy@gmail.com";
-    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_EMAIL = "-";
+    public static final String DEFAULT_ADDRESS = "-";
 
     private Name name;
     private Phone phone;
@@ -76,6 +76,16 @@ public class PersonBuilder {
      */
     public PersonBuilder withPet(Pet pet) {
         this.pets.add(pet);
+        return this;
+    }
+
+    /**
+     * Sets the {@code List<Pet>} of the {@code Person} that we are building.
+     * @param pets
+     * @return
+     */
+    public PersonBuilder withPets(List<Pet> pets) {
+        this.pets = pets;
         return this;
     }
 

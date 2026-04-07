@@ -85,6 +85,12 @@ public interface Model {
     void addPerson(Person person);
 
     /**
+     * Adds the given person to the front of the list.
+     * {@code person} must not already exist in the address book.
+     */
+    void addPersonToFront(Person person);
+
+    /**
      * Returns the person at given index.
      * Throws IndexOutOfBoundsException if the index too large.
      */

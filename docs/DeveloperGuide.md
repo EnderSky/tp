@@ -297,48 +297,46 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …  ​ | I want to …​                | So that I can…​ |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user | view the user guide easily | learn more about how to use the product |
-| `* * *`  | user     | add a new pet              | keep track of a new pet |
-| `* * *`  | user     | record a pet's details (name, breed, date of birth) | identify each pet easily |
-| `* * *`  | user     | add a new client and their contact information | keep track of a new client |
-| `* * *`  | user     | view a pet's information   | view the information of a pet that I need to groom |
-| `* * *`  | user     | view a client's details    | see the details of a client to contact |
-| `* * *`  | user     | link a client to their pet | record who the pet's owner is |
-| `* * *`  | user     | remove a pet               | delete outdated pet information |
-| `* * *`  | user     | remove a client            | remove clients who no longer visit my shop |
-| `* * *`  | user     | ensure my data persists automatically | preserve my records after closing the app |
-| `* *`    | user     | edit a client's information | keep my client records up to date |
-| `* *`    | user     | edit a pet's details       | update pet information when needed |
-| `* *`    | user     | search for clients by name | quickly locate a specific client's details |
-| `* *`    | user     | search for pets by name    | quickly find a specific pet's details |
-| `* *`    | user     | search for a client and see all the pets they own | quickly retrieve their pets' information when they arrive |
-| `* *`    | user     | search for a pet and see their owner's details | quickly retrieve the owner's contact information |
-| `* *`    | user     | search for clients by contact details | quickly locate a specific client's details |
-| `* *`    | user     | search for pets by attributes    | quickly find a specific pet's details |
-| `* *`    | user     | attach photos to pets      | record what the pets look like in real life |
-| `* *`    | user     | view a pet's photos        | identify pets quickly in real life |
-| `* *`    | user     | edit a pet's photos      | update pet photos with more recent versions |
-| `* *`    | user     | delete a pet's photos      | remove outdated pet photos |
-| `* *`    | new user | purge (delete all) existing pets | clear any dummy pet information once I have familiarised with the app |
-| `* *`    | new user | purge (delete all) existing clients | clear any dummy client information once I have familiarised with the app |
-| `* *`    | user     | record grooming notes for each pet | record each pet's special requirements |
-| `* *`    | user     | view grooming notes for a pet | recall a pet's special requirements |
-| `* *`    | user     | update grooming notes for a pet | update a pet's requirements as they change |
-| `* *`    | user     | delete grooming notes for a pet | remove outdated information |
-| `* *`    | experienced user | attach tags to clients | categorize different types of clients |
-| `*`    | experienced user | attach tags to pets    | flag out pets with special requirements |   |
-| `*`    | user     | add appointment | schedule future appointments |
-| `*`    | user     | view all appointments | see what upcoming appointments I have |
-| `*`    | user     | edit appointment time and day | keep track of changes in future appoinements |
-| `*`    | user     | delete appointment | keep track of cancellation of appointments |
-| `*`    | user     | filter appointments by day | see what appointments I have for that day |
-| `*`    | user     | mark the appointment as completed | keep track of what appointments have been completed |
-| `*`    | user     | undo my last command | undo mistakes and typos |
-| `*`    | user     | redo my last command | redo commands I accidentally undoed |
-
-*{More to be added}*
+| Priority | As a …​ | I want to …​ | So that I can…​ | Status |
+|----------|---------|--------------|-----------------|--------|
+| `* * *`  | new user | view the user guide easily | learn more about how to use the product | Implemented |
+| `* * *`  | user     | add a new pet              | keep track of a new pet | Implemented |
+| `* * *`  | user     | record a pet's details (name, breed, date of birth) | identify each pet easily | Implemented |
+| `* * *`  | user     | add a new client and their contact information | keep track of a new client | Implemented |
+| `* * *`  | user     | view a pet's information   | view the information of a pet that I need to groom | Implemented |
+| `* * *`  | user     | view a client's details    | see the details of a client to contact | Implemented |
+| `* * *`  | user     | link a client to their pet | record who the pet's owner is | Implemented |
+| `* * *`  | user     | remove a pet               | delete outdated pet information | Implemented |
+| `* * *`  | user     | remove a client            | remove clients who no longer visit my shop | Implemented |
+| `* * *`  | user     | ensure my data persists automatically | preserve my records after closing the app | Implemented |
+| `* *`    | user     | edit a client's information | keep my client records up to date | Implemented |
+| `* *`    | user     | edit a pet's details       | update pet information when needed | Implemented |
+| `* *`    | user     | search for clients by name | quickly locate a specific client's details | Implemented |
+| `* *`    | user     | search for pets by name    | quickly find a specific pet's details | Implemented |
+| `* *`    | user     | search for a client and see all the pets they own | quickly retrieve their pets' information when they arrive | Implemented |
+| `* *`    | user     | search for a pet and see their owner's details | quickly retrieve the owner's contact information | Implemented |
+| `* *`    | user     | search for clients by contact details | quickly locate a specific client's details | Implemented |
+| `* *`    | user     | search for pets by attributes | quickly find a specific pet's details | Implemented |
+| `* *`    | user     | attach photos to pets      | record what the pets look like in real life | Implemented |
+| `* *`    | user     | view a pet's photos        | identify pets quickly in real life | Implemented |
+| `* *`    | user     | edit a pet's photos        | update pet photos with more recent versions | Implemented |
+| `* *`    | user     | delete a pet's photos      | remove outdated pet photos | Implemented |
+| `* *`    | new user | purge (delete all) existing pets | clear any dummy pet information once I have familiarised with the app | Implemented |
+| `* *`    | new user | purge (delete all) existing clients | clear any dummy client information once I have familiarised with the app | Implemented |
+| `* *`    | user     | record grooming notes for each pet | record each pet's special requirements | Implemented |
+| `* *`    | user     | view grooming notes for a pet | recall a pet's special requirements | Implemented |
+| `* *`    | user     | update grooming notes for a pet | update a pet's requirements as they change | Implemented |
+| `* *`    | user     | delete grooming notes for a pet | remove outdated information | Implemented |
+| `* *`    | experienced user | attach tags to clients | categorize different types of clients | Implemented |
+| `*`      | experienced user | attach tags to pets | flag out pets with special requirements | Not implemented |
+| `*`      | user     | add appointment | schedule future appointments | Not implemented |
+| `*`      | user     | view all appointments | see what upcoming appointments I have | Not implemented |
+| `*`      | user     | edit appointment time and day | keep track of changes in future appointments | Not implemented |
+| `*`      | user     | delete appointment | keep track of cancellation of appointments | Not implemented |
+| `*`      | user     | filter appointments by day | see what appointments I have for that day | Not implemented |
+| `*`      | user     | mark the appointment as completed | keep track of what appointments have been completed | Not implemented |
+| `*`      | user     | undo my last command | undo mistakes and typos | Not implemented |
+| `*`      | user     | redo my last command | redo commands I accidentally undid | Not implemented |
 
 ### Use cases
 

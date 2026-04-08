@@ -15,7 +15,7 @@
 
 * This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
 * Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
-* Images used: [Footprint Icon](https://www.flaticon.com/free-icons/footprint") (created by Daniel ceha)
+* Images used: [Footprint Icon](https://www.stfrancisanimalwelfare.co.uk/home/placeholder-logo-1/)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -33,10 +33,10 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 The ***Architecture Diagram*** shows the high-level design of the app.
 It is a Model-View-Controller design, where
-* The user interacts with the UI...
-* Requested changes are passed through the Logic interface...
-* These changes are reflected in the Model and Storage...
-* And the UI listens for and displays changes accordingly.
+* The user interacts with the [**`UI`**](#ui-component)...
+* Requested changes are passed through the [**`Logic`**](#logic-component) interface...
+* These changes are reflected in the [**`Model`**](#model-component) and [**`Storage`**](#storage-component)...
+* And the [**`UI`**](#ui-component) listens for and displays changes accordingly.
 
 ### Sequence of program execution
 
@@ -54,7 +54,7 @@ User commands generally follow the execution sequence below.
 Each of the four main components (also shown in the diagram above),
 
 * defines its *API* in an `interface` with the same name as the Component.
-* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
+* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point).
 
 For example, the `Logic` component defines its API in the `Logic.java` interface
 and implements its API in the `LogicManager.java` class.
@@ -103,6 +103,7 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 <box type="info" seamless>
 
 **Note:** The lifeline for `DeletePersonCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
+
 </box>
 
 How the `Logic` component works:
@@ -129,12 +130,10 @@ How the parsing works:
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
+* stores the address book data i.e., all `Person` (client) objects (which are contained in a `UniquePersonList` object).
 * stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
+* stores a `UserPref` object that represents the user's preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
-
-<box type="info" seamless>
 
 ### Storage component
 
@@ -152,6 +151,22 @@ The `Storage` component,
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+
+### \[Actual\] Person-pet relationship
+
+Each `Person` (client) contains a `List<Pet>` representing their owned pets. This is a **one-to-many** relationship: one client can own multiple pets.
+
+**Key characteristics of the Person-Pet model:**
+
+* **Immutability**: `Person` objects are immutable. Operations like `addPet(Pet)` and `removePet(Pet)` return new `Person` instances rather than modifying the existing object. This design ensures thread safety and simplifies state management.
+
+* **Client identity**: A client's uniqueness is determined by their **phone number**. Two clients with the same phone number are considered the same person, regardless of other fields. This is implemented in `Person#isSamePerson()`.
+
+* **Pet identity**: A pet's uniqueness within an owner is determined by the **pet name**. Two pets belonging to the same owner cannot have the same name. This is validated when adding or editing pets.
+
+* **Pet indexing**: Pets are indexed **globally** across all clients in the displayed list. For example, if Client 1 has pets A and B, and Client 2 has pet C, their indexes would be 1, 2, and 3 respectively. This sequential indexing is used by `editPet` and `deletePet` commands.
+
+* **Pet-Client linking**: When adding a pet via `addPet`, the pet is linked to a client using the client's **phone number** (not the client's index). This ensures the link remains stable even when the client list is filtered or reordered.
 
 ### \[Proposed\] Undo/redo feature
 
@@ -171,11 +186,11 @@ Step 1. The user launches the application for the first time. The `VersionedAddr
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `deleteClient 5` command to delete the 5th client in the address book. The `deleteClient` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `deleteClient 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `addClient n/David p/PHONE …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
@@ -282,48 +297,46 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …  ​ | I want to …​                | So that I can…​ |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user | view the user guide easily | learn more about how to use the product |
-| `* * *`  | user     | add a new pet              | keep track of a new pet |
-| `* * *`  | user     | record a pet's details (name, breed, date of birth) | identify each pet easily |
-| `* * *`  | user     | add a new client and their contact information | keep track of a new client |
-| `* * *`  | user     | view a pet's information   | view the information of a pet that I need to groom |
-| `* * *`  | user     | view a client's details    | see the details of a client to contact |
-| `* * *`  | user     | link a client to their pet | record who the pet's owner is |
-| `* * *`  | user     | remove a pet               | delete outdated pet information |
-| `* * *`  | user     | remove a client            | remove clients who no longer visit my shop |
-| `* * *`  | user     | ensure my data persists automatically | preserve my records after closing the app |
-| `* *`    | user     | edit a client's information | keep my client records up to date |
-| `* *`    | user     | edit a pet's details       | update pet information when needed |
-| `* *`    | user     | search for clients by name | quickly locate a specific client's details |
-| `* *`    | user     | search for pets by name    | quickly find a specific pet's details |
-| `* *`    | user     | search for a client and see all the pets they own | quickly retrieve their pets' information when they arrive |
-| `* *`    | user     | search for a pet and see their owner's details | quickly retrieve the owner's contact information |
-| `* *`    | user     | search for clients by contact details | quickly locate a specific client's details |
-| `* *`    | user     | search for pets by attributes    | quickly find a specific pet's details |
-| `* *`    | user     | attach photos to pets      | record what the pets look like in real life |
-| `* *`    | user     | view a pet's photos        | identify pets quickly in real life |
-| `* *`    | user     | edit a pet's photos      | update pet photos with more recent versions |
-| `* *`    | user     | delete a pet's photos      | remove outdated pet photos |
-| `* *`    | new user | purge (delete all) existing pets | clear any dummy pet information once I have familiarised with the app |
-| `* *`    | new user | purge (delete all) existing clients | clear any dummy client information once I have familiarised with the app |
-| `* *`    | user     | record grooming notes for each pet | record each pet's special requirements |
-| `* *`    | user     | view grooming notes for a pet | recall a pet's special requirements |
-| `* *`    | user     | update grooming notes for a pet | update a pet's requirements as they change |
-| `* *`    | user     | delete grooming notes for a pet | remove outdated information |
-| `* *`    | experienced user | attach tags to clients | categorize different types of clients |
-| `*`    | experienced user | attach tags to pets    | flag out pets with special requirements |   |
-| `*`    | user     | add appointment | schedule future appointments |
-| `*`    | user     | view all appointments | see what upcoming appointments I have |
-| `*`    | user     | edit appointment time and day | keep track of changes in future appoinements |
-| `*`    | user     | delete appointment | keep track of cancellation of appointments |
-| `*`    | user     | filter appointments by day | see what appointments I have for that day |
-| `*`    | user     | mark the appointment as completed | keep track of what appointments have been completed |
-| `*`    | user     | undo my last command | undo mistakes and typos |
-| `*`    | user     | redo my last command | redo commands I accidentally undoed |
-
-*{More to be added}*
+| Priority | As a …​ | I want to …​ | So that I can…​ | Status |
+|----------|---------|--------------|-----------------|--------|
+| `* * *`  | new user | view the user guide easily | learn more about how to use the product | Implemented |
+| `* * *`  | user     | add a new pet              | keep track of a new pet | Implemented |
+| `* * *`  | user     | record a pet's details (name, breed, date of birth) | identify each pet easily | Implemented |
+| `* * *`  | user     | add a new client and their contact information | keep track of a new client | Implemented |
+| `* * *`  | user     | view a pet's information   | view the information of a pet that I need to groom | Implemented |
+| `* * *`  | user     | view a client's details    | see the details of a client to contact | Implemented |
+| `* * *`  | user     | link a client to their pet | record who the pet's owner is | Implemented |
+| `* * *`  | user     | remove a pet               | delete outdated pet information | Implemented |
+| `* * *`  | user     | remove a client            | remove clients who no longer visit my shop | Implemented |
+| `* * *`  | user     | ensure my data persists automatically | preserve my records after closing the app | Implemented |
+| `* *`    | user     | edit a client's information | keep my client records up to date | Implemented |
+| `* *`    | user     | edit a pet's details       | update pet information when needed | Implemented |
+| `* *`    | user     | search for clients by name | quickly locate a specific client's details | Implemented |
+| `* *`    | user     | search for pets by name    | quickly find a specific pet's details | Implemented |
+| `* *`    | user     | search for a client and see all the pets they own | quickly retrieve their pets' information when they arrive | Implemented |
+| `* *`    | user     | search for a pet and see their owner's details | quickly retrieve the owner's contact information | Implemented |
+| `* *`    | user     | search for clients by contact details | quickly locate a specific client's details | Implemented |
+| `* *`    | user     | search for pets by attributes | quickly find a specific pet's details | Implemented |
+| `* *`    | user     | attach photos to pets      | record what the pets look like in real life | Implemented |
+| `* *`    | user     | view a pet's photos        | identify pets quickly in real life | Implemented |
+| `* *`    | user     | edit a pet's photos        | update pet photos with more recent versions | Implemented |
+| `* *`    | user     | delete a pet's photos      | remove outdated pet photos | Implemented |
+| `* *`    | new user | purge (delete all) existing pets | clear any dummy pet information once I have familiarised with the app | Implemented |
+| `* *`    | new user | purge (delete all) existing clients | clear any dummy client information once I have familiarised with the app | Implemented |
+| `* *`    | user     | record grooming notes for each pet | record each pet's special requirements | Implemented |
+| `* *`    | user     | view grooming notes for a pet | recall a pet's special requirements | Implemented |
+| `* *`    | user     | update grooming notes for a pet | update a pet's requirements as they change | Implemented |
+| `* *`    | user     | delete grooming notes for a pet | remove outdated information | Implemented |
+| `* *`    | experienced user | attach tags to clients | categorize different types of clients | Implemented |
+| `*`      | experienced user | attach tags to pets | flag out pets with special requirements | Not implemented |
+| `*`      | user     | add appointment | schedule future appointments | Not implemented |
+| `*`      | user     | view all appointments | see what upcoming appointments I have | Not implemented |
+| `*`      | user     | edit appointment time and day | keep track of changes in future appointments | Not implemented |
+| `*`      | user     | delete appointment | keep track of cancellation of appointments | Not implemented |
+| `*`      | user     | filter appointments by day | see what appointments I have for that day | Not implemented |
+| `*`      | user     | mark the appointment as completed | keep track of what appointments have been completed | Not implemented |
+| `*`      | user     | undo my last command | undo mistakes and typos | Not implemented |
+| `*`      | user     | redo my last command | redo commands I accidentally undid | Not implemented |
 
 ### Use cases
 
@@ -446,10 +459,8 @@ A **Precondition** is that the system is displaying the list of clients and pets
 **MSS**
 
 1.  User finds the client to edit.
-2.  User deletes the client (UC3).
-3.  System deletes the client and displays the updated list.
-4.  User adds the updated client and their pets (UC1).
-5.  System adds the client and displays the updated list.
+2.  User requests to edit the client.
+3.  System edits the client and displays the updated list.
 
     Use case ends.
 
@@ -459,15 +470,21 @@ A **Precondition** is that the system is displaying the list of clients and pets
 
      Use case ends.
 
+* 2a. The given parameters are invalid.
+
+    * 2a1. System shows an error message.
+    * 2a2. User makes new request to edit a client.
+      Steps 2a1-2a2 are repeated until the parameters are valid.
+
+      Use case resumes at step 3.
+
 **Use case 6: Edit details of a pet**
 
 **MSS**
 
 1.  User finds the pet to edit.
-2.  User deletes the pet (UC4).
-3.  System deletes the pet and displays the updated list.
-4.  User adds the updated pet to the client (UC2).
-5.  System adds the pet and displays the updated list.
+2.  User requests to edit the pet.
+3.  System edits the pet and displays the updated list.
 
     Use case ends.
 
@@ -477,11 +494,19 @@ A **Precondition** is that the system is displaying the list of clients and pets
 
      Use case ends.
 
+* 2a. The given parameters are invalid.
+
+    * 2a1. System shows an error message.
+    * 2a2. User makes new request to edit a pet.
+      Steps 2a1-2a2 are repeated until the parameters are valid.
+
+      Use case resumes at step 3.
+
 **Use case 7: Search for pet of client**
 
 **MSS**
 
-1.  User looks for the client.
+1.  User looks for the client using keywords.
 2.  User looks for their pet.
 
     Use case ends.
@@ -496,7 +521,7 @@ A **Precondition** is that the system is displaying the list of clients and pets
 
 **MSS**
 
-1.  User looks for the pet.
+1.  User looks for the pet using keywords.
 2.  User looks for the client.
 
     Use case ends.
@@ -512,10 +537,10 @@ A **Precondition** is that the system is displaying the list of clients and pets
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+2.  Should be able to hold up to 1000 clients with 5 pets each without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4. The response to any use action should become visible within 5 seconds.
-5. The app should not crash due to a user action (e.g., entering an invalid command, or deleting a person that does not exist).
+5. The app should not crash due to a user action (e.g., entering an invalid command, or deleting a client that does not exist).
 6. The app should not crash due to a system error (e.g., hard disk failure, or running out of memory).
 7. The app should not crash due to a programmer error (e.g., null pointer exception, or array index out of bounds exception).
 8. Should not have a steep learning curve for users who are reasonably comfortable using CLI apps.
@@ -593,7 +618,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Deleting a client using their index
 
-   1. Prerequisites: List all clients using the `list` command. Multiple persons in the list.
+   1. Prerequisites: List all clients using the `list` command. Multiple clients in the list.
 
    1. Test case: `deleteClient 1`<br>
       Expected: Client with index 1 is deleted from the list. Details of the deleted client shown in the status message.

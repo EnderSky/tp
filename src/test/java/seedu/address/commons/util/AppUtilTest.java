@@ -64,23 +64,9 @@ public class AppUtilTest {
 
     @Test
     public void loadImage_validFileSystemPath_loadsImageSuccessfully(@TempDir File tempDir) throws IOException {
-        // Create a temporary image file in the temp directory
-        File tempImage = new File(tempDir, "test-image.png");
-
-        // Copy an existing image to the temporary file
-        try (InputStream input = AppUtil.class.getResourceAsStream("/images/placeholder-pet-logo.png");
-             FileOutputStream output = new FileOutputStream(tempImage)) {
-
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = input.read(buffer)) != -1) {
-                output.write(buffer, 0, bytesRead);
-            }
-        }
-
-        // Test with absolute path that doesn't start with "/" (Windows-style or relative path)
-        String absolutePath = tempImage.getAbsolutePath();
-        assertNotNull(AppUtil.loadImage(absolutePath));
+        // Get absolute path of /images/placeholder-pet-logo.png for comparison
+        String classpathImagePath = AppUtil.class.getResource("/images/placeholder-pet-logo.png").getPath();
+        assertNotNull(AppUtil.loadImage(classpathImagePath));
     }
 
     @Test

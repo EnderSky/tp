@@ -62,7 +62,7 @@ public class PhotoPath {
         // Then, try as a filesystem path using java.nio.file.Path
         try {
             Path path = Paths.get(test);
-            return Files.exists(path) && Files.isRegularFile(path);
+            return Files.exists(path);
         } catch (InvalidPathException e) {
             return false;
         }

@@ -49,6 +49,14 @@ public class PhotoPathTest {
         // valid file path and file exists but is not regular file (e.g. directory)
         assertFalse(PhotoPath.isValidPhotoPath("images.test/"));
 
+        // test all accepted file extensions with images that don't exist
+        assertFalse(PhotoPath.isValidPhotoPath("/images/photo.jpg"));
+        assertFalse(PhotoPath.isValidPhotoPath("/images/photo.jpeg"));
+        assertFalse(PhotoPath.isValidPhotoPath("/images/photo.png"));
+        assertFalse(PhotoPath.isValidPhotoPath("/images/photo.gif"));
+        assertFalse(PhotoPath.isValidPhotoPath("/images/photo.bmp"));
+        assertFalse(PhotoPath.isValidPhotoPath("/images/photo.jfif"));
+
         // valid photo path
         assertTrue(PhotoPath.isValidPhotoPath("/images/placeholder-pet-logo.png"));
     }

@@ -76,6 +76,7 @@ body {
   position: sticky;
   top: var(--sticky-header-height);
   flex: 0 0 auto;
+  height: calc(100vh - var(--sticky-header-height)) !important;
   max-width: 300px;
   max-height: calc(100vh - var(--sticky-header-height));
   width: 300px;

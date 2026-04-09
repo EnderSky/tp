@@ -43,25 +43,27 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 
 AddressBook *--> "1" UniquePersonList
 UniquePersonList --> "~* all" Person
-Person *--> Name
-Person *--> Phone
-Person *--> Email
-Person *--> Address
-Person *--> "*" Tag
-Person *-> Pet
 
-Pet *--> PetName
-Pet *--> Species
-Pet *--> Breed
-Pet *--> Note
-Pet *--> PhotoPath
+Person *--> "1" Phone : identified by >
+Person *--> "0..1" Name
+Person *--> "0..1" Email
+Person *--> "0..1" Address
+Person *--> "*" Tag
+Person "1" *---> "*" Pet : owns >
+
+Pet *--> "1" PetName
+Pet *--> "0..1" Species
+Pet *--> "0..1" Breed
+Pet *--> "0..1" Note
+Pet *--> "0..1" PhotoPath
 
 ModelManager --> "~* filtered" Person
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
 
-Name -[hidden]right-> Phone
-Phone -[hidden]right-> Address
+
+Phone -[hidden]right-> Name
+Name -[hidden]right-> Address
 Address -[hidden]right-> Email
 Email -[hidden]right-> Tag
 

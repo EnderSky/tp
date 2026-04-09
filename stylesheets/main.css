@@ -1,5 +1,5 @@
 mark {
-  background-color: #ff0;
+  background-color: #faedcd;
   border-radius: 5px;
   padding-top: 0;
   padding-bottom: 0;
@@ -20,7 +20,7 @@ mark {
 }
 
 .slim-scroll::-webkit-scrollbar-thumb {
-  background: #808080;
+  background: #ccd5ae;
   border-radius: 20px;
 }
 
@@ -34,7 +34,7 @@ mark {
 }
 
 .slim-scroll-blue::-webkit-scrollbar-thumb {
-  background: #00b0ef;
+  background: #d4a373;
   border-radius: 20px;
 }
 
@@ -45,10 +45,16 @@ mark {
 
 /* Layout containers */
 
+body {
+  background-color: #fefae0 !important;
+  color: #1a1a1a !important;
+}
+
 #flex-body {
   display: flex;
   flex: 1;
   align-items: start;
+  background-color: #fefae0 !important;
 }
 
 #content-wrapper {
@@ -60,6 +66,7 @@ mark {
   padding: 0.8rem 20px 0 20px;
   transition: 0.4s;
   -webkit-transition: 0.4s;
+  background-color: #fefae0 !important;
 }
 
 #site-nav,
@@ -72,10 +79,11 @@ mark {
   max-width: 300px;
   max-height: calc(100vh - var(--sticky-header-height));
   width: 300px;
+  background-color: #e9edc9 !important;
 }
 
 #site-nav {
-  border-right: 1px solid lightgrey;
+  border-right: 1px solid #ccd5ae !important;
   padding-bottom: 20px;
   z-index: 999;
 }
@@ -90,7 +98,7 @@ mark {
 }
 
 #page-nav {
-  border-left: 1px solid lightgrey;
+  border-left: 1px solid #ccd5ae !important;
 }
 
 @media screen and (max-width: 1299.98px) {
@@ -166,5 +174,73 @@ h3,
 h4,
 h5,
 h6 {
-  color: #e46c0a;
+  color: #d4a373;
+}
+
+.navbar {
+  background-color: #ccd5ae !important;
+  border-bottom: 1px solid #d4a373 !important;
+}
+
+.navbar-brand, .nav-link {
+  color: #1a1a1a !important;
+  font-weight: 600;
+}
+
+.nav-link:hover {
+  color: #d4a373 !important;
+}
+
+#site-nav a, #page-nav a {
+  color: #333333 !important;
+}
+
+#site-nav a:hover, #page-nav a:hover {
+  color: black !important;
+  background-color: #faedcd !important;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.lower-navbar-container {
+  background-color: #fefae0 !important;
+  background: #fefae0 !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+footer {
+  background-color: #ccd5ae !important;
+  color: #1a1a1a !important;
+  border-top: 1px solid #d4a373 !important;
+}
+
+.app-screenshot {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border: 1px solid #ccd5ae;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  max-width: 100%;
+  display: block;
+}
+
+table tbody tr:nth-child(even) td,
+table tbody tr:nth-child(even) th {
+  background-color: #e9edc9 !important;
+  color: #1a1a1a !important;
+  border-color: #ccd5ae !important;
+}
+
+table tbody tr:nth-child(odd) td,
+table tbody tr:nth-child(odd) th {
+  background-color: #d4e0b5 !important;
+  color: #1a1a1a !important;
+  border-color: #ccd5ae !important;
+}
+
+/* Bonus: Style the Table Header (so it isn't stark white!) */
+table thead th {
+  background-color: #faedcd !important; /* Your darker greenish-yellow */
+  color: #1a1a1a !important;
+  border-bottom: 2px solid #d4a373 !important; /* Earthy tan border */
 }

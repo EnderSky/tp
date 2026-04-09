@@ -1,8 +1,9 @@
 package seedu.address.ui;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.logging.Logger;
 
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -39,10 +40,14 @@ public class PetPersonListPanel extends UiPart<Region> {
 
         personListView.setItems(personList);
         personListView.setCellFactory(listView -> new PetPersonListViewCell());
+    }
 
-        personList.addListener((ListChangeListener<Person>) change -> {
-            personListView.refresh();
-        });
+    /**
+     * Rebuilds the {@code ListView} which contains all {@code Pet} and {@code Person} information.
+     */
+    public void refreshPersonList() {
+        requireNonNull(personListView);
+        personListView.setCellFactory(listView -> new PetPersonListViewCell());
     }
 
     /**

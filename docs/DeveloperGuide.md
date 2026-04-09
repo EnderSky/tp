@@ -15,7 +15,8 @@
 
 * This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
 * Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
-* Images used: [Footprint Icon](https://www.stfrancisanimalwelfare.co.uk/home/placeholder-logo-1/)
+* Images used: [Dog](https://unsplash.com/photos/golden-retriever-puppy-on-focus-photo-9LkqymZFLrE) (Bill Stephan), [Cat](https://mypetandi.elanco.com/au/new-owners/so-you-re-thinking-about-getting-siamese-cat) (my pet & i), [Rabbit](https://www.jigidi.com/jigsaw-puzzle/86yg3txk/english-angora-rabbit/) (Jigidi), [Placeholder](https://www.stfrancisanimalwelfare.co.uk/home/placeholder-logo-1/) (St. Francis Animal Welfare)
+* Icons used: [Footprint](https://www.flaticon.com/free-icons/footprint) (Daniel ceha), [Bunny](https://www.flaticon.com/free-icons/bunny) (Freepik), [Genes](https://www.flaticon.com/free-icons/genes) (Icon home), [Notepad](https://www.flaticon.com/free-icons/notepad) (Freepik), [Phone call](https://www.flaticon.com/free-icons/phone-call) (Ilham Fitrotul Hayat), [Home address](https://www.flaticon.com/free-icons/home-address) (KP Arts), [Email](https://www.flaticon.com/free-icons/email) (Freepik)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -688,7 +689,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Finding clients and pets that (partially) match **all** keywords.
 
-   1. Test case: `find alex`, given client `Alex Yeoh` exists and nobody else matches alex<br>
+   1. Test case: `find alex`, given client `Alex Yeoh` exists and nobody else matches `alex`<br>
       Expected: Only client `Alex Yeoh` is displayed.
 
    1. Other correct commands to try: Partial matches across all keywords, matching across owner and pet<br>
@@ -699,7 +700,7 @@ testers are expected to do more *exploratory* testing.
 Our project extended AB3 by including pets as an additional attribute for person.
 We changed the layout of the UI to make it more appealing.
 Extending the existing commands to include a new entity should have saved a significant amount of effort, but adapting the tests turned out to be very tedious.
-An unexpected challenge was addressing pets with indexes, since we only had a ObservablePersonList to work with.
+An unexpected challenge was addressing pets with indexes, since we only had an ObservablePersonList to work with.
 
 ## **Appendix: Planned Enhancements**
 

@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.image.Image?>
 <HBox id="petCardPane" fx:id="petCardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
@@ -16,7 +17,7 @@
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
     </columnConstraints>
 
-    <ImageView fx:id="petImage" fitHeight="100" fitWidth="100" preserveRatio="true" smooth="true" styleClass="pet-image" GridPane.columnIndex="0">
+    <ImageView fx:id="petImage" fitWidth="100" fitHeight="100" preserveRatio="true" styleClass="pet-image" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
       <GridPane.margin>
         <Insets top="5" right="10" bottom="5" left="5" />
       </GridPane.margin>
@@ -26,7 +27,7 @@
       <padding>
         <Insets top="5" right="5" bottom="5" left="15" />
       </padding>
-      <HBox spacing="0.5" alignment="CENTER_LEFT">
+      <HBox spacing="0.5">
         <Label fx:id="petId" styleClass="cell_big_label">
           <minWidth>
             <!-- Ensures that the label text is never truncated -->
@@ -35,9 +36,37 @@
         </Label>
         <Label fx:id="petName" text="\$name" styleClass="cell_big_label" wrapText="true" minHeight="-Infinity" />
       </HBox>
-      <Label fx:id="petSpecies" styleClass="cell_small_label" text="\$species" wrapText="true" minHeight="-Infinity" />
-      <Label fx:id="petBreed" styleClass="cell_small_label" text="\$breed" wrapText="true" minHeight="-Infinity" />
-      <Label fx:id="petNote" styleClass="cell_small_label" text="\$note" wrapText="true" minHeight="-Infinity" />
-    </VBox>
+
+      <HBox spacing="8">
+        <ImageView fitHeight="14" fitWidth="14" pickOnBounds="true" preserveRatio="true">
+          <HBox.margin>
+            <Insets top="2" />
+          </HBox.margin>
+          <image><Image url="@/images/species_icon.png" /></image>
+        </ImageView>
+        <Label fx:id="petSpecies" text="\$species" styleClass="cell_small_label" wrapText="true" minHeight="-Infinity" />
+      </HBox>
+
+      <HBox spacing="8">
+        <ImageView fitHeight="14" fitWidth="14" pickOnBounds="true" preserveRatio="true">
+          <HBox.margin>
+            <Insets top="2" />
+          </HBox.margin>
+          <image><Image url="@/images/breed_icon.png" /></image>
+        </ImageView>
+        <Label fx:id="petBreed" text="\$breed" styleClass="cell_small_label" wrapText="true" minHeight="-Infinity" />
+      </HBox>
+
+      <HBox spacing="8">
+        <ImageView fitHeight="14" fitWidth="14" pickOnBounds="true" preserveRatio="true">
+          <HBox.margin>
+            <Insets top="2" />
+          </HBox.margin>
+          <image><Image url="@/images/note_icon.png" /></image>
+        </ImageView>
+        <Label fx:id="petNote" text="\$note" styleClass="cell_small_label" wrapText="true" minHeight="-Infinity" />
+      </HBox>
+
+      </VBox>
   </GridPane>
 </HBox>

@@ -22,29 +22,29 @@ so that after grooming a pet, you can quickly find the details of the owner and 
 1. [Install](https://se-education.org/guides/tutorials/javaInstallation.html) Java `17` or higher to your computer.
 * Java `17` is the programming language that Hairy Pawter runs on.
 
-1. Download `hairypawter.jar` from the latest release [here](https://github.com/AY2526S2-CS2103T-F14-2/tp/releases).
+2. Download `hairypawter.jar` from the latest release [here](https://github.com/AY2526S2-CS2103T-F14-2/tp/releases).
 * You should be able to see it inside your Downloads folder.
 
-1. Move `hairypawter.jar` to the folder you want to use as the _home folder_ for this app.
+3. Move `hairypawter.jar` to the folder you want to use as the _home folder_ for this app.
 * You can create a folder called Hairypawter and drag `hairypawter.jar` inside it.
 
-1. Double-click on `hairypawter.jar` to run it
+4. Double-click on `hairypawter.jar` to run it
 
 <box type="warning" seamless>
 
 **If double-clicking does not run the app:**<br>
-1. Open a command terminal
+5. Open a command terminal
 * Windows users can use the search bar on the bottom of the screen to search for `Command Prompt` and run it.
 * Mac users can use spotlight search `Cmd` + `SPACE` to search for `Terminal` and run it.
 
-1. In the command terminal, enter the command `cd PATH` where PATH is the location of _home folder_ (e.g. `cd C:\Users\jeff\Desktop\HairyPawter\`)
+6. In the command terminal, enter the command `cd PATH` where PATH is the location of _home folder_ (e.g. `cd C:\Users\jeff\Desktop\HairyPawter\`)
 * You can right click on the _home folder_ and select the option most similar to `Copy as path`, then paste it after `cd `.
 
-1. In the command terminal, enter the command `java -jar hairypawter.jar` to start the app.<br>
+7. In the command terminal, enter the command `java -jar hairypawter.jar` to start the app.<br>
 * If the app starts, you can ignore the rest of the logs on the command terminal.
 </box>
 
-![Ui](images/Ui.png)
+<img src="images/Ui.png" class="app-screenshot" alt="Ui">
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -77,7 +77,7 @@ You would use the `help` command when you don't remember the command to perform 
 
 This command shows a message explaining how to access the user guide (this document), to view the list of commands and how to use them.
 
-![help message](images/helpMessage.png)
+<img src="images/helpMessage.png" class="app-screenshot" alt="help message">
 
 Format: `help`
 
@@ -142,7 +142,7 @@ Examples:
 *  `editPet 1 s/cat` Edits the species of the pet in `POSITION` 1.
 *  `editPet 2 n/Gunner` Changes the name of the pet in `POSITION` 2 to `Gunner`
 
-### Locating clients by name: `find`
+### Locating clients and pets by keywords: `find`
 
 Finds pets and clients who match **all** of the given keywords.
 
@@ -152,9 +152,11 @@ Finds pets and clients who match **all** of the given keywords.
 Format: `find KEYWORD...`
 
 Examples:
-* `findClient John` returns `john` and `John Doe`
-* `findClient alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'findClient alex david'](images/findAlexDavidResult.png)
+* `find Yu` returns clients named `yusuf` and `Yuri` with their pets
+* `find Yu cat` returns clients with their pets, if both `yu` and `cat` appear in either their details or any of their pets' details
+
+
+<img src="images/findYuCatResult.png" class="app-screenshot" alt="result for find Yu Cat">
 
 ### Deleting a client : `deleteClient`
 
@@ -167,7 +169,7 @@ Format: `deleteClient POSITION`
 
 Examples:
 * `list` followed by `delete 2` deletes the client with `POSITION` 2 in the displayed list.
-* `findClient Betsy` followed by `delete 1` deletes the 1st client in the results of the `findClient` command.
+* `find Betsy` followed by `delete 1` deletes the 1st client in the results of the `find` command.
 
 ### Deleting a pet : `deletePet`
 
@@ -216,7 +218,7 @@ _Details coming soon ..._
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Hairy Pawter home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 

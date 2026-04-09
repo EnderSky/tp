@@ -9,6 +9,8 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
@@ -18,7 +20,7 @@
       <padding>
         <Insets top="5" right="5" bottom="5" left="15" />
       </padding>
-      <HBox spacing="0.5" alignment="CENTER_LEFT">
+      <HBox spacing="0.5" alignment="TOP_LEFT">
         <Label fx:id="id" styleClass="cell_big_label">
           <minWidth>
             <!-- Ensures that the label text is never truncated -->
@@ -28,9 +30,37 @@
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" wrapText="true" minHeight="-Infinity" />
       </HBox>
       <FlowPane fx:id="tags" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" wrapText="true" minHeight="-Infinity" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" wrapText="true" minHeight="-Infinity" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" wrapText="true" minHeight="-Infinity" />
+
+      <HBox spacing="8">
+        <ImageView fitHeight="14" fitWidth="14" pickOnBounds="true" preserveRatio="true">
+          <HBox.margin>
+            <Insets top="2" />
+          </HBox.margin>
+          <image><Image url="@/images/phone_icon.png" /></image>
+        </ImageView>
+        <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" wrapText="true" minHeight="-Infinity" />
+      </HBox>
+
+      <HBox spacing="8">
+        <ImageView fitHeight="14" fitWidth="14" pickOnBounds="true" preserveRatio="true">
+          <HBox.margin>
+            <Insets top="2" />
+          </HBox.margin>
+          <image><Image url="@/images/address_icon.png" /></image>
+        </ImageView>
+        <Label fx:id="address" styleClass="cell_small_label" text="\$address" wrapText="true" minHeight="-Infinity" />
+      </HBox>
+
+      <HBox spacing="8">
+        <ImageView fitHeight="14" fitWidth="14" pickOnBounds="true" preserveRatio="true">
+          <HBox.margin>
+            <Insets top="2" />
+          </HBox.margin>
+          <image><Image url="@/images/email_icon.png" /></image>
+        </ImageView>
+        <Label fx:id="email" styleClass="cell_small_label" text="\$email" wrapText="true" minHeight="-Infinity"/>
+      </HBox>
+
     </VBox>
   </GridPane>
 </HBox>

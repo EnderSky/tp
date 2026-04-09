@@ -42,10 +42,10 @@ public class EditPetCommand extends Command {
             + "[" + PREFIX_NOTE + "NOTE] "
             + "[" + PREFIX_PHOTO + "PHOTO PATH] "
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_NAME + "Meowy"
-            + PREFIX_SPECIES + "cat"
-            + PREFIX_BREED + "persian"
-            + PREFIX_NOTE + "Good kitty"
+            + PREFIX_NAME + "Meowy "
+            + PREFIX_SPECIES + "cat "
+            + PREFIX_BREED + "persian "
+            + PREFIX_NOTE + "Good kitty "
             + PREFIX_PHOTO + "C:\\Users\\DummyUser\\Photos\\meowy.png";
 
     public static final String MESSAGE_EDIT_PET_SUCCESS = "Edited Pet: %1$s";

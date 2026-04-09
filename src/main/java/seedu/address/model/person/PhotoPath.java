@@ -18,7 +18,7 @@ public class PhotoPath {
 
     public static final String MESSAGE_CONSTRAINTS = "Photo path must be a valid file path "
             + "to an existing image file and cannot be empty. "
-            + "Accepted file extensions: .jpg, .jpeg, .png, .gif, .bmp";
+            + "Accepted file extensions: .jpg, .jpeg, .jfif, .png, .gif, .bmp";
 
     public final String value;
 

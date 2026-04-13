@@ -15,7 +15,7 @@ public class BreedTest {
 
     @Test
     public void constructor_invalidBreed_throwsIllegalArgumentException() {
-        String invalidBreed = "";
+        String invalidBreed = "  ";
         assertThrows(IllegalArgumentException.class, () -> new Breed(invalidBreed));
     }
 
@@ -25,11 +25,11 @@ public class BreedTest {
         assertThrows(NullPointerException.class, () -> Breed.isValidBreed(null));
 
         // invalid name
-        assertFalse(Breed.isValidBreed("")); // empty string
         assertFalse(Breed.isValidBreed("  ")); // spaces only
         assertFalse(Breed.isValidBreed(" ^")); // starts with space
 
         // valid name
+        assertTrue(Breed.isValidBreed("")); // empty string
         assertTrue(Breed.isValidBreed("Xoloitzcuintli"));
         assertTrue(Breed.isValidBreed("Lagotto Romagnolo")); // long name
     }

@@ -70,7 +70,22 @@ public class MessagesTest {
     }
 
     @Test
-    public void format_petWithPlaceholderPhoto_showsNoPictureProvided() {
+    public void format_petWithNullFields_skipsNullFields() {
+        Pet pet = new Pet(new Name("Cooper"), null, null, null, null);
+        String formatted = Messages.format(pet);
+        assertEquals("Cooper", formatted);
+    }
+
+    @Test
+    public void format_petWithEmptyFields_skipsEmptyFields() {
+        Pet pet = new Pet(new Name("Cooper"), new Species(""), new Breed(""),
+                          new Note(""), new PhotoPath(PLACEHOLDER_IMAGE_PATH));
+        String formatted = Messages.format(pet);
+        assertEquals("Cooper", formatted);
+    }
+
+    @Test
+    public void format_petWithPlaceholderPhoto_omitsPictureField() {
         Pet pet = new Pet(new Name("Snoopy"), new Species("Dog"), new Breed("Beagle"), new Note("Friendly"),
                 new PhotoPath(PLACEHOLDER_IMAGE_PATH));
         String formatted = Messages.format(pet);
@@ -78,7 +93,7 @@ public class MessagesTest {
         assertTrue(formatted.contains("Species: Dog"));
         assertTrue(formatted.contains("Breed: Beagle"));
         assertTrue(formatted.contains("Notes: Friendly"));
-        assertTrue(formatted.contains("Picture: No picture provided"));
+        assertFalse(formatted.contains("Picture:"));
     }
 
     @Test

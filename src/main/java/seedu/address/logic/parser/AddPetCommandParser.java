@@ -46,9 +46,9 @@ public class AddPetCommandParser implements Parser<AddPetCommand> {
                 PREFIX_PHOTO);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
-        Species species = ParserUtil.parseSpecies(argMultimap.getValue(PREFIX_SPECIES).orElse("Unknown"));
-        Breed breed = ParserUtil.parseBreed(argMultimap.getValue(PREFIX_BREED).orElse("Unknown"));
-        Note note = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE).orElse("None"));
+        Species species = ParserUtil.parseSpecies(argMultimap.getValue(PREFIX_SPECIES).orElse(""));
+        Breed breed = ParserUtil.parseBreed(argMultimap.getValue(PREFIX_BREED).orElse(""));
+        Note note = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE).orElse(""));
         PhotoPath photoPath = ParserUtil
                 .parsePhotoPath(argMultimap.getValue(PREFIX_PHOTO).orElse(PLACEHOLDER_IMAGE_PATH));
 

@@ -15,7 +15,7 @@ public class SpeciesTest {
 
     @Test
     public void constructor_invalidSpecies_throwsIllegalArgumentException() {
-        String invalidSpecies = "";
+        String invalidSpecies = "  ";
         assertThrows(IllegalArgumentException.class, () -> new Species(invalidSpecies));
     }
 
@@ -25,11 +25,11 @@ public class SpeciesTest {
         assertThrows(NullPointerException.class, () -> Species.isValidSpecies(null));
 
         // invalid name
-        assertFalse(Species.isValidSpecies("")); // empty string
         assertFalse(Species.isValidSpecies("  ")); // spaces only
         assertFalse(Species.isValidSpecies(" ^")); // starts with space
 
         // valid name
+        assertTrue(Species.isValidSpecies("")); // empty string
         assertTrue(Species.isValidSpecies("Parastratiosphecomyia stratiosphecomyioides"));
         assertTrue(Species.isValidSpecies("Arcticalymene rotteni")); // long name
     }

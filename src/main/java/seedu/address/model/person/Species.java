@@ -11,7 +11,7 @@ public class Species {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Species name should not be blank";
-    public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String VALIDATION_REGEX = "^(\\S.*)?$";
 
     public final String speciesName;
 

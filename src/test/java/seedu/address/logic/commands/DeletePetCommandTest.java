@@ -56,22 +56,23 @@ public class DeletePetCommandTest {
 
     @Test
     public void execute_filteredList_success() {
-        // filter second person to position 1, delete position 1's pet
+        // filter to first person, delete first pet from the filtered list
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Pet distraction = new PetBuilder().withName("distraction").build();
-        Pet target = new PetBuilder().build();
+        Pet target = new PetBuilder().withName("Buddy")
+                .withSpecies("Cat").withBreed("Persian").withNote("Calm").build();
         model.addPet(distraction, new Phone(FIRST_PERSON_PHONE));
-        model.addPet(target, new Phone(SECOND_PERSON_PHONE));
+        model.addPet(target, new Phone(FIRST_PERSON_PHONE));
 
-        showPersonAtIndex(model, INDEX_SECOND_PERSON);
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         DeletePetCommand deletePetCommand = new DeletePetCommand(INDEX_FIRST_PERSON);
         String expectedMessage = String.format(DeletePetCommand.MESSAGE_SUCCESS,
-                Messages.format(target));
+                Messages.format(distraction));
 
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel.addPet(distraction, new Phone(FIRST_PERSON_PHONE));
-        showPersonAtIndex(expectedModel, INDEX_SECOND_PERSON);
+        expectedModel.addPet(target, new Phone(FIRST_PERSON_PHONE));
+        showPersonAtIndex(expectedModel, INDEX_FIRST_PERSON);
 
         assertCommandSuccess(deletePetCommand, model, expectedMessage, expectedModel);
     }

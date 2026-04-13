@@ -66,7 +66,7 @@ public class Messages {
         if (pet.getBreed() != null && !pet.getBreed().toString().isEmpty()) {
             builder.append("; Breed: ").append(pet.getBreed());
         }
-        if (pet.getNote() != null && !pet.getBreed().toString().isEmpty()) {
+        if (pet.getNote() != null && !pet.getNote().toString().isEmpty()) {
             builder.append("; Notes: ").append(pet.getNote());
         }
         if (pet.getPhotoPath() != null && !pet.getPhotoPath().toString().equals(PLACEHOLDER_IMAGE_PATH)) {

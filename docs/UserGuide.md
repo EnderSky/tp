@@ -210,13 +210,11 @@ New pet added: Snowy; Species: Dog; Breed: Wire Fox Terrier (White); Notes: None
 
 <box type="info" seamless>
 
-Omitted fields will appear as `Unknown` or `None`.
+Omitted fields will appear empty.
 
 </box>
 
-<box type="info" seamless>
-
-#### **More about `[pic/PICTURE]`:**<br>
+##### **More about `[pic/PICTURE]`:**<br>
 
 * Locate the auto-generated photos subdirectory `[hairypawter.jar file location]/data/photos/` (if it has not been generated yet, run any command that adds or deletes an entry first)
 * Copy a photo you wish to add into that subdirectory, and take note of its filename
@@ -227,12 +225,10 @@ Omitted fields will appear as `Unknown` or `None`.
   1. A valid picture was initially added, but was later unable to be located (either due to the picture being deleted or due to the filepath being manually edited to an invalid filepath in the JSON file after the initial adding)
   * If this happens, try to re-add the photo with the `editPet` command with the corrected filename and filepath
 
-#### **Using `[nt/NOTES]` to your advantage:**<br>
+##### **Using `[nt/NOTES]` to your advantage:**<br>
 
 * `[nt/NOTES]` exists to record down important information about the pet. This can be identifying information
 like leash colour, or allergies and quirks of the pet. Use this flexibly!
-
-</box>
 
 <br><br>
 
@@ -432,6 +428,8 @@ Data is stored as a JSON file at `[hairypawter.jar location]/data/addressbook.js
 **Caution:** If your edits make the file format invalid, the entire file will be discarded the next time the app opens. Back up the file before editing it.
 
 Certain edits may also cause the app to behave unexpectedly (e.g. if a value is outside the accepted range). Only edit the data file if you are confident you can update it correctly.
+
+Optional fields should still be included in the JSON with empty values to avoid unexpected behaviour.
 
 </box>
 

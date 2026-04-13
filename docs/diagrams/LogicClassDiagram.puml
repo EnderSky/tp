@@ -21,11 +21,11 @@ class LogicManager
 }
 
 package Model {
-class Model
+class Model MODEL_COLOR
 }
 
 package Storage {
-class Storage
+class Storage STORAGE_COLOR
 }
 
 ' Key relationships

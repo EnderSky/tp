@@ -3,9 +3,11 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Represents a photo path for a Pet in the address book.
@@ -14,7 +16,12 @@ import java.io.InputStream;
  */
 public class PhotoPath {
 
-    public static final String MESSAGE_CONSTRAINTS = "Photo path must be a valid file path to an existing image file.";
+    public static final String MESSAGE_CONSTRAINTS = "Photo must be a valid file path "
+            + "to an existing image file stored within data/photos/ and cannot be empty "
+            + "(Example: doggy.png). "
+            + "Accepted file extensions: .jpg, .jpeg, .jfif, .png, .gif, .bmp";
+
+    private static final Path DATA_PHOTOS_DIR = Paths.get("data", "photos");
 
     public final String value;
 
@@ -26,7 +33,7 @@ public class PhotoPath {
     public PhotoPath(String path) {
         requireNonNull(path);
         checkArgument(isValidPhotoPath(path), MESSAGE_CONSTRAINTS);
-        value = path.trim();
+        value = path;
     }
 
     /**
@@ -34,33 +41,38 @@ public class PhotoPath {
      * The path must not be blank and the file must exist.
      */
     public static boolean isValidPhotoPath(String test) {
-        if (test == null || test.trim().isEmpty()) {
+        if (test == null || test.isBlank()) {
             return false;
         }
 
-        String trimmedPath = test.trim();
+        // Only accept the following file extensions: .jpg, .jpeg, .png, .gif, .bmp, .jfif
+        int dotIndex = test.lastIndexOf(".");
+        if (dotIndex == -1) {
+            return false;
+        }
+        String extension = test.substring(dotIndex).toLowerCase();
+        if (!extension.equals(".jpg") && !extension.equals(".jpeg") && !extension.equals(".png")
+                && !extension.equals(".gif") && !extension.equals(".bmp") && !extension.equals(".jfif")) {
+            return false;
+        }
 
-        // Check if given path is a classpath
-        if (trimmedPath.startsWith("/")) {
-            // If file has no extension, it's likely a directory
-            if (!trimmedPath.contains(".")) {
+        // Attempt classpath resource loading
+        InputStream stream = seedu.address.MainApp.class.getResourceAsStream(test);
+        if (stream != null) {
+            return true;
+        }
+
+        // Then, try as a filesystem path using java.nio.file.Path
+        try {
+            Path path = Paths.get(test);
+            path = DATA_PHOTOS_DIR.resolve(path).normalize();
+            if (!path.startsWith(DATA_PHOTOS_DIR)) {
                 return false;
             }
-            InputStream stream = seedu.address.MainApp.class.getResourceAsStream(trimmedPath);
-            if (stream != null) {
-                try {
-                    stream.close();
-                } catch (IOException e) {
-                    // Ignore
-                }
-                return true;
-            }
+            return Files.exists(path) && Files.isRegularFile(path);
+        } catch (InvalidPathException e) {
             return false;
         }
-
-        // Check if given path is a file system path
-        File file = new File(trimmedPath);
-        return file.exists() && file.isFile();
     }
 
     @Override

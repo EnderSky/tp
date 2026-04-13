@@ -1,7 +1,9 @@
 package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.parser.CliSyntax.PLACEHOLDER_IMAGE_PATH;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -211,5 +213,45 @@ public class ParserUtilTest {
     public void parsePhotoPath_validPath_success() throws Exception {
         PhotoPath expectedPhotoPath = new PhotoPath(VALID_PHOTO_PATH);
         assertEquals(expectedPhotoPath, ParserUtil.parsePhotoPath(VALID_PHOTO_PATH));
+    }
+
+    @Test
+    public void parsePhotoPath_doubleQuotedPath_stripsQuotes() throws Exception {
+        // Covers the double-quote stripping branch in parsePhotoPath
+        String doubleQuotedPath = "\"" + VALID_PHOTO_PATH + "\"";
+        PhotoPath expectedPhotoPath = new PhotoPath(VALID_PHOTO_PATH);
+        assertEquals(expectedPhotoPath, ParserUtil.parsePhotoPath(doubleQuotedPath));
+    }
+
+    @Test
+    public void parsePhotoPath_singleQuotedPath_stripsQuotes() throws Exception {
+        // Covers the single-quote stripping branch in parsePhotoPath
+        String singleQuotedPath = "'" + VALID_PHOTO_PATH + "'";
+        PhotoPath expectedPhotoPath = new PhotoPath(VALID_PHOTO_PATH);
+        assertEquals(expectedPhotoPath, ParserUtil.parsePhotoPath(singleQuotedPath));
+    }
+
+    @Test
+    public void parsePhotoPath_emptyValue_returnsPlaceholderPath() throws Exception {
+        PhotoPath expectedPhotoPath = new PhotoPath(PLACEHOLDER_IMAGE_PATH);
+        assertEquals(expectedPhotoPath, ParserUtil.parsePhotoPath("   "));
+    }
+
+    @Test
+    public void parsePhotoPath_windowsBackslashes_normalizesToForwardSlashes() throws Exception {
+        String windowsPath = "\\images\\clock.png";
+        PhotoPath expectedPhotoPath = new PhotoPath("/images/clock.png");
+        assertEquals(expectedPhotoPath, ParserUtil.parsePhotoPath(windowsPath));
+    }
+
+    @Test
+    public void parsePhotoPath_unmatchedQuotes_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parsePhotoPath("\"/images/clock.png"));
+    }
+
+    @Test
+    public void multipleWords() {
+        assertTrue(ParserUtil.multipleWords("1 two"));
+        assertFalse(ParserUtil.multipleWords("single"));
     }
 }

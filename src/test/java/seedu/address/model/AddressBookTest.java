@@ -23,6 +23,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Pet;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PetBuilder;
 
@@ -156,6 +157,12 @@ public class AddressBookTest {
         Person found = ab.getPersonList().stream().filter(
                 p -> p.getPhone().equals(person.getPhone())).findFirst().get();
         assertFalse(found.getPets().contains(pet));
+    }
+
+    @Test
+    public void test_sampleDataUtil() {
+        //assert no errors thrown
+        ReadOnlyAddressBook ab = SampleDataUtil.getSampleAddressBook();
     }
 
     /**

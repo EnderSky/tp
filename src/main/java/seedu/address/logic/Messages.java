@@ -1,5 +1,7 @@
 package seedu.address.logic;
 
+import static seedu.address.logic.parser.CliSyntax.PLACEHOLDER_IMAGE_PATH;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,9 +18,9 @@ public class Messages {
     public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
     public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The client index provided is invalid";
-    public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
+    public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d clients listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
-                "Multiple values specified for the following single-valued field(s): ";
+        "Multiple values specified for the following single-valued field(s): ";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
@@ -26,8 +28,7 @@ public class Messages {
     public static String getErrorMessageForDuplicatePrefixes(Prefix... duplicatePrefixes) {
         assert duplicatePrefixes.length > 0;
 
-        Set<String> duplicateFields =
-                Stream.of(duplicatePrefixes).map(Prefix::toString).collect(Collectors.toSet());
+        Set<String> duplicateFields = Stream.of(duplicatePrefixes).map(Prefix::toString).collect(Collectors.toSet());
 
         return MESSAGE_DUPLICATE_FIELDS + String.join(" ", duplicateFields);
     }
@@ -51,13 +52,19 @@ public class Messages {
 
     /**
      * Formats the {@code pet} for display to the user.
+     *
      * @param pet The pet to format.
      *
      * @return The formatted string representation of the pet.
      */
     public static String format(Pet pet) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(pet.getName());
+        builder.append(pet.getName()).append("; Species: ").append(pet.getSpecies())
+                .append("; Breed: ").append(pet.getBreed())
+                .append("; Notes: ").append(pet.getNote())
+                .append("; Picture: ")
+                .append(pet.getPhotoPath().toString().equals(PLACEHOLDER_IMAGE_PATH) ? "No picture provided"
+                        : pet.getPhotoPath());
         return builder.toString();
     }
 

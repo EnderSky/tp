@@ -22,7 +22,7 @@ public class PetBuilder {
     public static final String DEFAULT_NAME = "Snoopy";
     public static final String DEFAULT_SPECIES = "Dog";
     public static final String DEFAULT_BREED = "Labrador";
-    public static final String DEFAULT_NOTE = "Very friendly";
+    public static final String DEFAULT_NOTE = "Friendly";
     public static final String DEFAULT_PHOTO_PATH = PLACEHOLDER_IMAGE_PATH;
 
     private Name name;

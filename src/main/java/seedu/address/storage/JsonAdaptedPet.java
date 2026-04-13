@@ -95,8 +95,8 @@ public class JsonAdaptedPet {
         final Note modelNote = new Note(note);
 
         String editedPath = photoPath;
-        if (photoPath == null || !PhotoPath.isValidPhotoPath(photoPath)) {
-            editedPath = PLACEHOLDER_IMAGE_PATH.toString();
+        if (!PhotoPath.isValidPhotoPath(photoPath)) {
+            editedPath = PLACEHOLDER_IMAGE_PATH;
         }
         final PhotoPath modelPhotoPath = new PhotoPath(editedPath);
 

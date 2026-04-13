@@ -15,7 +15,7 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches for pets and clients"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches for pets and clients "
             + "that match all the specified keywords (case-insensitive).\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";

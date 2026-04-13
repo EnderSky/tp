@@ -34,7 +34,7 @@ mark {
 }
 
 .slim-scroll-blue::-webkit-scrollbar-thumb {
-  background: #d4a373;
+  background: #7e4f20;
   border-radius: 20px;
 }
 
@@ -175,12 +175,12 @@ h3,
 h4,
 h5,
 h6 {
-  color: #d4a373;
+  color: #7e4f20;
 }
 
 .navbar {
   background-color: #ccd5ae !important;
-  border-bottom: 1px solid #d4a373 !important;
+  border-bottom: 1px solid #7e4f20 !important;
 }
 
 .navbar-brand, .nav-link {
@@ -189,7 +189,7 @@ h6 {
 }
 
 .nav-link:hover {
-  color: #d4a373 !important;
+  color: #7e4f20 !important;
 }
 
 #site-nav a, #page-nav a {
@@ -213,7 +213,7 @@ h6 {
 footer {
   background-color: #ccd5ae !important;
   color: #1a1a1a !important;
-  border-top: 1px solid #d4a373 !important;
+  border-top: 1px solid #7e4f20 !important;
 }
 
 .app-screenshot {
@@ -243,5 +243,5 @@ table tbody tr:nth-child(odd) th {
 table thead th {
   background-color: #faedcd !important; /* Your darker greenish-yellow */
   color: #1a1a1a !important;
-  border-bottom: 2px solid #d4a373 !important; /* Earthy tan border */
+  border-bottom: 2px solid #7e4f20 !important; /* Earthy tan border */
 }

@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.HOON;
@@ -9,6 +10,7 @@ import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -106,5 +108,36 @@ public class JsonAddressBookStorageTest {
     @Test
     public void saveAddressBook_nullFilePath_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> saveAddressBook(new AddressBook(), null));
+    }
+
+    @Test
+    public void saveAddressBook_createsDataPhotosSubdirectory() throws Exception {
+        Path nestedFilePath = testFolder.resolve(Paths.get("nested", "book.json"));
+        JsonAddressBookStorage storage = new JsonAddressBookStorage(nestedFilePath);
+
+        storage.saveAddressBook(getTypicalAddressBook(), nestedFilePath);
+
+        assertTrue(Files.exists(nestedFilePath.getParent().resolve("photos")));
+        assertTrue(Files.isDirectory(nestedFilePath.getParent().resolve("photos")));
+    }
+
+    @Test
+    public void readAddressBook_nullPath_throwsNullPointerException() {
+        JsonAddressBookStorage storage = new JsonAddressBookStorage(testFolder.resolve("book.json"));
+        assertThrows(NullPointerException.class, () -> storage.readAddressBook((Path) null));
+    }
+
+    @Test
+    public void saveAddressBook_nullPath_throwsNullPointerException() {
+        JsonAddressBookStorage storage = new JsonAddressBookStorage(testFolder.resolve("book.json"));
+        assertThrows(NullPointerException.class, ()
+            -> storage.saveAddressBook(getTypicalAddressBook(), (Path) null));
+    }
+
+    @Test
+    public void getAddressBookFilePath_returnsConstructorPath() {
+        Path filePath = testFolder.resolve("book.json");
+        JsonAddressBookStorage storage = new JsonAddressBookStorage(filePath);
+        assertEquals(filePath, storage.getAddressBookFilePath());
     }
 }

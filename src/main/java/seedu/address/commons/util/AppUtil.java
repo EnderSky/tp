@@ -3,9 +3,11 @@ package seedu.address.commons.util;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PLACEHOLDER_IMAGE_PATH;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import javafx.scene.image.Image;
@@ -18,14 +20,7 @@ import seedu.address.commons.core.LogsCenter;
 public class AppUtil {
 
     private static final Logger logger = LogsCenter.getLogger(AppUtil.class);
-
-    /**
-     * Gets an {@code Image} from the specified path.
-     */
-    public static Image getImage(String imagePath) {
-        requireNonNull(imagePath);
-        return new Image(MainApp.class.getResourceAsStream(imagePath));
-    }
+    private static final Path DATA_PHOTOS_DIR = Paths.get("data", "photos");
 
     /**
     * Loads an image from the specified path. If the image cannot be loaded, a
@@ -35,42 +30,32 @@ public class AppUtil {
     * @return The loaded Image, or a placeholder Image if loading fails.
     */
     public static Image loadImage(String imagePath) {
-        return loadImage(imagePath, PLACEHOLDER_IMAGE_PATH);
-    }
-
-    private static Image loadImage(String imagePath, String placeholderPath) {
         requireNonNull(imagePath);
-        requireNonNull(placeholderPath);
+        requireNonNull(PLACEHOLDER_IMAGE_PATH);
         Image image;
         try {
-            if (isClasspathResource(imagePath)) {
-                // Use classpath resource
-                InputStream stream = MainApp.class.getResourceAsStream(imagePath);
-                if (stream == null) {
-                    throw new IOException("Image not found in resources: " + imagePath);
-                }
+            // First, try loading as a classpath resource (default bundled images)
+            InputStream stream = MainApp.class.getResourceAsStream(imagePath);
+            if (stream != null) {
                 image = new Image(stream);
             } else {
-                // Use file system
-                File photo = new File(imagePath);
-                if (!photo.exists() || !photo.isFile()) {
+                // Try as a filesystem path (handles normalized forward-slash paths on all OSes)
+                Path photoPath = Paths.get(imagePath);
+                if (!photoPath.isAbsolute()) {
+                    photoPath = DATA_PHOTOS_DIR.resolve(photoPath).normalize();
+                }
+                if (!Files.exists(photoPath) || !Files.isRegularFile(photoPath)) {
                     throw new IOException("Image file not found: " + imagePath);
                 }
-                image = new Image(photo.toURI().toString());
+                image = new Image(photoPath.toUri().toString());
             }
         } catch (Exception e) {
             logger.warning("Failed to load image at " + imagePath + ": " + e.getMessage());
-            logger.info("Loading placeholder image at " + placeholderPath);
-            InputStream fallbackStream = MainApp.class.getResourceAsStream(placeholderPath);
+            logger.info("Loading placeholder image at " + PLACEHOLDER_IMAGE_PATH);
+            InputStream fallbackStream = MainApp.class.getResourceAsStream(PLACEHOLDER_IMAGE_PATH);
             image = new Image(fallbackStream);
         }
         return image;
-    }
-
-    private static boolean isClasspathResource(String path) {
-        return path.startsWith("/")
-                && !path.contains(":") // Not Windows drive letter
-                && !path.startsWith("//"); // Not UNC path
     }
 
     /**

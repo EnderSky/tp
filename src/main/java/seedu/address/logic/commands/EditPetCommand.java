@@ -40,13 +40,13 @@ public class EditPetCommand extends Command {
             + "[" + PREFIX_SPECIES + "SPECIES] "
             + "[" + PREFIX_BREED + "BREED] "
             + "[" + PREFIX_NOTE + "NOTE] "
-            + "[" + PREFIX_PHOTO + "PHOTO PATH] "
+            + "[" + PREFIX_PHOTO + "PICTURE] "
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_NAME + "Meowy"
-            + PREFIX_SPECIES + "cat"
-            + PREFIX_BREED + "persian"
-            + PREFIX_NOTE + "Good kitty"
-            + PREFIX_PHOTO + "C:\\Users\\DummyUser\\Photos\\meowy.png";
+            + PREFIX_NAME + "Meowy "
+            + PREFIX_SPECIES + "cat "
+            + PREFIX_BREED + "persian "
+            + PREFIX_NOTE + "Good kitty "
+            + PREFIX_PHOTO + "doggy.png";
 
     public static final String MESSAGE_EDIT_PET_SUCCESS = "Edited Pet: %1$s";
     public static final String MESSAGE_NO_INDEX_PASSED = "No POSITION was detected.";

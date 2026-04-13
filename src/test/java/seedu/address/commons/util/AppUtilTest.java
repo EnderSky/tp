@@ -1,30 +1,20 @@
 package seedu.address.commons.util;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 public class AppUtilTest {
-
-    @Test
-    public void getImage_existingImage() {
-        assertNotNull(AppUtil.getImage("/images/address_book_32.png"));
-    }
-
-    @Test
-    public void getImage_nullGiven_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> AppUtil.getImage(null));
-    }
 
     @Test
     public void loadImage_existingImage() {
@@ -59,6 +49,30 @@ public class AppUtilTest {
     }
 
     @Test
+    public void loadImage_relativePathInDataPhotos_loadsImageSuccessfully() throws IOException {
+        Path dataPhotos = Paths.get("data", "photos");
+        Files.createDirectories(dataPhotos);
+        Path tempImage = Files.createTempFile(dataPhotos, "pet-", ".png");
+
+        try (InputStream input = AppUtil.class.getResourceAsStream("/images/placeholder-pet-logo.png")) {
+            Files.copy(input, tempImage, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+        }
+
+        assertNotNull(AppUtil.loadImage(tempImage.getFileName().toString()));
+        Files.deleteIfExists(tempImage);
+    }
+
+    @Test
+    public void loadImage_directoryPath_loadsFallbackImage(@TempDir File tempDir) {
+        assertNotNull(AppUtil.loadImage(tempDir.getAbsolutePath()));
+    }
+
+    @Test
+    public void loadImage_invalidPathString_loadsFallbackImage() {
+        assertNotNull(AppUtil.loadImage("invalid\0path.png"));
+    }
+
+    @Test
     public void checkArgument_true_nothingHappens() {
         AppUtil.checkArgument(true);
         AppUtil.checkArgument(true, "");
@@ -77,13 +91,24 @@ public class AppUtilTest {
 
     @Test
     public void loadImage_validFileSystemPath_loadsImageSuccessfully(@TempDir File tempDir) throws IOException {
-        // Create a temporary image file in the temp directory
-        File tempImage = new File(tempDir, "test-image.png");
+        // Get absolute path of /images/placeholder-pet-logo.png for comparison
+        String classpathImagePath = AppUtil.class.getResource("/images/placeholder-pet-logo.png").getPath();
+        assertNotNull(AppUtil.loadImage(classpathImagePath));
+    }
 
-        // Copy an existing image to the temporary file
+    @Test
+    public void loadImage_classpathResources_loadSuccessfully() {
+        // Classpath resources starting with "/" should load via getResourceAsStream
+        assertNotNull(AppUtil.loadImage("/images/placeholder-pet-logo.png"));
+        assertNotNull(AppUtil.loadImage("/images/address_book_32.png"));
+    }
+
+    @Test
+    public void loadImage_fileSystemPaths_loadSuccessfully(@TempDir File tempDir) throws IOException {
+        // Create a temporary image file
+        File tempImage = new File(tempDir, "fs-test-image.png");
         try (InputStream input = AppUtil.class.getResourceAsStream("/images/placeholder-pet-logo.png");
              FileOutputStream output = new FileOutputStream(tempImage)) {
-
             byte[] buffer = new byte[1024];
             int bytesRead;
             while ((bytesRead = input.read(buffer)) != -1) {
@@ -91,34 +116,14 @@ public class AppUtilTest {
             }
         }
 
-        // Test with absolute path that doesn't start with "/" (Windows-style or relative path)
-        String absolutePath = tempImage.getAbsolutePath();
-        assertNotNull(AppUtil.loadImage(absolutePath));
+        // Filesystem path should not be mistaken for a classpath resource
+        assertNotNull(AppUtil.loadImage(tempImage.getAbsolutePath()));
     }
 
     @Test
-    public void isClasspathResource_classpathPath_returnsTrue() throws Exception {
-        // Use reflection to access the private isClasspathResource method
-        Method method = AppUtil.class.getDeclaredMethod("isClasspathResource", String.class);
-        method.setAccessible(true);
-
-        // Test classpath resource paths (start with "/" and no drive letter)
-        assertTrue((Boolean) method.invoke(null, "/images/placeholder-pet-logo.png"));
-        assertTrue((Boolean) method.invoke(null, "/images/address_book_32.png"));
-        assertTrue((Boolean) method.invoke(null, "/view/MainWindow.fxml"));
-    }
-
-    @Test
-    public void isClasspathResource_fileSystemPath_returnsFalse() throws Exception {
-        // Use reflection to access the private isClasspathResource method
-        Method method = AppUtil.class.getDeclaredMethod("isClasspathResource", String.class);
-        method.setAccessible(true);
-
-        // Test filesystem paths (don't start with "/" or contain drive letters)
-        assertFalse((Boolean) method.invoke(null, "src/main/resources/images/test.png"));
-        assertFalse((Boolean) method.invoke(null, "relative/path/image.png"));
-        assertFalse((Boolean) method.invoke(null, "C:/Users/test/image.png")); // Windows path with drive letter
-        assertFalse((Boolean) method.invoke(null, "D:\\photos\\image.png")); // Windows path with backslash
-        assertFalse((Boolean) method.invoke(null, "//network/share/image.png")); // UNC path
+    public void loadImage_nonExistentFileSystemPath_loadsFallbackImage(@TempDir File tempDir) {
+        // A filesystem path that doesn't exist and isn't a classpath resource
+        String nonExistentPath = tempDir.getAbsolutePath() + "/does_not_exist.png";
+        assertNotNull(AppUtil.loadImage(nonExistentPath));
     }
 }

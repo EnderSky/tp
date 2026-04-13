@@ -15,7 +15,7 @@
 
 * This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
 * Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
-* Images used: [Dog](https://unsplash.com/photos/golden-retriever-puppy-on-focus-photo-9LkqymZFLrE) (Bill Stephan), [Cat](https://mypetandi.elanco.com/au/new-owners/so-you-re-thinking-about-getting-siamese-cat) (my pet & i), [Rabbit](https://www.jigidi.com/jigsaw-puzzle/86yg3txk/english-angora-rabbit/) (Jigidi), [Placeholder](https://www.stfrancisanimalwelfare.co.uk/home/placeholder-logo-1/) (St. Francis Animal Welfare)
+* Images used: [Dog - Bella](https://unsplash.com/photos/golden-retriever-puppy-on-focus-photo-9LkqymZFLrE) (Bill Stephan), [Cat - Milo](https://mypetandi.elanco.com/au/new-owners/so-you-re-thinking-about-getting-siamese-cat) (my pet & i), [Rabbit - Dove](https://www.jigidi.com/jigsaw-puzzle/86yg3txk/english-angora-rabbit/) (Jigidi), [Rabbit - Carrots](https://www.peakpx.com/en/hd-wallpaper-desktop-odqid) (Peakpx), [Shih Tzu - Fluffy](https://www.vecteezy.com/photo/73870857-adorable-shih-tzu-puppy-in-soft-pastel-background-portrait-photography-cozy-indoor-setting-charming-viewpoint) (Littlestar 0816), [Beagle - Snoopy](https://www.instagram.com/bayley.sheepadoodle/) (bayley.sheepadoodle), [Placeholder Image](https://www.stfrancisanimalwelfare.co.uk/home/placeholder-logo-1/) (St. Francis Animal Welfare)
 * Icons used: [Footprint](https://www.flaticon.com/free-icons/footprint) (Daniel ceha), [Bunny](https://www.flaticon.com/free-icons/bunny) (Freepik), [Genes](https://www.flaticon.com/free-icons/genes) (Icon home), [Notepad](https://www.flaticon.com/free-icons/notepad) (Freepik), [Phone call](https://www.flaticon.com/free-icons/phone-call) (Ilham Fitrotul Hayat), [Home address](https://www.flaticon.com/free-icons/home-address) (KP Arts), [Email](https://www.flaticon.com/free-icons/email) (Freepik)
 
 --------------------------------------------------------------------------------------------------------------------
@@ -34,10 +34,10 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 The ***Architecture Diagram*** shows the high-level design of the app.
 It is a Model-View-Controller design, where
-* The user interacts with the [**`UI`**](#ui-component)...
-* Requested changes are passed through the [**`Logic`**](#logic-component) interface...
-* These changes are reflected in the [**`Model`**](#model-component) and [**`Storage`**](#storage-component)...
-* And the [**`UI`**](#ui-component) listens for and displays changes accordingly.
+* The user interacts with the [**`UI`**](#ui-component), which accepts text commands and displays results.
+* Requested changes are passed through the [**`Logic`**](#logic-component) interface, which parses and executes commands.
+* These changes are reflected in the [**`Model`**](#model-component) (in-memory state) and [**`Storage`**](#storage-component) (persisted JSON file).
+* The [**`UI`**](#ui-component) listens for changes to `Model` data and updates the display accordingly.
 
 ### Sequence of program execution
 
@@ -76,7 +76,7 @@ The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `Re
 Additionally, `PetPersonCard` displays a client on the right and all the pets they own on the left. Hence, it contains 1 `PersonCard` and any number of `PetCard` objects.
 This ensures that all pets of a client are shown together, which is easier for our users to handle.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFX UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S2-CS2103T-F14-2/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S2-CS2103T-F14-2/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -147,7 +147,8 @@ The `Model` component,
 
 * stores the address book data i.e., all `Person` (client) objects (which are contained in a `UniquePersonList` object).
 * stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* stores a `UserPref` object that represents the user's preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
+* stores a `UserPrefs` object that represents the user's preferences. This is exposed to the outside as a `ReadOnlyUserPrefs` objects.
+* stores all `Pet` objects embedded within `Person` objects. Each `Person` holds a list of `Pet` objects, each with a `Name`, `Species`, `Breed`, `Note`, and optionally a `PhotoPath`.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components).
 
 <puml src="diagrams/ModelSequenceDiagram.puml" alt="Interactions Inside the Model Component for the `deleteClient 1` Command" />
@@ -166,7 +167,8 @@ How the `Model` component works:
 
 The `Storage` component,
 * can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+* inherits from both `AddressBookStorage` and `UserPrefsStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+* serializes `Pet` objects via `JsonAdaptedPet`, nested within `JsonAdaptedPerson`, allowing the full client-pet hierarchy to be saved and restored from a single JSON file (`data/addressbook.json`).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 --------------------------------------------------------------------------------------------------------------------
@@ -191,6 +193,56 @@ Each `Person` (client) contains a `List<Pet>` representing their owned pets. Thi
 
 * **Pet-Client linking**: When adding a pet via `addPet`, the pet is linked to a client using the client's **phone number** (not the client's index). This ensures the link remains stable even when the client list is filtered or reordered.
 
+The sequence diagram below illustrates the interactions within the `Logic` and `Model` components when executing `addPet n/Max p/87438807 s/Dog`:
+
+<puml src="diagrams/AddPetSequenceDiagram.puml" alt="Interactions for the `addPet n/Max p/87438807 s/Dog` Command" />
+
+Unlike `deleteClient` (which uses a list index), `addPet` uses a **phone number lookup**. The command first checks that a client with the given phone exists (`Model#hasPhone()`), then checks that the pet name is not a duplicate for that owner (`Model#hasPet()`), before finally calling `Model#addPet()`.
+
+### \[Actual\] Find feature
+
+The `find` command filters the displayed list of clients (and their pets) based on one or more keywords.
+
+**How `FindPredicate` works:**
+
+`FindPredicate` (in `model/person/FindPredicate.java`) implements `Predicate<Person>`. It requires **all** keywords to match (AND logic), but each keyword can match **any** field — a keyword is satisfied if it appears in:
+* the client's name, phone number, email, or address
+* any of the client's tags
+* any of the client's pets' name, species, breed, or grooming notes
+
+Matching is **case-insensitive** and **partial-word** (e.g., `find alex` matches a client named "Alexander").
+
+**Filtering is applied at the `Person` level:** if a `Person` (client) satisfies all keywords, the entire entry — including all their pets — is shown. This means a search for `find alex dog` shows any client whose fields (or whose pets' fields) together contain both "alex" and "dog".
+
+**Design consideration:**
+
+| Alternative | Pros | Cons |
+|---|---|---|
+| Current: filter at `Person` level | Simple; only one `ObservableList<Person>` needed | Shows all of a client's pets even if only one pet matched |
+| Filter at `(Person, Pet)` pair level | More precise — only matching pets shown | Requires structural changes to `Model` and `UI` |
+
+The pair-level approach is listed as a planned enhancement (see Appendix: Planned Enhancements).
+
+### \[Actual\] Pet photo feature
+
+Pets can optionally have a photo attached, stored as a `PhotoPath` value.
+
+**How `PhotoPath` validation works:**
+
+When a `pic/` argument is provided to `addPet` or `editPet`, the `PhotoPath` class validates it:
+1. The file extension must be one of: `.jpg`, `.jpeg`, `.jfif`, `.png`, `.gif`, `.bmp`.
+2. It first attempts to load the path as a **classpath resource** (used for bundled sample images).
+3. If that fails, it resolves the filename against the `data/photos/` directory and checks the file exists on disk.
+4. Path traversal is blocked — any path that escapes `data/photos/` after normalisation is rejected.
+
+**Storage:** Only the filename string is saved in JSON. The actual image file must be present in `data/photos/` at runtime.
+
+**Fallback:** If a pet has no `PhotoPath`, or if the referenced file is missing at startup, the UI displays a placeholder paw icon instead.
+
+**Design consideration:**
+
+Embedding image data (e.g., Base64) in the JSON would eliminate the need for users to manually manage `data/photos/`, but would significantly increase file size and make the JSON unreadable. Storing only the path keeps the data file lightweight and human-editable.
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -209,11 +261,11 @@ Step 1. The user launches the application for the first time. The `VersionedAddr
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `deleteClient 5` command to delete the 5th client in the address book. The `deleteClient` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `deleteClient 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `deleteClient 5` command to delete the 5th client. Internally, the command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `deleteClient 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `addClient n/David p/PHONE …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `addClient n/David p/PHONE …​` to add a new person. The command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
@@ -223,7 +275,7 @@ Step 3. The user executes `addClient n/David p/PHONE …​` to add a new person
 
 </box>
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4. The user now decides that adding the client was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
 
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
 
@@ -284,7 +336,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Documentation, logging, testing, configuration, dev-ops**
+## **Documentation, logging, testing, configuration, DevOps**
 
 * [Documentation guide](Documentation.md)
 * [Testing guide](Testing.md)
@@ -324,7 +376,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 |----------|---------|--------------|-----------------|--------|
 | `* * *`  | new user | view the user guide easily | learn more about how to use the product | Implemented |
 | `* * *`  | user     | add a new pet              | keep track of a new pet | Implemented |
-| `* * *`  | user     | record a pet's details (name, breed, date of birth) | identify each pet easily | Implemented |
+| `* * *`  | user     | record a pet's details (name, breed) | identify each pet easily | Implemented |
 | `* * *`  | user     | add a new client and their contact information | keep track of a new client | Implemented |
 | `* * *`  | user     | view a pet's information   | view the information of a pet that I need to groom | Implemented |
 | `* * *`  | user     | view a client's details    | see the details of a client to contact | Implemented |
@@ -414,8 +466,9 @@ A **Precondition** is that the system is displaying the list of clients and pets
 
 **Extensions**
 
-* 1a. There are no existing clients.
+* 1a. There are no existing clients to add pets to.
 
+    * 1a1. System notifies user.
      Use case ends.
 
 * 2a. The given parameters are invalid.
@@ -441,14 +494,15 @@ A **Precondition** is that the system is displaying the list of clients and pets
 
 * 1a. There are no clients to delete.
 
+    * 1a1. System notifies user.
      Use case ends.
 
-* 2a. The given parameters are invalid.
+* 2a. The given index is invalid.
 
     * 2a1. System shows an error message.
     * 2a2. User makes new request to delete a client.
 
-      Steps 2a1-2a2 are repeated until the parameters are valid.
+      Steps 2a1-2a2 are repeated until the index is valid.
 
       Use case resumes at step 3.
 
@@ -467,13 +521,14 @@ A **Precondition** is that the system is displaying the list of clients and pets
 
 * 1a. There are no pets to delete.
 
+    * 1a1. System notifies user.
      Use case ends.
 
-* 2a. The given parameters are invalid.
+* 2a. The given index is invalid.
 
     * 2a1. System shows an error message.
     * 2a2. User makes new request to delete a pet from a client.
-      Steps 2a1-2a2 are repeated until the parameters are valid.
+      Steps 2a1-2a2 are repeated until the index is valid.
 
       Use case resumes at step 3.
 
@@ -481,7 +536,7 @@ A **Precondition** is that the system is displaying the list of clients and pets
 
 **MSS**
 
-1.  User finds the client to edit.
+1.  User finds a client to edit.
 2.  User requests to edit the client.
 3.  System edits the client and displays the updated list.
 
@@ -491,13 +546,14 @@ A **Precondition** is that the system is displaying the list of clients and pets
 
 * 1a. There are no clients to edit.
 
+    * 1a1. System notifies user.
      Use case ends.
 
-* 2a. The given parameters are invalid.
+* 2a. The given index is invalid.
 
     * 2a1. System shows an error message.
     * 2a2. User makes new request to edit a client.
-      Steps 2a1-2a2 are repeated until the parameters are valid.
+      Steps 2a1-2a2 are repeated until the index is valid.
 
       Use case resumes at step 3.
 
@@ -505,7 +561,7 @@ A **Precondition** is that the system is displaying the list of clients and pets
 
 **MSS**
 
-1.  User finds the pet to edit.
+1.  User finds a pet to edit.
 2.  User requests to edit the pet.
 3.  System edits the pet and displays the updated list.
 
@@ -515,62 +571,75 @@ A **Precondition** is that the system is displaying the list of clients and pets
 
 * 1a. There are no pets to edit.
 
+    * 1a1. System notifies user.
      Use case ends.
 
-* 2a. The given parameters are invalid.
+* 2a. The given index is invalid.
 
     * 2a1. System shows an error message.
     * 2a2. User makes new request to edit a pet.
-      Steps 2a1-2a2 are repeated until the parameters are valid.
+      Steps 2a1-2a2 are repeated until the index is valid.
 
       Use case resumes at step 3.
 
-**Use case 7: Search for pet of client**
+**Use case 7: Search for clients and pets by keywords**
 
 **MSS**
 
-1.  User looks for the client using keywords.
-2.  User looks for their pet.
+1.  User provides one or more keywords to the `find` command.
+2.  System displays all clients where **all** keywords match at least one of: the client's name, phone, email, address, tags, or any of their pets' name, species, breed, or grooming notes.
+3.  User locates the desired client or pet in the filtered list.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The pet does not exist.
+* 2a. No client matches all the keywords.
 
-     Use case ends.
+    * 2a1. System displays an empty list with a "0 clients listed" message.
 
-**Use case 8: Search for client who owns pet**
+      Use case ends.
 
-**MSS**
+* 2b. User wants a broader search.
 
-1.  User looks for the pet using keywords.
-2.  User looks for the client.
-
-    Use case ends.
-
-**Extensions**
-
-* 1a. There are many pets with the same name.
-
-    * 1a1. User decides which client is the one they want.
+    * 2b1. User reruns `find` with fewer keywords.
 
       Use case resumes at step 2.
 
+* 2c. User wants to restore the full list after searching.
+
+    * 2c1. User runs `list`.
+
+      Use case ends.
+
+**Use case 8: Delete all records**
+
+**MSS**
+
+1.  User requests to clear all stored information.
+2.  System deletes all records and displays the empty list.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The records are already empty.
+
+     Use case resumes at step 2.
+
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 clients with 5 pets each without a noticeable sluggishness in performance for typical usage.
+1.  Should work on any _mainstream OS_ as long as it has `Java 17` or above installed.
+2.  Should be able to hold up to 200 clients with 3 pets each without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-4. The response to any use action should become visible within 5 seconds.
+4. The response to any user action should become visible within 2 seconds.
 5. The app should not crash due to a user action (e.g., entering an invalid command, or deleting a client that does not exist).
-6. The app should not crash due to a system error (e.g., hard disk failure, or running out of memory).
-7. The app should not crash due to a programmer error (e.g., null pointer exception, or array index out of bounds exception).
-8. Should not have a steep learning curve for users who are reasonably comfortable using CLI apps.
+6. The app should not crash due to a programmer error (e.g., null pointer exception, or array index out of bounds exception).
+7. Should not have a steep learning curve for users who are reasonably comfortable using CLI apps.
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
+* **Mainstream OS**: Windows, Linux, Unix, macOS
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 * **Above average typing speed**: 40 words per minute (wpm) or above, where a word is defined as 5 characters including spaces.
 * **Noticeable sluggishness**: A noticeable delay in the response of the app to user actions, such as a delay in showing the result of a command, or a delay in updating the UI after a command is executed.
@@ -607,127 +676,234 @@ testers are expected to do more *exploratory* testing.
 
 ### Adding a client
 
-1. Adding a client
-
-   1. Test case: `addClient n/name p/12345678 e/a@gmail.com a/#11-11 11 Eleven Road, 111111 t/11/11/11`<br>
+1. Test case: `addClient n/name p/12345678 e/a@gmail.com a/#11-11 11 Eleven Road, 111111 t/11/11/11`<br>
       Expected: Client is added to the list. Details of the client shown in the status message.
 
-   1. Other correct commands to try: Case-insensitive, alias `ac`, reordered fields, missing fields<br>
+    * Other correct commands to try: case-insensitive `addclient`, alias `ac`, reordered fields, missing fields<br>
       Expected: Similar to previous.
 
-   1. Test case: `addClient  n/name e/1@gmail.com a/#11-11 11 Eleven Road, 111111 t/11/11/11`<br>
+2. Test case: `addClient  n/name e/1@gmail.com a/#11-11 11 Eleven Road, 111111 t/11/11/11`<br>
       Expected: No client is added. Error details shown in the status message.
 
-   1. Other incorrect commands to try: `addClient`, repeat parameters<br>
-      Expected: Similar to previous.
+   * Other incorrect commands to try: `addClient`, repeat parameters<br>
+         Expected: Similar to previous.
 
 ### Editing a client
 
-1. Editing a client using their index
-
-   1. Test case: `editClient 1 n/new name p/22 e/2@gmail.com a/"22 Next Door" t/`<br>
+1. Test case: `editClient 1 n/new name p/22 e/2@gmail.com a/"22 Next Door" t/`<br>
       Expected: Client with index 1 is changed. Details of the client shown in the status message.
 
-   1. Other correct commands to try: Case-insensitive, alias `ec`, reordered fields, missing fields<br>
+   * Other correct commands to try: case-insensitive `editclient`, alias `ec`, reordered fields, missing fields<br>
+         Expected: Similar to previous.
+
+2. Test case: `editClient 1 p/123`, where client at index 1 already has phone 123<br>
+      Expected: Success message shown in the status message, but no change in the list. Details of the client shown in the status message.
+
+3. Test case: `editClient 2 p/123`, where there already is a client with phone number 123 that is not in index 1<br>
+   Expected: No change in the list. Error details shown in the status message.
+
+    * Other incorrect commands to try: `editClient`, repeat parameters<br>
       Expected: Similar to previous.
-
-   1. Test case: `editClient p/123`, where there already is a client with phone number 123<br>
-      Expected: No change in the list. Error details shown in the status message.
-
-   1. Other incorrect commands to try: `editClient`, repeat parameters<br>
-      Expected: Similar to previous.
-
+   
 ### Deleting a client
-
-1. Deleting a client using their index
-
-   1. Prerequisites: List all clients using the `list` command. Multiple clients in the list.
+Prerequisites: List all clients using the `list` command. Multiple clients in the list.
 
    1. Test case: `deleteClient 1`<br>
       Expected: Client with index 1 is deleted from the list. Details of the deleted client shown in the status message.
 
-   1. Other correct commands to try: Case-insensitive, alias `dc`, filtered list using `find`<br>
-      Expected: Similar to previous.
+      * Other correct commands to try: case-insensitive `deleteclient`, alias `dc`, filtered list using `find`<br>
+            Expected: Similar to previous.
 
    1. Test case: `deleteClient 0`<br>
       Expected: No client is deleted. Error details shown in the status message.
 
-   1. Other incorrect commands to try: `deleteClient`, `deleteClient x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+      * Other incorrect commands to try: `deleteClient`, `deleteClient x`, `...` (where x is larger than the list size)<br>
+         Expected: Similar to previous.
 
 ### Adding a pet
-
-1. Adding a pet
 
    1. Test case: `addPet n/name p/87438807 s/dog b/beagle nt/paws sensitive` where the client with the phone number already exists<br>
       Expected: Pet is added beside the client. Details of the pet shown in the status message.
 
-   1. Other correct commands to try: Case-insensitive, alias `ap`, reordered fields, missing fields, adding photo path<br>
-      Expected: Similar to previous.
+      * Other correct commands to try: case-insensitive `addpet`, alias `ap`, reordered fields, missing fields, adding photo path<br>
+                  Expected: Similar to previous.
 
    1. Test case: `addPet n/name`<br>
       Expected: No pet is added. Error details shown in the status message.
 
-   1. Other incorrect commands to try: `addPet`, repeat parameters<br>
-      Expected: Similar to previous.
+      1. Other incorrect commands to try: `addPet`, repeat parameters<br>
+         Expected: Similar to previous.
 
 ### Editing a pet
-
-1. Editing a pet using its index
-
-   1. Prerequisites: List all pets using the `list` command. Multiple pets in the list.
+Prerequisites: List all pets using the `list` command. Multiple pets in the list.
 
    1. Test case: `editPet 1 n/nyeow s/Cat b/Tabby nt/skin allergies`<br>
       Expected: Pet with index 1 is edited. Details of the pet shown in the status message.
 
-   1. Other correct commands to try: Case-insensitive, alias `ep`, filtered list using `find`<br>
-      Expected: Similar to previous.
+      * Other correct commands to try: case-insensitive `editpet`, alias `ep`, filtered list using `find`<br>
+                  Expected: Similar to previous.
 
-   1. Test case: `editPet 0 n/that`<br>
-      Expected: No edit happens. Error details shown in the status message.
+   2. Test case: `editPet 0 n/that`<br>
+            Expected: No edit happens. Error details shown in the status message.
 
-   1. Other incorrect commands to try: `editPet`, `editPet x`, (where x is larger than the list size), editing to a pet with the same name and owner as another<br>
-      Expected: Similar to previous.
+      * Other incorrect commands to try: `editPet`, `editPet x`, (where x is larger than the list size), editing to a pet with the same name and owner as another<br>
+                  Expected: Similar to previous.
 
 ### Deleting a pet
 
-1. Deleting a pet using its index
+Prerequisites: List all pets using the `list` command. Multiple pets in the list.
 
-   1. Prerequisites: List all pets using the `list` command. Multiple pets in the list.
-
-   1. Test case: `deletePet 1`<br>
+1. Test case: `deletePet 1`<br>
       Expected: Pet with index 1 is deleted from the list. Details of the deleted pet shown in the status message.
 
-   1. Other correct commands to try: Case-insensitive, alias `dp`, filtered list using `find`<br>
+   * Other correct commands to try: case-insensitive `deletepet`, alias `dp`, filtered list using `find`<br>
       Expected: Similar to previous.
 
-   1. Test case: `deletePet 0`<br>
+2. Test case: `deletePet 0`<br>
       Expected: No pet is deleted. Error details shown in the status message.
 
-   1. Other incorrect commands to try: `deletePet`, `deletePet x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+   * Other incorrect commands to try: `deletePet`, `deletePet x`, `...` (where x is larger than the list size)<br>
+            Expected: Similar to previous.
 
 ### Finding clients and pets
 
-1. Finding clients and pets that (partially) match **all** keywords.
+Finding clients and pets that (partially) match **all** keywords.
 
    1. Test case: `find alex`, given client `Alex Yeoh` exists and nobody else matches `alex`<br>
       Expected: Only client `Alex Yeoh` is displayed.
 
-   1. Other correct commands to try: Partial matches across all keywords, matching across owner and pet<br>
-      Expected: If a client or pet matches the keywords, the client and all their pets are displayed.
+   1. Test case: `find alex dog`, given `Alex Yeoh` owns a pet with species `Dog`<br>
+      Expected: `Alex Yeoh` and all their pets are displayed, because both keywords are satisfied across the client and pet fields.
+
+   1. Test case: `find xyzzy`<br>
+      Expected: No clients displayed. Status message shows `0 clients listed`.
+
+      * Other correct commands to try: Partial matches across all keywords, matching across owner and pet<br>
+            Expected: If a client or pet matches all keywords, the client and all their pets are displayed.
+
+### Listing all clients and pets
+Restoring the full list after a `find` command.
+
+Prerequisites: Run `find alex` so the list is filtered.
+
+   1. Test case: `list`<br>
+      Expected: All clients and their pets are shown. Status message confirms the full list is displayed.
+
+### Adding grooming notes
+
+Adding and clearing a grooming note on a pet.
+
+Prerequisites: At least one client exists. Use `list` to confirm.
+
+   1. Test case: `addPet n/Max p/87438807 s/Dog b/Beagle nt/Sensitive to loud noises` where the client with phone `87438807` exists<br>
+      Expected: Pet is added with the grooming note visible in the UI.
+
+   1. Test case: `editPet 1 nt/`<br>
+      Expected: Grooming note is cleared for the pet at index 1. Pet entry updates immediately.
+
+   1. Test case: `find Sensitive` after adding a pet with `nt/Sensitive to loud noises`<br>
+      Expected: The client owning that pet is shown, because grooming notes are included in search.
+
+### Adding and editing a pet photo
+Prerequisites: Place an image file (e.g., `max.png`) inside the `data/photos/` directory. Use `list` to confirm at least one client exists.
+
+   1. Test case: `addPet n/Max p/87438807 s/Dog b/Beagle pic/max.png`<br>
+      Expected: Pet is added with the photo displayed in the UI.
+
+   1. Test case: `editPet 1 pic/max.png`<br>
+      Expected: Photo is updated for the pet at index 1.
+
+   1. Test case: `addPet n/Ghost p/87438807 s/Cat pic/nonexistent.png`<br>
+      Expected: No pet added. Error message shown indicating the photo file was not found.
+
+   1. Test case: `addPet n/Ghost p/87438807 s/Cat pic/../../secret.png`<br>
+      Expected: No pet added. Error message shown (path traversal outside `data/photos/` is blocked).
+
+### Using tags
+Adding and clearing tags on a client.
+
+   1. Test case: `addClient n/Alice p/91234567 e/alice@example.com a/123 Street t/VIP`<br>
+      Expected: Client added with a `VIP` tag shown.
+
+   1. Test case: `editClient 1 t/Regular t/Discount`<br>
+      Expected: Tags on client at index 1 are replaced with `Regular` and `Discount`.
+
+   1. Test case: `editClient 1 t/`<br>
+      Expected: All tags removed from client at index 1.
+
+   1. Test case: `find VIP` after adding a client tagged `VIP`<br>
+      Expected: That client is shown, because tags are included in search.
+
+### Clearing all records
+
+Prerequisites: At least one client exists.
+
+   1. Test case: `clear`<br>
+      Expected: All clients and pets are deleted. An empty list is shown.
+
+   1. Test case: `clear` when the list is already empty<br>
+      Expected: The list remains empty. No error shown.
+
+### Help and exit
+
+   1. Test case: `help`<br>
+      Expected: A help window opens showing command usage information.
+
+   1. Test case: `exit`<br>
+      Expected: The application closes cleanly.
 
 ## **Appendix: Effort**
 
-Our project extended AB3 by including pets as an additional attribute for person.
-We changed the layout of the UI to make it more appealing.
-Extending the existing commands to include a new entity should have saved a significant amount of effort, but adapting the tests turned out to be very tedious.
-An unexpected challenge was addressing pets with indexes, since we only had an ObservablePersonList to work with.
+**Difficulty level:** Moderate to high, relative to AB3.
+
+AB3 manages a single entity (`Person`). Hairy Pawter manages two entities (`Person` and `Pet`) in a **one-to-many** relationship, requiring changes across every component of the application.
+
+**Challenges encountered and effort required:**
+
+* **Global pet indexing.** AB3 uses a simple list index for persons. Hairy Pawter needs a global sequential index across all pets (e.g., if Client 1 has pets A and B, and Client 2 has pet C, their indexes are 1, 2, 3). Since only `ObservableList<Person>` is exposed, computing these indexes required iterating over all persons and their embedded pet lists, which was not trivial to integrate cleanly with commands and the UI.
+
+* **Immutable `Person` with embedded pets.** `Person` objects are immutable. Any pet modification — add, edit, or delete — requires creating a new `Person` with the updated pet list and replacing it in the `UniquePersonList`. This pattern had to be implemented consistently across `AddPetCommand`, `EditPetCommand`, and `DeletePetCommand`.
+
+* **Adapting existing tests.** Every existing AB3 test assumed `Person` had no pets. Updating them — and writing new tests for pet-related commands — accounted for a large share of total effort, more than writing the production code itself.
+
+* **Phone-based pet linking.** The decision to link pets to clients by phone number (not index) was necessary for stability under filtering, but it required `AddPetCommand` to perform a lookup that is structurally different from all other commands, and this difference had to be clearly communicated to contributors.
+
+* **Photo feature.** Implementing `PhotoPath` validation — covering file extensions, path traversal prevention, classpath resources, and graceful fallback to a placeholder icon — was more involved than a typical optional field.
+
+* **Storage for nested entities.** Adding `JsonAdaptedPet` nested within `JsonAdaptedPerson` while maintaining JSON compatibility required careful handling of optional fields (species, breed, notes, photo path).
+
+**Appendix: Effort:**
+
+* **UI restructuring.** The UI restructuring (showing `PetPersonCard` with a `PersonCard` and one or more `PetCard` objects side by side) was an additional non-trivial effort.
+
+**Achievements:**
+
+* Fully functional two-entity CRUD system with client-pet linking.
+* Unified `find` command searching across all client and pet fields.
+* Pet photo support with runtime validation and graceful fallback.
+* Grooming notes integrated into search.
+* Custom UI layout tailored to a pet grooming workflow.
 
 ## **Appendix: Planned enhancements**
 
 Team size: 5
 
-1. **Make find function more specific:** The current find function returns pets that are not related to the search.
-The find function can be made more specific by saving an additional predicate in the model that takes in a pair of pet and person.
-The methods `getFilteredPersonList()`, `getPerson()` and `getPet()` will use the additional predicate to do another round of filtering.
+1. **Make find function more specific:** The current `find` command returns a client and **all** their pets if any field matches, even if only one pet was the actual match. The fix is to introduce a pair-predicate in the `Model` that filters at the `(Person, Pet)` level. `getFilteredPersonList()` would expose only the clients that matched, and the UI would render only the matched pets for each such client. This requires changes to `ModelManager`, the filtered list logic, and `PetPersonListPanel`.
+
+2. **Allow `pic/` to clear a photo:** Currently there is no way to remove a photo once it has been set on a pet — `editPet` requires `pic/` to point to a valid file. The fix is to treat `pic/` (with no argument) as a sentinel that clears the photo, consistent with how `t/` clears tags in `editClient`. This requires a change in `EditPetCommandParser` and `EditPetCommand` to distinguish between an absent `pic/` prefix and a present-but-empty one.
+
+3. **Improve duplicate-pet error message:** When `addPet` or `editPet` is rejected because a pet with the same name already exists for that owner, the error message says only "This pet already exists." The fix is to include the duplicate's name and owner in the message, e.g. `A pet named 'Max' already exists for client 87438807.`, so users can quickly identify the conflict.
+
+4. **Enforce minimum phone number length:** Currently any non-empty string of digits is accepted as a phone number by `Phone`, including single-digit values. The fix is to enforce a minimum of 3 digits in `Phone#isValidPhone()`. Sample input that should be rejected: `p/1`, `p/12`.
+
+5. **Show pet count in status bar:** The current status bar shows only the data file path. Adding a live count such as `5 clients · 12 pets` would give users at-a-glance information about the size of their database without needing to scroll. This requires a listener on the `ObservableList<Person>` in `StatusBarFooter` and a utility to sum pet counts across all persons.
+
+6. **Improve phone-conflict error message in `editClient`:** When a client's phone is changed to one already used by another client, the error says "This person already exists in the address book." The fix is to make the message more specific: `Phone number 87438807 is already in use by another client.`
+
+7. **Prevent accidental `clear` with a confirmation step:** The `clear` command permanently deletes all clients and pets with no warning. The fix is to require users to confirm by typing `clear --confirm`, or to display a confirmation prompt in the result display that must be acknowledged before the deletion proceeds.
+
+8. **Support prefix-based `find` for specific fields:** Currently `find dog` matches "dog" anywhere — names, notes, species, etc. — which can return unexpected results. The fix is to allow optional prefixes such as `find s/Dog b/Beagle` to restrict the search to specific fields, while keeping bare keyword search as a fallback for the general case.
+
+9. **Make address and email optional in `addClient`:** Both `a/` and `e/` are currently required parameters, which forces users to enter placeholder values when a client's email or address is unknown. The fix is to make these fields optional, defaulting to empty strings when omitted, matching how `Species`, `Breed`, `Note`, and `PhotoPath` are optional in `addPet`.
+
+10. **Improve `find` result message to include pet count:** The current result message after `find` says `N clients listed`, but gives no information about how many pets were matched. The fix is to update the message to `N clients listed (M pets)` by counting pets in the filtered list, providing more feedback without requiring the user to count manually.

@@ -32,9 +32,9 @@ Hairy Pawter is designed for pet groomers who:
 
 ## Example Commands
 
-- `add n/Bella Tan p/91234567 e/bella@email.com a/123 Clementi Ave 3`
-- `edit 1 p/98765432`
-- `delete 2`
+- `addClient n/Bella Tan p/91234567 e/bella@email.com a/123 Clementi Ave 3`
+- `editClient 1 p/98765432`
+- `deletePet 2`
 - `find Bella`
 - `list`
 

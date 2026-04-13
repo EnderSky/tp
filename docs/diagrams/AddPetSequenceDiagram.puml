@@ -1,0 +1,79 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":AddPetCommandParser" as AddPetCommandParser LOGIC_COLOR
+participant "a:AddPetCommand" as AddPetCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("addPet n/Max p/87438807 s/Dog")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("addPet n/Max p/87438807 s/Dog")
+activate AddressBookParser
+
+create AddPetCommandParser
+AddressBookParser -> AddPetCommandParser
+activate AddPetCommandParser
+
+AddPetCommandParser --> AddressBookParser
+deactivate AddPetCommandParser
+
+AddressBookParser -> AddPetCommandParser : parse("n/Max p/87438807 s/Dog")
+activate AddPetCommandParser
+
+create AddPetCommand
+AddPetCommandParser -> AddPetCommand
+activate AddPetCommand
+
+AddPetCommand --> AddPetCommandParser :
+deactivate AddPetCommand
+
+AddPetCommandParser --> AddressBookParser : a
+deactivate AddPetCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+AddPetCommandParser -[hidden]-> AddressBookParser
+destroy AddPetCommandParser
+
+AddressBookParser --> LogicManager : a
+deactivate AddressBookParser
+
+LogicManager -> AddPetCommand : execute(m)
+activate AddPetCommand
+
+AddPetCommand -> Model : hasPhone(ownerPhone)
+activate Model
+Model --> AddPetCommand : true
+deactivate Model
+
+AddPetCommand -> Model : hasPet(ownerPhone, pet)
+activate Model
+Model --> AddPetCommand : false
+deactivate Model
+
+AddPetCommand -> Model : addPet(pet, ownerPhone)
+activate Model
+Model --> AddPetCommand
+deactivate Model
+
+create CommandResult
+AddPetCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> AddPetCommand
+deactivate CommandResult
+
+AddPetCommand --> LogicManager : r
+deactivate AddPetCommand
+
+[<-- LogicManager
+deactivate LogicManager
+@enduml

@@ -73,7 +73,6 @@ public class MessagesTest {
     public void format_petWithNullFields_skipsNullFields() {
         Pet pet = new Pet(new Name("Cooper"), null, null, null, null);
         String formatted = Messages.format(pet);
-        
         assertEquals("Cooper", formatted);
     }
 
@@ -82,7 +81,6 @@ public class MessagesTest {
         Pet pet = new Pet(new Name("Cooper"), new Species(""), new Breed(""),
                           new Note(""), new PhotoPath(PLACEHOLDER_IMAGE_PATH));
         String formatted = Messages.format(pet);
-        
         assertEquals("Cooper", formatted);
     }
 

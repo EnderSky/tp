@@ -55,16 +55,23 @@ public class Messages {
      *
      * @param pet The pet to format.
      *
-     * @return The formatted string representation of the pet.
+     * @return The formatted string representation of the pet. Only include non-empty fields.
      */
     public static String format(Pet pet) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(pet.getName()).append("; Species: ").append(pet.getSpecies())
-                .append("; Breed: ").append(pet.getBreed())
-                .append("; Notes: ").append(pet.getNote())
-                .append("; Picture: ")
-                .append(pet.getPhotoPath().toString().equals(PLACEHOLDER_IMAGE_PATH) ? "No picture provided"
-                        : pet.getPhotoPath());
+        builder.append(pet.getName());
+        if (pet.getSpecies() != null && !pet.getSpecies().toString().isEmpty()) {
+            builder.append("; Species: ").append(pet.getSpecies());
+        }
+        if (pet.getBreed() != null && !pet.getBreed().toString().isEmpty()) {
+            builder.append("; Breed: ").append(pet.getBreed());
+        }
+        if (pet.getNote() != null && !pet.getBreed().toString().isEmpty()) {
+            builder.append("; Notes: ").append(pet.getNote());
+        }
+        if (pet.getPhotoPath() != null && !pet.getPhotoPath().toString().equals(PLACEHOLDER_IMAGE_PATH)) {
+            builder.append("; Picture: ").append(pet.getPhotoPath());
+        }
         return builder.toString();
     }
 

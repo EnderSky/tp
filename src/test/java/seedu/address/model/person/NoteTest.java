@@ -15,7 +15,7 @@ public class NoteTest {
 
     @Test
     public void constructor_invalidNote_throwsIllegalArgumentException() {
-        String invalidNote = "";
+        String invalidNote = "  ";
         assertThrows(IllegalArgumentException.class, () -> new Note(invalidNote));
     }
 
@@ -25,11 +25,11 @@ public class NoteTest {
         assertThrows(NullPointerException.class, () -> Note.isValidNote(null));
 
         // invalid name
-        assertFalse(Note.isValidNote("")); // empty string
         assertFalse(Note.isValidNote("  ")); // spaces only
         assertFalse(Note.isValidNote(" ^")); // starts with space
 
         // valid name
+        assertTrue(Note.isValidNote("")); // empty string
         assertTrue(Note.isValidNote("This is a note."));
         assertTrue(Note.isValidNote("This is a very long note that should still be considered valid.")); // long name
     }

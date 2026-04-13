@@ -11,7 +11,7 @@ public class Note {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Note should not be blank";
-    public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String VALIDATION_REGEX = "^(\\S.*)?$";
 
     public final String fullNote;
 

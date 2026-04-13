@@ -3,9 +3,6 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.BREED_DESC_LABRADOR;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PET_BREED_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PET_NOTE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PET_SPECIES_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_SNOOPY;
@@ -28,12 +25,9 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddPetCommand;
-import seedu.address.model.person.Breed;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Note;
 import seedu.address.model.person.Pet;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Species;
 import seedu.address.testutil.PetBuilder;
 import seedu.address.testutil.TypicalPets;
 
@@ -80,9 +74,9 @@ public class AddPetCommandParserTest {
 
     @Test void parse_optionalFieldsMissing_success() {
         Pet expectedPet = new PetBuilder(TypicalPets.SNOOPY)
-                        .withSpecies("Unknown")
-                        .withBreed("Unknown")
-                        .withNote("None").build();
+                        .withSpecies("")
+                        .withBreed("")
+                        .withNote("").build();
         Phone expectedPhone = new Phone(VALID_PHONE_AMY);
 
         // missing species, breed and note
@@ -112,18 +106,6 @@ public class AddPetCommandParserTest {
         // invalid phone
         assertParseFailure(parser, NAME_DESC_BOB + INVALID_PHONE_DESC,
                 Phone.MESSAGE_CONSTRAINTS);
-
-        // invalid species
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_AMY + INVALID_PET_SPECIES_DESC,
-                String.format(Species.MESSAGE_CONSTRAINTS));
-
-        // invalid breed
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_AMY + INVALID_PET_BREED_DESC,
-                String.format(Breed.MESSAGE_CONSTRAINTS));
-
-        // invalid note
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_AMY + INVALID_PET_NOTE_DESC,
-                String.format(Note.MESSAGE_CONSTRAINTS));
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, INVALID_NAME_DESC + INVALID_PHONE_DESC,

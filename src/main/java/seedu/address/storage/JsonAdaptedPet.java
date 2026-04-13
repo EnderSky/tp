@@ -70,29 +70,23 @@ public class JsonAdaptedPet {
         }
         final Name modelPetName = new Name(petName);
 
-        if (species == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Species"));
-        }
-        if (!Species.isValidSpecies(species)) {
+        String resolvedSpecies = species != null ? species : "";
+        if (!Species.isValidSpecies(resolvedSpecies)) {
             throw new IllegalValueException(Species.MESSAGE_CONSTRAINTS);
         }
-        final Species modelSpecies = new Species(species);
+        final Species modelSpecies = new Species(resolvedSpecies);
 
-        if (breed == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Breed"));
-        }
-        if (!Breed.isValidBreed(breed)) {
+        String resolvedBreed = breed != null ? breed : "";
+        if (!Breed.isValidBreed(resolvedBreed)) {
             throw new IllegalValueException(Breed.MESSAGE_CONSTRAINTS);
         }
-        final Breed modelBreed = new Breed(breed);
+        final Breed modelBreed = new Breed(resolvedBreed);
 
-        if (note == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Note"));
-        }
-        if (!Note.isValidNote(note)) {
+        String resolvedNote = note != null ? note : "";
+        if (!Note.isValidNote(resolvedNote)) {
             throw new IllegalValueException(Note.MESSAGE_CONSTRAINTS);
         }
-        final Note modelNote = new Note(note);
+        final Note modelNote = new Note(resolvedNote);
 
         String editedPath = photoPath;
         if (!PhotoPath.isValidPhotoPath(photoPath)) {

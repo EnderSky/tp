@@ -47,7 +47,7 @@ public class AddPetCommandIntegrationTest {
         Pet validPet = new PetBuilder().build();
 
         assertCommandFailure(new AddPetCommand(validPet, validPerson.getPhone()), model,
-                AddPetCommand.MESSAGE_NONEXISTENT_PERSON);
+                AddPetCommand.MESSAGE_NONEXISTENT_PERSON + System.lineSeparator() + AddPetCommand.MESSAGE_USAGE);
     }
 
 }

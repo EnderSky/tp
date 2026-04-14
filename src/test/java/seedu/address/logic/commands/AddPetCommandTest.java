@@ -73,7 +73,8 @@ public class AddPetCommandTest {
         AddPetCommand addPetCommand = new AddPetCommand(validPet, validPhone);
 
         assertThrows(CommandException.class,
-                AddPetCommand.MESSAGE_DUPLICATE_PET, () -> addPetCommand.execute(modelStub));
+                AddPetCommand.MESSAGE_DUPLICATE_PET + System.lineSeparator()
+                        + AddPetCommand.MESSAGE_USAGE, () -> addPetCommand.execute(modelStub));
     }
 
     @Test

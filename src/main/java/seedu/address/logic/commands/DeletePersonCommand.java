@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_EMPTY_LIST;
+import static seedu.address.logic.Messages.MESSAGE_NO_CLIENTS;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class DeletePersonCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (lastShownList.isEmpty()) {
-            throw new CommandException(MESSAGE_EMPTY_LIST + " " + MESSAGE_ADD_CLIENT_FIRST
+            throw new CommandException(MESSAGE_NO_CLIENTS + " " + MESSAGE_ADD_CLIENT_FIRST
                     + System.lineSeparator() + MESSAGE_USAGE);
         }
         int noOfClientsShown = lastShownList.size();

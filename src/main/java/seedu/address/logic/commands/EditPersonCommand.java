@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_EMPTY_LIST;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_NO_CLIENTS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -83,7 +83,7 @@ public class EditPersonCommand extends Command {
         } catch (IndexOutOfBoundsException e) {
             int noOfClientsShown = model.getFilteredPersonList().size();
             if (noOfClientsShown == 0) {
-                throw new CommandException(MESSAGE_EMPTY_LIST + " " + MESSAGE_ADD_CLIENT_FIRST
+                throw new CommandException(MESSAGE_NO_CLIENTS + " " + MESSAGE_ADD_CLIENT_FIRST
                         + System.lineSeparator() + MESSAGE_USAGE);
             }
             String indexMessage = String.format(MESSAGE_INDEX_TOO_LARGE, noOfClientsShown);

@@ -102,6 +102,11 @@ public interface Model {
      */
     public Pair<Person, Pet> getPet(Index index) throws IndexOutOfBoundsException;
 
+    /**
+     * Returns the total number of pets currently shown.
+     */
+    public int getTotalPets();
+
     void addPet(Pet pet, Phone phone);
 
     void removePet(Pet pet, Phone phone);

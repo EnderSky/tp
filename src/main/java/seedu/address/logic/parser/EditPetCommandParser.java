@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.EditPersonCommand;
 import seedu.address.logic.commands.EditPetCommand;
 import seedu.address.logic.commands.EditPetCommand.EditPetDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -33,7 +34,7 @@ public class EditPetCommandParser implements Parser<EditPetCommand> {
 
         if (argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EditPetCommand.MESSAGE_NO_INDEX_PASSED));
+                    EditPetCommand.MESSAGE_NO_INDEX_PASSED + System.lineSeparator() + EditPetCommand.MESSAGE_USAGE));
         }
 
         if (ParserUtil.multipleWords(argMultimap.getPreamble())) {
@@ -69,11 +70,6 @@ public class EditPetCommandParser implements Parser<EditPetCommand> {
         }
         if (argMultimap.getValue(PREFIX_PHOTO).isPresent()) {
             editPetDescriptor.setPhotoPath(ParserUtil.parsePhotoPath(argMultimap.getValue(PREFIX_PHOTO).get()));
-        }
-
-        if (!editPetDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EditPetCommand.MESSAGE_NOT_EDITED + System.lineSeparator() + EditPetCommand.MESSAGE_USAGE));
         }
 
         return new EditPetCommand(index, editPetDescriptor);

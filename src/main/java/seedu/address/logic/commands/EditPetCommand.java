@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_NO_PETS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
@@ -15,6 +17,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Breed;
 import seedu.address.model.person.Name;
@@ -50,8 +53,10 @@ public class EditPetCommand extends Command {
 
     public static final String MESSAGE_EDIT_PET_SUCCESS = "Edited Pet: %1$s";
     public static final String MESSAGE_NO_INDEX_PASSED = "No POSITION was detected.";
-    public static final String MESSAGE_INDEX_TOO_LARGE = "The POSITION provided is too large.";
+    public static final String MESSAGE_INDEX_TOO_LARGE = "The POSITION provided is too large. "
+        + "Choose a number between 1 and %s.";
     public static final String MESSAGE_MANY_WORDS = "There are unrecognised words behind the POSITION.";
+    public static final String MESSAGE_ADD_PET_FIRST = "Add a pet to the list first.";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PET = "A pet with this name and owner already exists.";
 
@@ -79,7 +84,18 @@ public class EditPetCommand extends Command {
             owner = model.getPet(index).getKey();
             petToEdit = model.getPet(index).getValue();
         } catch (IndexOutOfBoundsException e) {
-            throw new CommandException(MESSAGE_INDEX_TOO_LARGE);
+            int noOfPetsShown = model.getTotalPets();
+            if (noOfPetsShown == 0) {
+                throw new CommandException(MESSAGE_NO_PETS + " " + MESSAGE_ADD_PET_FIRST
+                        + System.lineSeparator() + MESSAGE_USAGE);
+            }
+            String indexMessage = String.format(MESSAGE_INDEX_TOO_LARGE, noOfPetsShown);
+            throw new CommandException(indexMessage + System.lineSeparator() + MESSAGE_USAGE);
+        }
+
+        if (!editPetDescriptor.isAnyFieldEdited()) {
+            throw new CommandException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditPersonCommand.MESSAGE_NOT_EDITED + System.lineSeparator() + EditPersonCommand.MESSAGE_USAGE));
         }
 
         Pet editedPet = createEditedPet(petToEdit, editPetDescriptor);

@@ -136,6 +136,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public int getTotalPets() {
+        return filteredPersons.stream().map(p -> p.getPets().size()).reduce(0, Integer::sum);
+    }
+
+    @Override
     public void addPerson(Person person) {
         addressBook.addPerson(person);
     }

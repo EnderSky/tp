@@ -33,7 +33,7 @@ public class EditPetCommandParser implements Parser<EditPetCommand> {
 
         if (argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EditPetCommand.MESSAGE_NO_INDEX_PASSED));
+                    EditPetCommand.MESSAGE_NO_INDEX_PASSED + System.lineSeparator() + EditPetCommand.MESSAGE_USAGE));
         }
 
         if (ParserUtil.multipleWords(argMultimap.getPreamble())) {
@@ -69,11 +69,6 @@ public class EditPetCommandParser implements Parser<EditPetCommand> {
         }
         if (argMultimap.getValue(PREFIX_PHOTO).isPresent()) {
             editPetDescriptor.setPhotoPath(ParserUtil.parsePhotoPath(argMultimap.getValue(PREFIX_PHOTO).get()));
-        }
-
-        if (!editPetDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EditPetCommand.MESSAGE_NOT_EDITED + System.lineSeparator() + EditPetCommand.MESSAGE_USAGE));
         }
 
         return new EditPetCommand(index, editPetDescriptor);

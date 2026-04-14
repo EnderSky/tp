@@ -55,7 +55,8 @@ public class AddPersonCommandTest {
         ModelStub modelStub = new ModelStubWithPerson(validPerson);
 
         assertThrows(CommandException.class,
-                AddPersonCommand.MESSAGE_DUPLICATE_PERSON, () -> addPersonCommand.execute(modelStub));
+                AddPersonCommand.MESSAGE_DUPLICATE_PERSON + System.lineSeparator()
+                + AddPersonCommand.MESSAGE_USAGE, () -> addPersonCommand.execute(modelStub));
     }
 
     @Test
@@ -164,6 +165,11 @@ public class AddPersonCommandTest {
 
         @Override
         public Pair<Person, Pet> getPet(Index index) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public int getTotalPets() {
             throw new AssertionError("This method should not be called.");
         }
 

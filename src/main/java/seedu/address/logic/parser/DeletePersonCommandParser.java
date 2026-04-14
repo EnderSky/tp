@@ -17,13 +17,21 @@ public class DeletePersonCommandParser implements Parser<DeletePersonCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public DeletePersonCommand parse(String args) throws ParseException {
+        String trimmed = args.trim();
+        if (trimmed.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePersonCommand
+                    .MESSAGE_NO_INDEX_PASSED + System.lineSeparator() + DeletePersonCommand.MESSAGE_USAGE));
+        } else if (trimmed.contains(" ")) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePersonCommand
+                    .MESSAGE_MANY_WORDS + System.lineSeparator() + DeletePersonCommand.MESSAGE_USAGE));
+        }
         try {
             Index index = ParserUtil.parseIndex(args);
             return new DeletePersonCommand(index);
         } catch (ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                            DeletePersonCommand.MESSAGE_INDEX_TOO_SMALL), pe);
+                            pe.getMessage() + System.lineSeparator() + DeletePersonCommand.MESSAGE_USAGE));
         }
     }
 

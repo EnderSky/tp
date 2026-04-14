@@ -24,14 +24,14 @@ public class AddPetCommand extends Command {
     public static final String COMMAND_WORD = "addpet";
     public static final String ALIAS = "ap";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a pet to the address book. "
-            + "Parameters: "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a pet to the address book.\n"
+            + "User inputs: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_PHONE + "OWNER's PHONE "
+            + PREFIX_PHONE + "PHONE "
             + "[" + PREFIX_SPECIES + "SPECIES] "
             + "[" + PREFIX_BREED + "BREED] "
             + "[" + PREFIX_NOTE + "NOTES] "
-            + "[" + PREFIX_PHOTO + "PICTURE] "
+            + "[" + PREFIX_PHOTO + "PICTURE]\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Doggy "
             + PREFIX_PHONE + "98765432 "
@@ -61,11 +61,11 @@ public class AddPetCommand extends Command {
         requireNonNull(model);
 
         if (!model.hasPhone(ownerPhone)) {
-            throw new CommandException(MESSAGE_NONEXISTENT_PERSON);
+            throw new CommandException(MESSAGE_NONEXISTENT_PERSON + System.lineSeparator() + MESSAGE_USAGE);
         }
 
         if (model.hasPet(ownerPhone, toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PET);
+            throw new CommandException(MESSAGE_DUPLICATE_PET + System.lineSeparator() + MESSAGE_USAGE);
         }
 
         model.addPet(toAdd, ownerPhone);

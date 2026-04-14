@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
@@ -81,19 +82,6 @@ public class EditPersonCommandTest {
     }
 
     @Test
-    public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditPersonCommand editPersonCommand = new EditPersonCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
-        Person editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-
-        String expectedMessage = String.format(EditPersonCommand.MESSAGE_EDIT_PERSON_SUCCESS,
-                Messages.format(editedPerson));
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-
-        assertCommandSuccess(editPersonCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_filteredList_success() {
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
 
@@ -108,6 +96,17 @@ public class EditPersonCommandTest {
         expectedModel.setPerson(expectedModel.getFilteredPersonList().get(1), editedPerson);
         showPersonAtIndex(expectedModel, INDEX_SECOND_PERSON);
         assertCommandSuccess(editPersonCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_noFieldSpecifiedUnfilteredList_failure() {
+        EditPersonCommand editPersonCommand = new EditPersonCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
+        Person editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditPersonCommand.MESSAGE_NOT_EDITED
+                + System.lineSeparator() + EditPersonCommand.MESSAGE_USAGE);
+
+        assertCommandFailure(editPersonCommand, model, expectedMessage);
     }
 
     @Test
@@ -137,7 +136,10 @@ public class EditPersonCommandTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditPersonCommand editPersonCommand = new EditPersonCommand(outOfBoundIndex, descriptor);
 
-        assertCommandFailure(editPersonCommand, model, EditPersonCommand.MESSAGE_INDEX_TOO_LARGE);
+        String expectedMessage = String.format(EditPersonCommand.MESSAGE_INDEX_TOO_LARGE,
+                model.getFilteredPersonList().size()) + System.lineSeparator() + EditPersonCommand.MESSAGE_USAGE;
+
+        assertCommandFailure(editPersonCommand, model, expectedMessage);
     }
 
     /**
@@ -154,7 +156,10 @@ public class EditPersonCommandTest {
         EditPersonCommand editPersonCommand = new EditPersonCommand(outOfBoundIndex,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
-        assertCommandFailure(editPersonCommand, model, EditPersonCommand.MESSAGE_INDEX_TOO_LARGE);
+        String expectedMessage = String.format(EditPersonCommand.MESSAGE_INDEX_TOO_LARGE,
+                model.getFilteredPersonList().size()) + System.lineSeparator() + EditPersonCommand.MESSAGE_USAGE;
+
+        assertCommandFailure(editPersonCommand, model, expectedMessage);
     }
 
     @Test

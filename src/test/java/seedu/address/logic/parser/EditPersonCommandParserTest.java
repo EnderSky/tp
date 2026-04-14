@@ -61,13 +61,12 @@ public class EditPersonCommandParserTest {
     @Test
     public void parse_missingParts_failure() {
         // no index and no field specified
-        assertParseFailure(parser, "", MESSAGE_NO_INDEX_PASSED);
+        assertParseFailure(parser, "", MESSAGE_NO_INDEX_PASSED + System.lineSeparator()
+                + EditPersonCommand.MESSAGE_USAGE);
 
         // no index specified
-        assertParseFailure(parser, NAME_DESC_AMY, MESSAGE_NO_INDEX_PASSED);
-
-        // no field specified
-        assertParseFailure(parser, "1", MESSAGE_NOT_EDITED);
+        assertParseFailure(parser, NAME_DESC_AMY, MESSAGE_NO_INDEX_PASSED + System.lineSeparator()
+                + EditPersonCommand.MESSAGE_USAGE);
     }
 
     @Test

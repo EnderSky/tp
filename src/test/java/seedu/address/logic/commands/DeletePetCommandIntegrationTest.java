@@ -45,8 +45,11 @@ public class DeletePetCommandIntegrationTest {
     @Test
     public void execute_outOfBoundIndex_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(100000);
-        assertCommandFailure(new DeletePetCommand(outOfBoundIndex), model,
-                DeletePetCommand.MESSAGE_INDEX_TOO_LARGE);
+
+        String expectedMessage = String.format(DeletePetCommand.MESSAGE_INDEX_TOO_LARGE,
+                model.getTotalPets()) + System.lineSeparator() + DeletePetCommand.MESSAGE_USAGE;
+
+        assertCommandFailure(new DeletePetCommand(outOfBoundIndex), model, expectedMessage);
     }
 
 }

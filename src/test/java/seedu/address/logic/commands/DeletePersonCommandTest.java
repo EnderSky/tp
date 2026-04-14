@@ -46,7 +46,10 @@ public class DeletePersonCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         DeletePersonCommand deletePersonCommand = new DeletePersonCommand(outOfBoundIndex);
 
-        assertCommandFailure(deletePersonCommand, model, DeletePersonCommand.MESSAGE_INDEX_TOO_LARGE);
+        String expectedMessage = String.format(DeletePersonCommand.MESSAGE_INDEX_TOO_LARGE,
+                model.getFilteredPersonList().size()) + System.lineSeparator() + DeletePersonCommand.MESSAGE_USAGE;
+
+        assertCommandFailure(deletePersonCommand, model, expectedMessage);
     }
 
     @Test
@@ -76,7 +79,10 @@ public class DeletePersonCommandTest {
 
         DeletePersonCommand deletePersonCommand = new DeletePersonCommand(outOfBoundIndex);
 
-        assertCommandFailure(deletePersonCommand, model, DeletePersonCommand.MESSAGE_INDEX_TOO_LARGE);
+        String expectedMessage = String.format(DeletePersonCommand.MESSAGE_INDEX_TOO_LARGE,
+                model.getFilteredPersonList().size()) + System.lineSeparator() + DeletePersonCommand.MESSAGE_USAGE;
+
+        assertCommandFailure(deletePersonCommand, model, expectedMessage);
     }
 
     @Test

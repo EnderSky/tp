@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_NO_PETS;
 
 import java.util.List;
 
@@ -26,8 +27,12 @@ public class DeletePetCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "Deleted Pet: %1$s";
+    public static final String MESSAGE_NO_INDEX_PASSED = "No POSITION was detected.";
+    public static final String MESSAGE_MANY_WORDS = "There are unrecognised words behind the POSITION.";
+    public static final String MESSAGE_ADD_PET_FIRST = "Add a pet to the list first.";
     public static final String MESSAGE_INDEX_TOO_SMALL = "The POSITION provided should be 1 or more";
-    public static final String MESSAGE_INDEX_TOO_LARGE = "The POSITION provided is too large";
+    public static final String MESSAGE_INDEX_TOO_LARGE = "The POSITION provided is too large. "
+            + "Choose a number between 1 and %s.";
 
     private final Index index;
 
@@ -44,6 +49,10 @@ public class DeletePetCommand extends Command {
         requireNonNull(model);
         List<Person> personList = model.getFilteredPersonList();
 
+        if (personList.isEmpty()) {
+            throw new CommandException(MESSAGE_NO_PETS + " " + MESSAGE_ADD_PET_FIRST
+                    + System.lineSeparator() + MESSAGE_USAGE);
+        }
         Person owner = null;
         Pet petToDelete = null;
         int petCounter = 0;
@@ -56,8 +65,10 @@ public class DeletePetCommand extends Command {
                 }
             }
         }
+        int noOfPetsShown = model.getTotalPets();
         if (petToDelete == null) {
-            throw new CommandException(MESSAGE_INDEX_TOO_LARGE);
+            String indexMessage = String.format(MESSAGE_INDEX_TOO_LARGE, noOfPetsShown);
+            throw new CommandException(indexMessage + System.lineSeparator() + MESSAGE_USAGE);
         }
 
         model.setPerson(owner, owner.removePet(petToDelete));

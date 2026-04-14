@@ -21,7 +21,7 @@ public class AddPersonCommand extends Command {
     public static final String COMMAND_WORD = "addclient";
     public static final String ALIAS = "ac";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a client to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a client to the address book.\n"
             + "User inputs: "
             + PREFIX_PHONE + "PHONE "
             + "[" + PREFIX_NAME + "NAME] "
@@ -54,7 +54,7 @@ public class AddPersonCommand extends Command {
         requireNonNull(model);
 
         if (model.hasPerson(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON + System.lineSeparator() + MESSAGE_USAGE);
         }
 
         model.addPersonToFront(toAdd);

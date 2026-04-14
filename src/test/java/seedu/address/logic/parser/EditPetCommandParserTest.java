@@ -32,7 +32,7 @@ import seedu.address.testutil.EditPetDescriptorBuilder;
 public class EditPetCommandParserTest {
 
     private static final String MESSAGE_NO_INDEX_PASSED = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-            EditPetCommand.MESSAGE_NO_INDEX_PASSED);
+            EditPetCommand.MESSAGE_NO_INDEX_PASSED + System.lineSeparator() + EditPetCommand.MESSAGE_USAGE);
     private static final String MESSAGE_NOT_EDITED = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
             EditPetCommand.MESSAGE_NOT_EDITED + System.lineSeparator() + EditPetCommand.MESSAGE_USAGE);
     private static final String MESSAGE_INVALID_INDEX = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
@@ -45,9 +45,6 @@ public class EditPetCommandParserTest {
     public void parse_missingParts_failure() {
         // no index specified
         assertParseFailure(parser, VALID_PET_NAME_DESC, MESSAGE_NO_INDEX_PASSED);
-
-        // no field specified
-        assertParseFailure(parser, "1", MESSAGE_NOT_EDITED);
 
         // no index and no field specified
         assertParseFailure(parser, "", MESSAGE_NO_INDEX_PASSED);

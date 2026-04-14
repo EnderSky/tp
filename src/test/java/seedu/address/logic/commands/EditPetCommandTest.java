@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
@@ -114,24 +115,6 @@ public class EditPetCommandTest {
     }
 
     @Test
-    public void execute_noFieldSpecifiedUnfilteredList_success() {
-        // pet not changed if descriptor empty
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        Pet original = new PetBuilder().build();
-        model.addPet(original, new Phone(FIRST_PERSON_PHONE));
-
-        Pet editedPet = new PetBuilder().build();
-        EditPetCommand editPetCommand = new EditPetCommand(INDEX_FIRST_PERSON, new EditPetDescriptor());
-        String expectedMessage = String.format(EditPetCommand.MESSAGE_EDIT_PET_SUCCESS,
-                Messages.format(editedPet));
-
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel.addPet(editedPet, new Phone(FIRST_PERSON_PHONE));
-
-        assertCommandSuccess(editPetCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_filteredList_success() {
         // filter second pet to position 1 and edit position 1
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -156,6 +139,22 @@ public class EditPetCommandTest {
     }
 
     @Test
+    public void execute_noFieldSpecifiedUnfilteredList_failure() {
+        // pet not changed if descriptor empty
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Pet original = new PetBuilder().build();
+        model.addPet(original, new Phone(FIRST_PERSON_PHONE));
+
+        Pet editedPet = new PetBuilder().build();
+        EditPetCommand editPetCommand = new EditPetCommand(INDEX_FIRST_PERSON, new EditPetDescriptor());
+
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditPetCommand.MESSAGE_NOT_EDITED
+                + System.lineSeparator() + EditPetCommand.MESSAGE_USAGE);
+
+        assertCommandFailure(editPetCommand, model, expectedMessage);
+    }
+
+    @Test
     public void execute_duplicatePetUnfilteredList_failure() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Pet toEdit = new PetBuilder().build();
@@ -176,7 +175,10 @@ public class EditPetCommandTest {
         EditPetDescriptor descriptor = new EditPetDescriptorBuilder().withName(DIFFERENT_PET_NAME).build();
         EditPetCommand editPetCommand = new EditPetCommand(outOfBoundIndex, descriptor);
 
-        assertCommandFailure(editPetCommand, model, EditPetCommand.MESSAGE_INDEX_TOO_LARGE);
+        String expectedMessage = String.format(EditPetCommand.MESSAGE_INDEX_TOO_LARGE,
+                model.getTotalPets()) + System.lineSeparator() + EditPetCommand.MESSAGE_USAGE;
+
+        assertCommandFailure(editPetCommand, model, expectedMessage);
     }
 
     @Test

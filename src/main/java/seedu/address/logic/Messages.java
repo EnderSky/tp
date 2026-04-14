@@ -18,7 +18,9 @@ public class Messages {
     public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
     public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The client index provided is invalid";
-    public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d clients listed!";
+    public static final String MESSAGE_NO_CLIENTS = "There are no clients shown!";
+    public static final String MESSAGE_NO_PETS = "There are no pets shown!";
+    public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d client(s) listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
         "Multiple values specified for the following single-valued field(s): ";
 

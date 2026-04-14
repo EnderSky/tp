@@ -27,6 +27,7 @@ public class DeletePersonCommand extends Command {
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Client: %1$s";
     public static final String MESSAGE_NO_INDEX_PASSED = "No POSITION was detected.";
+    public static final String MESSAGE_MANY_WORDS = "There are unrecognised words behind the POSITION.";
     public static final String MESSAGE_ADD_CLIENT_FIRST = "Add a client to the list first.";
     public static final String MESSAGE_INDEX_TOO_SMALL = "The POSITION provided should be 1 or more";
     public static final String MESSAGE_INDEX_TOO_LARGE = "The POSITION provided is too large. "

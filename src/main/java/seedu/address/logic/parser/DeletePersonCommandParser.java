@@ -4,6 +4,8 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeletePersonCommand;
+import seedu.address.logic.commands.DeletePetCommand;
+import seedu.address.logic.commands.EditPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -21,6 +23,9 @@ public class DeletePersonCommandParser implements Parser<DeletePersonCommand> {
         if (trimmed.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePersonCommand
                     .MESSAGE_NO_INDEX_PASSED + System.lineSeparator() + DeletePersonCommand.MESSAGE_USAGE));
+        } else if (trimmed.contains(" ")) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePersonCommand
+                    .MESSAGE_MANY_WORDS + System.lineSeparator() + DeletePersonCommand.MESSAGE_USAGE));
         }
         try {
             Index index = ParserUtil.parseIndex(args);

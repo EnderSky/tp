@@ -6,42 +6,39 @@ skinparam classBackgroundColor LOGIC_COLOR
 
 package Logic as LogicPackage {
 
-package "Parser Classes" as ParserClasses{
+' Group all CommandParser subclasses
+package ParserClasses {
+class CommandParserSubclasses as "CommandParser subclasses\n(AddPerson, AddPet, etc.)"
 }
-Class XYZCommand
-Class CommandResult
-Class "{abstract}\nCommand" as Command
 
+' Group all Command subclasses
+class CommandSubclasses as "Command subclasses\n(Add, Delete, Edit, Find, List, etc.)"
 
-Class "<<interface>>\nLogic" as Logic
-Class LogicManager
+class CommandResult
+class "{abstract}\nCommand" as Command
+class "<<interface>>\nLogic" as Logic
+class LogicManager
 }
 
 package Model {
-Class HiddenModel #FFFFFF
+class Model MODEL_COLOR
 }
 
 package Storage {
+class Storage STORAGE_COLOR
 }
 
-Class HiddenOutside #FFFFFF
-HiddenOutside ..> Logic
-
-LogicManager .right.|> Logic
-LogicManager -right->"1" ParserClasses
-ParserClasses ..> XYZCommand : <<create>>
-
-XYZCommand -up-|> Command
-LogicManager .left.> Command : <<call>>
-
+' Key relationships
+LogicManager ..|> Logic
+LogicManager --> ParserClasses
+ParserClasses ..> CommandSubclasses : <<create>>
+CommandSubclasses --|> Command
 LogicManager --> Model
 LogicManager --> Storage
-Storage --[hidden] Model
-Command .[hidden]up.> Storage
-Command .right.> Model
-note right of XYZCommand: XYZCommand = AddPersonCommand, \nFindCommand, etc
-
 Logic ..> CommandResult
-LogicManager .down.> CommandResult
-Command .up.> CommandResult : <<create>>
+LogicManager ..> CommandResult
+Command ..> CommandResult : <<create>>
+LogicManager ..> Command : <<call>>
+Command ..> Model
+
 @enduml

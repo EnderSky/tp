@@ -270,14 +270,6 @@ Examples:
 Edited Pet: Gunner; Species: Unknown; Breed: Unknown; Notes: Nervous around strangers; Picture: No picture provided
 ```
 
-<box type="info" seamless>
-
-Click [here](#more-about-picpicture) for more details on using the `pic/` tag.
-
-Click [here](#using-ntnotes-to-your-advantage) to see how to use the `nt/` tag.
-
-</box>
-
 <br><br>
 
 ### Locating clients and pets by keywords: `find`

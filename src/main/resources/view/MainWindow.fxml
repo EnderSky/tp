@@ -21,6 +21,7 @@
       <stylesheets>
         <URL value="@LightTheme.css" />
         <URL value="@Extensions.css" />
+        <URL value="@LargeFont.css" />
       </stylesheets>
 
       <VBox>

@@ -17,6 +17,7 @@
     <Scene>
       <stylesheets>
         <URL value="@HelpWindow.css" />
+        <URL value="@LargeFont.css" />
       </stylesheets>
 
       <HBox alignment="CENTER" fx:id="helpMessageContainer">

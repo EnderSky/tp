@@ -1,0 +1,75 @@
+.root {
+    -fx-font-size: 24px;
+}
+
+.label {
+    -fx-font-size: 22pt;
+}
+
+.label-bright {
+    -fx-font-size: 22pt;
+}
+
+.label-header {
+    -fx-font-size: 64pt;
+}
+
+.text-field {
+    -fx-font-size: 24pt;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 40pt;
+}
+
+.header-label {
+    -fx-font-size: 36px;
+}
+
+.cell_big_label {
+    -fx-font-size: 32px;
+}
+
+.cell_small_label {
+    -fx-font-size: 26px;
+}
+
+.empty_pet_list_label {
+    -fx-font-size: 32px;
+}
+
+.result-display {
+    -fx-font-size: 26pt;
+}
+
+.menu-bar .label {
+    -fx-font-size: 28pt;
+}
+
+.button {
+    -fx-font-size: 22pt;
+}
+
+.dialog-pane>*.label.content {
+    -fx-font-size: 28px;
+}
+
+.dialog-pane:header *.header-panel *.label {
+    -fx-font-size: 36px;
+}
+
+#commandTypeLabel {
+    -fx-font-size: 22px;
+}
+
+#commandTextField {
+    -fx-font-size: 26pt;
+}
+
+#tags .label {
+    -fx-font-size: 22;
+}
+
+#helpMessage {
+    -fx-font-size: 24pt;
+}

@@ -168,6 +168,14 @@
         "project-addressbook-level-3": "Project: AddressBook Level 3"
       },
       "headingKeywords": {}
+    },
+    {
+      "src": "team/ram-nush.md",
+      "title": "Subramanian Ramasamy's Project Portfolio Page",
+      "headings": {
+        "project-hairy-pawter": "Project: Hairy Pawter"
+      },
+      "headingKeywords": {}
     }
   ]
 }

@@ -68,22 +68,30 @@ Then run: `java -jar hairypawter.jar`
 
 You can ignore any other text output in the terminal while the app is running. Note that closing the terminal will also close the app.
 
+The below sample data will be populated on startup.
+
+<img src="images/Ui-sample-data.png" class="app-screenshot" alt="sample data">
+
 </box>
 
 ### App layout
 
-<img src="images/Ui_labelled.png" class="app-screenshot" alt="Hairy Pawter interface" style="height:500px;">
+<img src="images/Ui-labelled.png" class="app-screenshot" alt="Hairy Pawter interface" style="height:500px;">
 
-When Hairy Pawter opens, you will see four areas:
+When Hairy Pawter opens, you will see the following areas:
 
+ * **Menu bar** (Top of the window)
+   - Dropdown options to view the help window or exit the application
  * **Client list** (Right panel)
    - Displays all clients and their contact details
  * **Pet list** (Left panel)
    - Displays the pets belonging to each client
  * **Result box** (Below both lists)
    - Shows the outcome of your last command
- * **Command box** (Bottom of the window)
+ * **Command box** (Below the result box)
    - Type your commands here and press Enter
+ * **Status bar** (Bottom of the window)
+    - Displays the location of the data file
 
 ### Try it yourself: a first session
 
@@ -93,7 +101,7 @@ Follow these steps to get started. Type each command into the command box and pr
    Adds a client named John Tan with phone number 91234567.
 
 2. `addPet n/Biscuit p/91234567 s/Dog b/Golden Retriever nt/Loves belly rubs`<br>
-   Adds a dog named Biscuit owned by John Tan (matched by phone number of owner).
+   Adds a dog named Biscuit owned by John Tan (determined by phone number of owner).
 
 3. `find Biscuit`<br>
    Filters the list to show only records matching "Biscuit".
@@ -222,9 +230,9 @@ New pet added: Meowy
 
 * Locate this folder `[_hairypawter.jar home folder_]/data/photos/`. (if it has not been generated yet, run any command that adds or deletes an entry first)
 * Copy a photo you wish to add into that folder, and take note of its filename.
-* To add this photo, include its filename after `pic/`. (eg. `pic/doggy.png`)
+* To add this photo, include its filename after `pic/`. (eg. `pic/doggy.jpg`)
 * You may choose to organize the images within your `data/photos/` folder into subfolders. In this case, take note that you have to include the subfolder name in your input. (eg. `pic/[subfolder name]/[image filename]`).
-   * Be careful not to end the subfolder name with a command item. (eg. `pic/subfolder nt/pet.png` is not allowed)
+   * Be careful not to end the subfolder name with a command item. (eg. `pic/subfolder nt/pet.jpg` is not allowed)
 * If the photo does not appear, try using the `editPet` command to update the filename and filepath.
 
 Example on Windows OS: Navigate to the `/data/photos/` subfolder as follows
@@ -247,17 +255,20 @@ like leash colour, or allergies and quirks of the pet. Use this flexibly!
 Additional example:
 
 Set up:
-- Save Doggy's picture as `doggy.png`
+- Download Doggy's picture as `doggy.jpg` from this [link](https://postimg.cc/VrvMrDpG).
 - Navigate to the `/data/photos/` subfolder
-- Place `doggy.png` inside this subfolder
+- Place `doggy.jpg` inside this subfolder
 
 Command:
-* `addPet n/Doggy p/98765432 nt/Loves ear rubs pic/doggy.png` — adds a pet Doggy owned by John Doe with the given grooming notes and a picture.
+* `addPet n/Doggy p/98765432 nt/Great sense of smell pic/doggy.jpg` — adds a pet Doggy owned by John Doe with the given grooming notes and a picture.
 
 **Expected output:**
 ```
-New pet added: Doggy; Notes: Loves ear rubs; Picture: doggy.png
+New pet added: Doggy; Notes: Great sense of smell; Picture: doggy.jpg
 ```
+
+Screenshot:
+<img src="images/Ui-addpet-with-photo-result.png" class="app-screenshot" alt="addpet with photo result">
 
 <br><br>
 
@@ -321,6 +332,9 @@ Edited Pet: Meowy; Species: Cat
 Edited Pet: Gunner; Species: Dog; Breed: Wire Fox Terrier (White); Notes: Nervous around strangers
 ```
 
+Screenshot:
+<img src="images/Ui-editpet-result.png" class="app-screenshot" alt="editpet result">
+
 <box type="info" seamless>
 
 **Note:** Attempting to modify a pet's details to the exact details they had before will return a success as long as the input values are valid.
@@ -355,7 +369,7 @@ Examples:
 
 **Notes:**
 * The result count shows the number of **clients** matched, not pets.
-* The find command will show **all** the pets of each matched client.
+* The `find` command will show **all** the pets of each matched client.
 
 </box>
 
@@ -392,11 +406,18 @@ Examples:
 
 **Expected output:**
 ```
-Deleted Client: Alex Yeoh; Phone: 87438807; Email: alexyeoh@example.com; Address: Blk 30 Geylang Street 29, #06-40; Tags: Regular
+Deleted Client: Alex Yeoh; Phone: 87438807; Email: alexyeoh@example.com; Address: Blk 30 Geylang Street 29, #06-40; Tags: [Regular]
 ```
 ```
-Deleted Client: Betsy Crower; Phone: 1234567; Email: betsycrowe@example.com; Address: Crown street; Tags: friend
+Deleted Client: Betsy Crower; Phone: 1234567; Email: betsycrowe@example.com; Address: Crown street; Tags:
 ```
+
+Screenshot:
+<img src="images/Ui-deleteclient-result.png" class="app-screenshot" alt="deleteclient result">
+
+**Note:**
+* After using `deleteClient` on a filtered list (after the `find` command), remember to run the `list` command again to view all clients and pets.
+
 
 <br><br>
 
@@ -420,11 +441,17 @@ Examples:
 
 **Expected output:**
 ```
-Deleted Pet: Doggy; Notes: Loves ear rubs; Picture: doggy.png
+Deleted Pet: Doggy; Notes: Great sense of smell; Picture: doggy.jpg
 ```
 ```
 Deleted Pet: Gunner; Species: Dog; Breed: Wire Fox Terrier (White); Notes: Nervous around strangers
 ```
+
+Screenshot:
+<img src="images/Ui-deletepet-result.png" class="app-screenshot" alt="deletepet result">
+
+**Note:**
+* After using `deletePet` on a filtered list (after the `find` command), remember to run the `list` command again to view all clients and pets.
 
 <br><br>
 
@@ -494,6 +521,14 @@ Optional fields should still be included in the JSON with their corresponding de
 **A**: Reordering is not currently supported. As a workaround, close the app and manually reorder the client entries in the data file at `[_hairypawter.jar home folder_]/data/addressbook.json`.
 
 
+**Q**: I was trying out commands on the sample data and accidentally ran the `clear` command. Is it possible to retrieve the sample data again, so that I can continue trying out the commands?<br>
+**A**: Yes. You can retrieve the sample data by following these steps:
+1. On your computer, locate the `data/` folder inside your Hairy Pawter home folder.
+1. Ensure you have a copy of the `addressbook.json` file stored outside the Hairy Pawter home folder, as a backup.
+1. Delete the `addressbook.json` file present in the `data/` folder.
+1. Run Hairy Pawter again and the sample data will be populated on startup.
+
+
 **Q**: How do I transfer my data to another computer?<br>
 **A**: Follow these steps to smoothly transfer your data:
 1. On your current computer, locate the `data/` folder inside your Hairy Pawter home folder.
@@ -510,12 +545,12 @@ Optional fields should still be included in the JSON with their corresponding de
 
 1. **When using multiple screens**, if you move the app to a secondary screen and later return to using only the primary screen, the window may open off-screen.
    * **Fix:** Delete the `preferences.json` file in your home folder before restarting the app.
-2. **If you minimise the Help Window** and then run the `help` command again (or press `F1`), the existing minimised window will not reappear and no new window will open.
+2. **If you minimize the Help Window** and then run the `help` command again (or press `F1`), the existing minimized window will not reappear and no new window will open.
    * **Fix:** Manually restore the minimized Help Window from your taskbar.
 3. **If you utilize any invalid non-standard Unicode characters**, such as the `U+200B` zero-width space, the input will be accepted and displayed as a blank character.
    * **Fix:** Utilize a standard-width space character for behaviour to fall within expected boundaries.
 4. **Using a photo that is too large** may cause it to fail to be displayed.
-   * **Fix:** Utilise an image of smaller resolution instead.
+   * **Fix:** Utilize an image of smaller resolution instead.
 
 --------------------------------------------------------------------------------------------------------------------
 

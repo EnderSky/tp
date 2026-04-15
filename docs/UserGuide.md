@@ -70,13 +70,13 @@ You can ignore any other text output in the terminal while the app is running. N
 
 The below sample data will be populated on startup.
 
-<img src="images/Ui-sample-data.png" class="app-screenshot" alt="sample data">
+<img src="images/Ui-sample-data.png" class="app-screenshot" alt="sample data" style="height:550px;">
 
 </box>
 
 ### App layout
 
-<img src="images/Ui-labelled.png" class="app-screenshot" alt="Hairy Pawter interface" style="height:500px;">
+<img src="images/Ui-labelled.png" class="app-screenshot" alt="Hairy Pawter interface" style="height:550px;">
 
 When Hairy Pawter opens, you will see the following areas:
 
@@ -268,7 +268,7 @@ New pet added: Doggy; Notes: Great sense of smell; Picture: doggy.jpg
 ```
 
 Screenshot:
-<img src="images/Ui-addpet-with-photo-result.png" class="app-screenshot" alt="addpet with photo result">
+<img src="images/Ui-addpet-with-photo-result.png" class="app-screenshot" alt="addpet with photo result" style="height:550px;">
 
 <br><br>
 
@@ -333,7 +333,7 @@ Edited Pet: Gunner; Species: Dog; Breed: Wire Fox Terrier (White); Notes: Nervou
 ```
 
 Screenshot:
-<img src="images/Ui-editpet-result.png" class="app-screenshot" alt="editpet result">
+<img src="images/Ui-editpet-result.png" class="app-screenshot" alt="editpet result" style="height:550px;">
 
 <box type="info" seamless>
 
@@ -360,9 +360,7 @@ Examples:
 * `find Yu cat` — shows clients where both `Yu` and `cat` appear anywhere across the client's or their pets' details.
 
 **Expected output:**
-```
-1 client(s) listed!
-```
+<img src="images/find.png" class="app-screenshot" alt="find command result" style="height:550px;">
 ```
 0 client(s) listed!
 ```
@@ -390,8 +388,6 @@ Listed all clients
 
 <br><br>
 
-<div style="page-break-after: always;"></div>
-
 ### Deleting a client : `deleteClient`
 
 Use this command to delete a client.
@@ -417,7 +413,7 @@ Deleted Client: Betsy Crower; Phone: 1234567; Email: betsycrowe@example.com; Add
 ```
 
 Screenshot:
-<img src="images/Ui-deleteclient-result.png" class="app-screenshot" alt="deleteclient result">
+<img src="images/Ui-deleteclient-result.png" class="app-screenshot" alt="deleteclient result" style="height:550px;">
 
 **Note:**
 * After using `deleteClient` on a filtered list (after the `find` command), remember to run the `list` command again to view all clients and pets.
@@ -452,7 +448,7 @@ Deleted Pet: Gunner; Species: Dog; Breed: Wire Fox Terrier (White); Notes: Nervo
 ```
 
 Screenshot:
-<img src="images/Ui-deletepet-result.png" class="app-screenshot" alt="deletepet result">
+<img src="images/Ui-deletepet-result.png" class="app-screenshot" alt="deletepet result" style="height:550px;">
 
 **Note:**
 * After using `deletePet` on a filtered list (after the `find` command), remember to run the `list` command again to view all clients and pets.

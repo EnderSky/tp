@@ -54,6 +54,7 @@ We extended [AddressBook Level-3](https://se-education.org/addressbook-level3/) 
 <img src="images/ram-nush.png" width="200px">
 
 [[github](http://github.com/ram-nush)]
+[[portfolio](team/ram-nush.md)]
 
 * Role: Developer
 * Responsibilities: UI component
